@@ -1,2 +1,2 @@
 # MenuPizze
-Questo repository deve visualizzare un elenco di pizze a schermo
+Questa repository deve visualizzare un elenco di pizze a schermo
