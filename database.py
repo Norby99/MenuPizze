@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
 import json
+import datetime
 
 class database():
 
@@ -79,7 +80,13 @@ class database():
 
         except Error as e:
             print("Error while connecting to MySQL", e)
-            exit()
+
+    def getCurrentLanguage(self):
+        now = datetime.datetime.now()
+        if now.minute%2 == 0:
+            return "nome_inglese"
+        else:
+            return "nome_italiano"
 
 def list2Json(table, columns):  #translates a matrix into a json
     keys = [i[0] for i in columns]

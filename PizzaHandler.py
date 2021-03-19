@@ -1,7 +1,6 @@
 from cloud import Cloud
 import json
 import os
-import platform
 from datetime import datetime, time
 from database import database, list2Json, saveJsonFile
 
@@ -17,9 +16,18 @@ class Pizzas():
             if os.path.isfile(fname):
                 print("Existing file detected!")
                 midnight = datetime.combine(datetime.today(), time.min).timestamp() #in realta segna le 11, ma vabbeh
-                if midnight-creation_date(fname) < 0:   #the file was created today
-                    #todo implement a function that reads the jsons from file
-                    pass
+                if midnight-creation_date(fname) < 0:   #the file was modified today
+
+                    with open('pizze.json') as f:   #reading the json-data from local files
+                        self.ElencoPizze = json.load(f)
+                        self.ElencoPizze = self.ElencoPizze["record"]
+                    with open('ingredienti.json') as f:
+                        self.ElencoIngredienti = json.load(f)
+                        self.ElencoIngredienti = self.ElencoIngredienti["record"]
+                    with open('aggiunte.json') as f:
+                        self.ElencoAggiunte = json.load(f)
+                        self.ElencoAggiunte = self.ElencoAggiunte["record"]
+
                 else:
                     print("But is too old.")
                     self.downloadAllFromCloud(False)
@@ -65,27 +73,41 @@ class Pizzas():
         dbAggiunteList = db.readByQuery(queryAggiunte, "json")
         self.c.update(dbAggiunteList, self.data["aggiunte"])
 
+    def get_pizzas(self, merge=False):
+        if merge:
+            elencoEsteso = []
+            for i in self.ElencoPizze:  #scorro le pizze
+                elencoEsteso.append(i)
+                ingredientiScritti = []
+                ingredientiScrittiInglese = []
+                ingredienti = i["ingredienti"]
+                ingredienti = list(ingredienti.split(","))
+                for id_ingrediente in ingredienti:  #scorro gli ingredienti della pizza
+                    for id_elencoIngrediente in self.ElencoIngredienti: #scorro tutti gli ingredienti
+                        if id_elencoIngrediente["id_ingrediente"] == int(id_ingrediente):
+                            ingredientiScritti.append(id_elencoIngrediente["nome_italiano"])
+                            ingredientiScrittiInglese.append(id_elencoIngrediente["nome_inglese"])
+                            
+                elencoEsteso[-1]["ingredienti"] = ','.join(ingredientiScritti)
+                elencoEsteso[-1]["ingredientiInglese"] = ','.join(ingredientiScrittiInglese)
+            return elencoEsteso
+        else:
+            return self.ElencoPizze
+
+    def get_aggiunte(self):
+        return self.ElencoAggiunte
+
+    def get_ingredienti(self):
+        return self.ElencoIngredienti
+
 def creation_date(path_to_file):
-    """
-    Try to get the date that a file was created, falling back to when it was
-    last modified if that isn't possible.
-    """
-    if platform.system() == 'Windows':
-        return os.path.getctime(path_to_file)
-    else:
-        stat = os.stat(path_to_file)
-        try:
-            return stat.st_birthtime
-        except AttributeError:
-            # We're probably on Linux. No easy way to get creation dates here,
-            # so we'll settle for when its content was last modified.
-            return stat.st_mtime
+    return os.path.getmtime(path_to_file)
 
 
 if __name__ == "__main__":
-    p = Pizzas("jsonBins.json")
-    p.downloadAllFromCloud()
+    """p = Pizzas("jsonBins.json")
+    p.downloadAllFromCloud()"""
 
     #la seguente parte di codice mi servira per uploaddare il menu modificato
-    """p = Pizzas("jsonBins.json")
-    p.uploadAll()"""
+    p = Pizzas("jsonBins.json")
+    p.uploadAll()

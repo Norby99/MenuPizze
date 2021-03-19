@@ -9,7 +9,7 @@ class Cloud():
     def read(self, url):    #reads the data from the cloud
         headers = {'X-Master-Key': self.mKey}
 
-        req = requests.get(url, headers=headers)
+        req = requests.get(url, headers=headers)#.json()
 
         data = json.dumps(req.json(), indent = 4)
         return data
@@ -22,7 +22,7 @@ class Cloud():
         print(req.text)
         print("File: " + url + "\nSuccesful updated!")
 
-if __name__ == "__main__":
+"""if __name__ == "__main__":
 
     c = Cloud("yourMkey")
     url = 'https://api.jsonbin.io/v3/b/60477e50683e7e079c49e1b3'
@@ -31,4 +31,4 @@ if __name__ == "__main__":
     fileName = "prova.json"
     with open(fileName) as json_file:
         data = json.load(json_file)
-    c.update(data, url)
+    c.update(data, url)"""
