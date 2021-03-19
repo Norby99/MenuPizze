@@ -114,7 +114,7 @@ class Fullscreen:
         self.window.bind("<F12>", self.close)
         self.window.bind("<F11>", self.toggleFullScreen)
         self.window.bind("<Escape>", self.quitFullScreen)
-        self.screenDimension = self.window.winfo_screenwidth(), self.window.winfo_screenheight()
+        self.screenDimension = 2560, 1440#self.window.winfo_screenwidth(), self.window.winfo_screenheight()
         self.window.config(cursor="none")
         self.pizze = self.pizzeCreator()
         self.aggiunte = self.aggiunteCreator()
