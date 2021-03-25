@@ -44,6 +44,10 @@ class Pizzas():
             saveJsonFile("ingredienti", self.ElencoIngredienti)
             saveJsonFile("aggiunte", self.ElencoAggiunte)
 
+            self.ElencoPizze = json.loads(self.ElencoPizze)["record"]
+            self.ElencoIngredienti = json.loads(self.ElencoIngredienti)["record"]
+            self.ElencoAggiunte = json.loads(self.ElencoAggiunte)["record"]
+
     def uploadAll(self):
         #uploadda le pizze
         db = database("localhost", self.data["dbUserName"], self.data["dbPassword"], self.data["dbData"])
