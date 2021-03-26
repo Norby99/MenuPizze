@@ -82,11 +82,11 @@ class database():
             print("Error while connecting to MySQL", e)
 
     def getCurrentLanguage(self):
-        now = datetime.datetime.now()
-        if now.minute%2 == 0:
-            return "nome_inglese"
-        else:
-            return "nome_italiano"
+        cursor = self.con.cursor()
+        query = """SELECT *
+                   FROM `lingua`"""
+        cursor.execute(query)
+        return cursor.fetchone()[0]
 
 def list2Json(table, columns):  #translates a matrix into a json
     keys = [i[0] for i in columns]
