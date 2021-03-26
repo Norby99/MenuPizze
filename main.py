@@ -89,6 +89,7 @@ class Elenco:
 
     def updateScritte(self):    #this function updates the text boxes
         lingua = self.getLingua()
+        print(lingua)
         if lingua == "nome_italiano":   #modifies the ingredients
             testoLingua = "ingredienti"
         elif lingua == "nome_inglese":
