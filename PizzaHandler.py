@@ -50,7 +50,7 @@ class Pizzas():
 
     def uploadAll(self):
         #uploadda le pizze
-        db = database("localhost", self.data["dbUserName"], self.data["dbPassword"], self.data["dbData"])
+        db = database("localhost", self.data["dbUserName"], self.data["dbPassword"], self.data["dbData2BeUploaded"])
         queryPizze = ("""
             SELECT pizze.id, nomePizza, nome_tipo, prezzo, GROUP_CONCAT(`pizza-ingredienti`.`id_ingrediente` ORDER BY `pizza-ingredienti`.`id_collegamento`) AS "ingredienti"
             FROM pizze

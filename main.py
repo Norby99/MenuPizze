@@ -33,6 +33,7 @@ class Elenco:
         else:
             self.canvas = tk.Canvas(self.window, width =self.screenDimension[0], height = self.screenDimension[1])
             self.canvas.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+            self.canvas.configure(background = colors["background"])
             self.canvas.pack()
 
             #self.canvas.create_rectangle(self.margini[0], self.margini[1], self.margini[2], self.margini[3], fill='red')   #canvas che copre il margine delle pizze
@@ -49,17 +50,17 @@ class Elenco:
                 y += 1
 
     def showAggiunte(self):
-        coords = [resolutionConverter(25), self.margini[3], (self.margini[2]*(4/5)+resolutionConverter(500)), self.screenDimension[1]-resolutionConverter(20)]
+        coords = [resolutionConverter(25), self.margini[3]+10, (self.margini[2]*(4/5)+resolutionConverter(500)), self.screenDimension[1]-resolutionConverter(20)]
         self.canvas.pack()
 
         font_titolo = "Times " + str(resolutionConverter(22)) + " bold"
         font_aggiunte = "Times " + str(resolutionConverter(16))
 
         ### TITOLO ###
-        self.canvas.create_text(coords[0], coords[1], anchor= tk.NW, fill="black",font=font_titolo, text= "Aggiunte")
+        self.canvas.create_text(coords[0], coords[1], anchor= tk.NW, fill=colors["generic_text"],font=font_titolo, text= "Aggiunte")
 
         ### AGGIUNTE ###
-        self.canvas.create_text(coords[0], coords[3]-resolutionConverter(5), anchor= tk.SW, fill="black",font=font_aggiunte, text= self.testo_aggiunte, width = (coords[2]-coords[0]))
+        self.canvas.create_text(coords[0], coords[3]-resolutionConverter(5), anchor= tk.SW, fill=colors["generic_text"],font=font_aggiunte, text= self.testo_aggiunte, width = (coords[2]-coords[0]))
 
     def scritte(self, coords, pizza):
 
@@ -76,20 +77,20 @@ class Elenco:
                 pizza["ingredienti"] += " tutto fuori cottura"
             
             ### NOME ###
-            self.canvas.create_text(coords[0]+resolutionConverter(5), coords[1]+resolutionConverter(5), anchor= tk.NW, fill="black",font=font_nome, text= pizza["nome"])
+            self.canvas.create_text(coords[0]+resolutionConverter(5), coords[1]+resolutionConverter(5), anchor= tk.NW, fill=colors["titolo"],font=font_nome, text= pizza["nome"])
 
             ### PREZZO ###
-            self.canvas.create_text(coords[2]-resolutionConverter(10), coords[1]+resolutionConverter(10), anchor= tk.NE, fill="red",font=font_prezzo, text= pizza["prezzo"])
+            self.canvas.create_text(coords[2]-resolutionConverter(10), coords[1]+resolutionConverter(10), anchor= tk.NE, fill=colors["price"],font=font_prezzo, text= pizza["prezzo"])
 
             ### INGREDIENTI ###
-            self.ScritteIngredienti.append(self.canvas.create_text(coords[0]+resolutionConverter(5), (coords[3]+coords[1])/2-resolutionConverter(10), anchor= tk.NW, fill="black",font=font_ingredienti, text= pizza["ingredienti"], width=(self.cell_dimension[0]-resolutionConverter(10))))
+            self.ScritteIngredienti.append(self.canvas.create_text(coords[0]+resolutionConverter(5), (coords[3]+coords[1])/2-resolutionConverter(10), anchor= tk.NW, fill=colors["generic_text"],font=font_ingredienti, text= pizza["ingredienti"], width=(self.cell_dimension[0]-resolutionConverter(10))))
         else:
             ### TIPO ###
-            self.canvas.create_text(coords[0]+resolutionConverter(5), coords[3]-resolutionConverter(25), anchor= tk.SW, fill=colori[pizza["tipo"]], font=font_tipo, text= pizza["tipo"])
+            #* self.canvas.create_text(coords[0]+resolutionConverter(5), coords[3]-resolutionConverter(25), anchor= tk.SW, fill=colori[pizza["tipo"]], font=font_tipo, text= pizza["tipo"])
+            self.canvas.create_text(coords[0]+resolutionConverter(5), coords[3]-resolutionConverter(25), anchor= tk.SW, fill=colors["p_tipo"], font=font_tipo, text= pizza["tipo"])
 
     def updateScritte(self):    #this function updates the text boxes
         lingua = self.getLingua()
-        print(lingua)
         if lingua == "nome_italiano":   #modifies the ingredients
             testoLingua = "ingredienti"
         elif lingua == "nome_inglese":
@@ -116,7 +117,18 @@ class Fullscreen:
         self.window.bind("<F11>", self.toggleFullScreen)
         self.window.bind("<Escape>", self.quitFullScreen)
         self.screenDimension = self.window.winfo_screenwidth(), self.window.winfo_screenheight()
+        global colors
         global ris
+
+        #colors = {"background" : "#003049", "generic_text" : "#EAE2B7", "titolo" : "#FCBF49","price" : "#D62828", "p_tipo" : "#F77F00","p_classica" : "#FF0000", "p_bianca" : "#0000FF", "p_speciale" : "#FF0000"}
+        #colors = {"background" : "#000000", "p_tipo" : "#FCA311", "titolo" : "#14213D", "generic_text" : "#E5E5E5", "price" : "#FFFFFF"}
+        #colors = {"background" : "#1D3557", "p_tipo" : "#E63946", "titolo" : "#F1FAEE", "generic_text" : "#A8DADC", "price" : "#457B9D"}
+        #colors = {"background" : "#F4F1DE", "p_tipo" : "#E07A5F", "titolo" : "#3D405B", "generic_text" : "#81B29A", "price" : "#F2CC8F"}
+        #colors = {"background" : "#3D405B", "p_tipo" : "#E07A5F", "titolo" : "#81B29A", "generic_text" : "#F4F1DE", "price" : "#F2CC8F"}
+        #colors = {"background" : "#2b2e4a", "p_tipo" : "#E07A5F", "titolo" : "#81B29A", "generic_text" : "#F4F1DE", "price" : "#F2CC8F"}
+        #colors = {"background" : "#2b2e4a", "p_tipo" : "#e84545", "titolo" : "#903749", "generic_text" : "#53354a", "price" : "#903749"}
+        #colors = {"background" : "#540B0E", "p_tipo" : "#e84545", "titolo" : "#E09F3E", "generic_text" : "#FFF3B0", "price" : "#335C67"}
+
         ris = self.screenDimension[0]
         self.window.config(cursor="none")
         self.pizze = self.pizzeCreator()
@@ -176,8 +188,8 @@ class Fullscreen:
         self.menu.updateScritte()
         self.window.after(2000, self.Update)
 
+#converts the ratio from 2560x1440 to ris
 def resolutionConverter(n):
-    #converts the ratio from 2560x1440 to ris
     return int(n/(2560/ris))
 
 if __name__ == '__main__':
