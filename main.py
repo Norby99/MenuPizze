@@ -65,7 +65,7 @@ class Elenco:
     def scritte(self, coords, pizza):
 
         font_nome = "Times " + str(resolutionConverter(20)) + " bold"
-        font_prezzo = "Times " + str(resolutionConverter(20)) + " bold"
+        font_prezzo = "Times " + str(resolutionConverter(18)) + " bold"
         font_ingredienti = "Times " + str(resolutionConverter(15))
         font_tipo = "Times " + str(resolutionConverter(36)) + " bold"
 
@@ -128,6 +128,8 @@ class Fullscreen:
         #colors = {"background" : "#2b2e4a", "p_tipo" : "#E07A5F", "titolo" : "#81B29A", "generic_text" : "#F4F1DE", "price" : "#F2CC8F"}
         #colors = {"background" : "#2b2e4a", "p_tipo" : "#e84545", "titolo" : "#903749", "generic_text" : "#53354a", "price" : "#903749"}
         #colors = {"background" : "#540B0E", "p_tipo" : "#e84545", "titolo" : "#E09F3E", "generic_text" : "#FFF3B0", "price" : "#335C67"}
+        #colors = {"background" : "#2B2D42", "p_tipo" : "#EF233C", "titolo" : "#8D99AE", "generic_text" : "#EDF2F4", "price" : "#EF233C"}
+        colors = {"background" : "#0B0014", "p_tipo" : "#598392", "titolo" : "#ef233c", "generic_text" : "#F5E9E2", "price" : "#fdc500"}
 
         ris = self.screenDimension[0]
         self.window.config(cursor="none")
