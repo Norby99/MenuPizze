@@ -69,8 +69,6 @@ class Elenco:
         font_ingredienti = "Times " + str(resolutionConverter(15))
         font_tipo = "Times " + str(resolutionConverter(36)) + " bold"
 
-        colori = {"Pizze classiche" : "green", "Pizze bianche" : "blue", "Pizze conditissime" : "red"}
-
         if "nome" in pizza:
 
             if pizza["nome"] == "Estiva":
@@ -86,7 +84,6 @@ class Elenco:
             self.ScritteIngredienti.append(self.canvas.create_text(coords[0]+resolutionConverter(5), (coords[3]+coords[1])/2-resolutionConverter(10), anchor= tk.NW, fill=colors["generic_text"],font=font_ingredienti, text= pizza["ingredienti"], width=(self.cell_dimension[0]-resolutionConverter(10))))
         else:
             ### TIPO ###
-            #* self.canvas.create_text(coords[0]+resolutionConverter(5), coords[3]-resolutionConverter(25), anchor= tk.SW, fill=colori[pizza["tipo"]], font=font_tipo, text= pizza["tipo"])
             self.canvas.create_text(coords[0]+resolutionConverter(5), coords[3]-resolutionConverter(25), anchor= tk.SW, fill=colors["p_tipo"], font=font_tipo, text= pizza["tipo"])
 
     def updateScritte(self):    #this function updates the text boxes
