@@ -82,9 +82,9 @@ class database():
             print("Error while connecting to MySQL", e)
 
     def getCurrentLanguage(self):
-        self.con.close()
-        self.con = self.connect()
         try:
+            self.con.close()
+            self.con = self.connect()
             cursor = self.con.cursor(buffered=True)
             query = """SELECT *
                     FROM `lingua`"""
@@ -92,7 +92,6 @@ class database():
             self.con.close()
             return cursor.fetchone()[1]
         except:
-            self.con.close()
             return "nome_italiano"
 
 def list2Json(table, columns):  #translates a matrix into a json
