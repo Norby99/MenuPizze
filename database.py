@@ -4,6 +4,7 @@ import json
 import datetime
 
 class database():
+    connectionTracker = True #remouves spam comments
 
     def __init__(self, host, user, password, database):
         self.host = host
@@ -11,17 +12,23 @@ class database():
         self.password = password
         self.database = database
         self.con = self.connect()
+        if self.con != None:
+            print("Connected")
+            self.con.close()
+        else:
+            self.connectionTracker = False
+            print("Can't connect to database. Default language will be used")
 
     def readByQuery(self, query, form=None):
         cursor = self.con.cursor(buffered=True)
         cursor.execute(query)
         table = cursor.fetchall()
+        self.con.close()
         if form == "json":  #retruns the table as a json
             dictionary = list2Json(table, cursor.description)
             
             #json_object = json.dumps(dictionary, indent = 4)
             return dictionary
-        
         return table
 
     def read_data(self, form=None):
@@ -42,6 +49,7 @@ class database():
         """)
         cursor.execute(query)
         table = cursor.fetchall()
+        self.con.close()
 
         if form == "json":  #retruns the table as a json
             dictionary = list2Json(table, cursor.description)
@@ -59,7 +67,9 @@ class database():
             ORDER BY id_aggiunta
         """)
         cursor.execute(query)
-        return cursor.fetchall()
+        result = cursor.fetchall()
+        self.con.close()
+        return result
         
 
     def connect(self):
@@ -71,19 +81,18 @@ class database():
                                                 database=self.database,
                                                 buffered=True)
             if connection.is_connected():
-                #db_Info = connection.get_server_info()     #rompe perche non lo uso
-                print("Connected")
                 cursor = connection.cursor()
                 cursor.execute("select database()")
-                #record = cursor.fetchone()     #rompe perche non lo uso
+                self.connectionTracker = True
                 return connection
 
         except Error as e:
-            print("Error while connecting to MySQL", e)
+            if self.connectionTracker:
+                self.connectionTracker = False
+                print("Error while connecting to MySQL", e)
 
     def getCurrentLanguage(self):
         try:
-            self.con.close()
             self.con = self.connect()
             cursor = self.con.cursor(buffered=True)
             query = """SELECT *
@@ -111,6 +120,3 @@ if __name__ == "__main__":
     for i in data:
         print(i, "\n")
 
-    
-
-    
