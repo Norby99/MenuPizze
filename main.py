@@ -109,7 +109,7 @@ class Elenco:
                 j += 1
 
     def getLingua(self):
-        return "nome_inglese"
+        return self.db.getCurrentLanguage()
 
 class Fullscreen:
     def __init__(self):
