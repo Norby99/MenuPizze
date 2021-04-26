@@ -22,6 +22,9 @@ class Elenco:
         self.testo_aggiunte = ""
         for i in self.elenco_aggiunte:
             self.testo_aggiunte += "| " + i["nome"] + " : " + i["prezzo"] + " "
+        self.testo_aggiunte_inglese = ""
+        for i in self.elenco_aggiunte:
+            self.testo_aggiunte_inglese += "| " + i["nomeInglese"] + " : " + i["prezzo"] + " "
 
         with open(fname) as f:
             data = json.load(f)
@@ -56,11 +59,14 @@ class Elenco:
         font_titolo = "Times " + str(resolutionConverter(22)) + " bold"
         font_aggiunte = "Times " + str(resolutionConverter(16))
 
+        self.ScritteAggiunte = {}
         ### TITOLO ###
-        self.canvas.create_text(coords[0], coords[1], anchor= tk.NW, fill=colors["generic_text"],font=font_titolo, text= "Aggiunte")
+        canvas = self.canvas.create_text(coords[0], coords[1], anchor= tk.NW, fill=colors["generic_text"],font=font_titolo, text= "Aggiunte")
+        self.ScritteAggiunte.update({'titolo': canvas})
 
         ### AGGIUNTE ###
-        self.canvas.create_text(coords[0], coords[3]-resolutionConverter(5), anchor= tk.SW, fill=colors["generic_text"],font=font_aggiunte, text= self.testo_aggiunte, width = (coords[2]-coords[0]))
+        canvas = self.canvas.create_text(coords[0], coords[3]-resolutionConverter(5), anchor= tk.SW, fill=colors["generic_text"],font=font_aggiunte, text= self.testo_aggiunte, width = (coords[2]-coords[0]))
+        self.ScritteAggiunte.update({'aggiunte': canvas})
 
     def scritte(self, coords, pizza):
 
@@ -90,8 +96,12 @@ class Elenco:
         lingua = self.getLingua()
         if lingua == "nome_italiano":   #modifies the ingredients
             testoLingua = "ingredienti"
+            self.canvas.itemconfig(self.ScritteAggiunte["titolo"], text="Aggiunte")
+            self.canvas.itemconfig(self.ScritteAggiunte["aggiunte"], text=self.testo_aggiunte)
         elif lingua == "nome_inglese":
             testoLingua = "ingredientiInglese"
+            self.canvas.itemconfig(self.ScritteAggiunte["titolo"], text="Custom")
+            self.canvas.itemconfig(self.ScritteAggiunte["aggiunte"], text=self.testo_aggiunte_inglese)
         j = 0
         for i in self.elenco_pizze:
             if "id" in i:
@@ -99,7 +109,8 @@ class Elenco:
                 j += 1
 
     def getLingua(self):
-        return self.db.getCurrentLanguage()
+        return "nome_inglese"
+        #! return self.db.getCurrentLanguage()
 
 class Fullscreen:
     def __init__(self):
@@ -144,6 +155,7 @@ class Fullscreen:
         for i in data:
             aggiunte.append({
                 "nome" : (", ".join(str(x) for x in i["nome_aggiunta"].split(","))).capitalize(),
+                "nomeInglese" : (", ".join(str(x) for x in i["nome_inglese"].split(","))).capitalize(),
                 "prezzo" : '€ {:,.2f}'.format(i["prezzo_aggiunta"])
             })
         return aggiunte

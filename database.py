@@ -20,6 +20,7 @@ class database():
             print("Can't connect to database. Default language will be used")
 
     def readByQuery(self, query, form=None):
+        self.con = self.connect()
         cursor = self.con.cursor(buffered=True)
         cursor.execute(query)
         table = cursor.fetchall()
@@ -32,6 +33,7 @@ class database():
         return table
 
     def read_data(self, form=None):
+        self.con = self.connect()
         cursor = self.con.cursor(buffered=True)
         query = "SELECT lingua from lingue"
         cursor.execute(query)
@@ -60,9 +62,10 @@ class database():
         return table
 
     def read_aggiunte(self):
+        self.con = self.connect()
         cursor = self.con.cursor()
         query = ("""
-            SELECT nome_aggiunta, prezzo_aggiunta
+            SELECT nome_aggiunta, nome_inglese, prezzo_aggiunta
             FROM aggiunte
             ORDER BY id_aggiunta
         """)
@@ -115,7 +118,9 @@ def saveJsonFile(fileName, jsonObj):
             f.write(jsonObj)
 
 if __name__ == "__main__":
-    db = database("localhost", "MirkoFagnocchi", "margherita1", "menu_pizzeria")
+    with open("jsonBins.json") as f:
+        data = json.load(f)
+    db = database("localhost", data["dbUserName"], data["dbPassword"], data["dbData2BeUploaded"])
     data = db.read_data()
     for i in data:
         print(i, "\n")

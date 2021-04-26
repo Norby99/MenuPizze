@@ -110,7 +110,7 @@ def creation_date(path_to_file):
 
 if __name__ == "__main__":
     """p = Pizzas("jsonBins.json")
-    p.downloadAllFromCloud()"""
+    p.downloadAllFromCloud(False)"""
 
     #la seguente parte di codice mi servira per uploaddare il menu modificato
     p = Pizzas("jsonBins.json")
