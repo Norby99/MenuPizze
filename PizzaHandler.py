@@ -1,7 +1,6 @@
 from cloud import Cloud
 import json
 import os
-import time
 from datetime import datetime, time
 from database import database, list2Json, saveJsonFile
 
@@ -37,17 +36,9 @@ class Pizzas():
 
         else:
             print("Downloading the files from the cloud...")
-            i = 0
-            while i < 5:
-                try:
-                    self.ElencoPizze = self.c.read(self.data["pizze"])
-                    self.ElencoIngredienti = self.c.read(self.data["ingredienti"])
-                    self.ElencoAggiunte = self.c.read(self.data["aggiunte"])
-                    break
-                except:
-                    time.sleep(10)
-                    i += 1
-
+            self.ElencoPizze = self.c.read(self.data["pizze"])
+            self.ElencoIngredienti = self.c.read(self.data["ingredienti"])
+            self.ElencoAggiunte = self.c.read(self.data["aggiunte"])
 
             saveJsonFile("pizze", self.ElencoPizze)
             saveJsonFile("ingredienti", self.ElencoIngredienti)
