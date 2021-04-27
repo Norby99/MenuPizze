@@ -39,7 +39,6 @@ class Pizzas():
             self.ElencoPizze = self.c.read(self.data["pizze"])
             self.ElencoIngredienti = self.c.read(self.data["ingredienti"])
             self.ElencoAggiunte = self.c.read(self.data["aggiunte"])
-            print("Done", self.ElencoPizze)
 
             saveJsonFile("pizze", self.ElencoPizze)
             saveJsonFile("ingredienti", self.ElencoIngredienti)
