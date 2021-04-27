@@ -90,6 +90,14 @@ class Elenco:
             self.ScritteIngredienti.append(self.canvas.create_text(coords[0]+resolutionConverter(5), (coords[3]+coords[1])/2-resolutionConverter(10), anchor= tk.NW, fill=colors["generic_text"],font=font_ingredienti, text= pizza["ingredienti"], width=(self.cell_dimension[0]-resolutionConverter(10))))
         else:
             ### TIPO ###
+            a = 3
+            self.canvas.create_line(coords[0], coords[1], coords[2]-resolutionConverter(40), coords[1], fill="#ff8000", width="3")
+            self.canvas.create_line(coords[0], coords[3]-resolutionConverter(15), coords[2]-resolutionConverter(40), coords[3]-resolutionConverter(15), fill="#ff8000", width="3")
+
+            self.canvas.create_text(coords[0]+resolutionConverter(5)+a, coords[3]-resolutionConverter(25)+a, anchor= tk.SW, fill="#BBBBBB", font=font_tipo, text= pizza["tipo"])
+            self.canvas.create_text(coords[0]+resolutionConverter(5)+1, coords[3]-resolutionConverter(25)+1, anchor= tk.SW, fill="#000000", font=font_tipo, text= pizza["tipo"])
+            self.canvas.create_text(coords[0]+resolutionConverter(5)-1, coords[3]-resolutionConverter(25)-1, anchor= tk.SW, fill="#000000", font=font_tipo, text= pizza["tipo"])
+
             self.canvas.create_text(coords[0]+resolutionConverter(5), coords[3]-resolutionConverter(25), anchor= tk.SW, fill=colors["p_tipo"], font=font_tipo, text= pizza["tipo"])
 
     def updateScritte(self):    #this function updates the text boxes
@@ -135,8 +143,8 @@ class Fullscreen:
         #colors = {"background" : "#2b2e4a", "p_tipo" : "#E07A5F", "titolo" : "#81B29A", "generic_text" : "#F4F1DE", "price" : "#F2CC8F"}
         #colors = {"background" : "#2b2e4a", "p_tipo" : "#e84545", "titolo" : "#903749", "generic_text" : "#53354a", "price" : "#903749"}
         #colors = {"background" : "#540B0E", "p_tipo" : "#e84545", "titolo" : "#E09F3E", "generic_text" : "#FFF3B0", "price" : "#335C67"}
-        #colors = {"background" : "#2B2D42", "p_tipo" : "#EF233C", "titolo" : "#8D99AE", "generic_text" : "#EDF2F4", "price" : "#EF233C"}
-        colors = {"background" : "#0B0014", "p_tipo" : "#598392", "titolo" : "#ef233c", "generic_text" : "#F5E9E2", "price" : "#fdc500"}
+        #colors = {"background" : "#2B2D42", "p_tipo" : "#EF233C", "titolo" : "#8D99AE", "generic_text" : "#EDF2F4", "price" : "#EF233C"}598392
+        colors = {"background" : "#0B0014", "p_tipo" : "#FFFFFF", "titolo" : "#ef233c", "generic_text" : "#F5E9E2", "price" : "#fdc500"}
 
         ris = self.screenDimension[0]
         self.window.config(cursor="none")
