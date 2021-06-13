@@ -7,6 +7,7 @@ import os
 import math
 import distutils.dir_util
 import json
+import requests
 
 class Elenco:
     def __init__(self, window, elenco_pizze, aggiunte, margini, fname):
@@ -210,5 +211,21 @@ class Fullscreen:
 def resolutionConverter(n):
     return int(n/(2560/ris))
 
+def waitForConnection(url='http://www.google.com/', timeout=5):
+    initTime = time.time()
+    while True:
+        try:
+            _ = requests.head(url, timeout=timeout)
+            break
+        except requests.ConnectionError:
+            pass
+        nowTime = time.time()
+        if (nowTime-initTime)/60 > 3:
+            print("No internet connection available.")
+            break
+    return
+
+
 if __name__ == '__main__':
+    waitForConnection()
     app = Fullscreen()
