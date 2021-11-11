@@ -40,8 +40,6 @@ class Elenco:
             self.canvas.configure(background = colors["background"])
             self.canvas.pack()
 
-            #self.canvas.create_rectangle(self.margini[0], self.margini[1], self.margini[2], self.margini[3], fill='red')   #canvas che copre il margine delle pizze
-
             x = 0
             y = 0
             self.ScritteIngredienti = []
@@ -164,7 +162,7 @@ class Fullscreen:
             aggiunte.append({
                 "nome" : (", ".join(str(x) for x in i["nome_aggiunta"].split(","))).capitalize(),
                 "nomeInglese" : (", ".join(str(x) for x in i["nome_inglese"].split(","))).capitalize(),
-                "prezzo" : '€ {:,.2f}'.format(i["prezzo_aggiunta"])
+                "prezzo" : '€ {:,.2f}'.format(float(i["prezzo_aggiunta"]))
             })
         return aggiunte
 
@@ -177,11 +175,12 @@ class Fullscreen:
             if i["nome_tipo"] != tipo_pizza:
                 pizze.append({"tipo" : i["nome_tipo"]})
                 tipo_pizza = i["nome_tipo"]
+
             pizze.append({
-                        "id" : i["id"],
+                        "id" : int(i["id"]),
                         "nome": i["nomePizza"],
                         "tipo" : i["nome_tipo"],
-                        "prezzo" : '€ {:,.2f}'.format(i["prezzo"]),
+                        "prezzo" : '€ {:,.2f}'.format(float(i["prezzo"])),
                         "ingredienti" : (", ".join(str(x) for x in i["ingredienti"].split(","))).capitalize(),
                         "ingredientiInglese" : (", ".join(str(x) for x in i["ingredientiInglese"].split(","))).capitalize()
                     })

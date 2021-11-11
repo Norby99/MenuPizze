@@ -20,13 +20,10 @@ class Pizzas():
 
                     with open('pizze.json') as f:   #reading the json-data from local files
                         self.ElencoPizze = json.load(f)
-                        self.ElencoPizze = self.ElencoPizze["record"]
                     with open('ingredienti.json') as f:
                         self.ElencoIngredienti = json.load(f)
-                        self.ElencoIngredienti = self.ElencoIngredienti["record"]
                     with open('aggiunte.json') as f:
                         self.ElencoAggiunte = json.load(f)
-                        self.ElencoAggiunte = self.ElencoAggiunte["record"]
 
                 else:
                     print("But is too old.")
@@ -88,7 +85,7 @@ class Pizzas():
                 ingredienti = list(ingredienti.split(","))
                 for id_ingrediente in ingredienti:  #scorro gli ingredienti della pizza
                     for id_elencoIngrediente in self.ElencoIngredienti: #scorro tutti gli ingredienti
-                        if id_elencoIngrediente["id_ingrediente"] == int(id_ingrediente):
+                        if int(id_elencoIngrediente["id_ingrediente"]) == int(id_ingrediente):
                             ingredientiScritti.append(id_elencoIngrediente["nome_italiano"])
                             ingredientiScrittiInglese.append(id_elencoIngrediente["nome_inglese"])
                             
