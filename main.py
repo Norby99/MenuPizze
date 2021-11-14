@@ -120,7 +120,7 @@ class Elenco:
 
 class Fullscreen:
     def __init__(self):
-        fname = "jsonBins.json"
+        fname = "setup.json"
         self.p = Pizzas(fname)
         self.p.downloadAllFromCloud()
         
