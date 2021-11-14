@@ -9,8 +9,7 @@ class Cloud():
     def read(self, url):    #reads the data from the cloud
         headers = {'X-Master-Key': self.mKey}
 
-        req = requests.get(url, headers=headers)#.json()
-
+        req = requests.get(url, headers=headers)
         data = json.dumps(req.json(), indent = 4)
         return data
 
