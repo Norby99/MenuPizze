@@ -1,121 +1,10 @@
-from database import database
 from PizzaHandler import Pizzas
 import tkinter as tk
-from PIL import Image, ImageTk
 import time
-import os
-import math
-import distutils.dir_util
+from windowsSpecs import WindowSpecs
 import json
 import requests
-
-class Elenco:
-    def __init__(self, window, elenco_pizze, aggiunte, margini, jsonData):
-        self.window = window
-        self.elenco_pizze = elenco_pizze
-        self.elenco_aggiunte = aggiunte
-        self.colonne_max = 5
-        self.righe_max = math.ceil(len(self.elenco_pizze)/self.colonne_max)   #numero di pizze per colonna
-        self.margini = margini
-        self.screenDimension = self.window.winfo_screenwidth(), self.window.winfo_screenheight()
-        self.cell_dimension = [(self.margini[2]-self.margini[0])/self.colonne_max, (self.margini[3]-self.margini[1])/self.righe_max]
-        
-        self.testo_aggiunte = ""
-        for i in self.elenco_aggiunte:
-            self.testo_aggiunte += "| " + i["nome"] + " : " + i["prezzo"] + " "
-        self.testo_aggiunte_inglese = ""
-        for i in self.elenco_aggiunte:
-            self.testo_aggiunte_inglese += "| " + i["nomeInglese"] + " : " + i["prezzo"] + " "
-        
-        self.db = database("localhost", jsonData["dbUserName"], jsonData["dbPassword"], jsonData["dbData"])
-
-    
-    def show(self, update=False):
-        if update:
-            self.updateScritte()
-        else:
-            self.canvas = tk.Canvas(self.window, width =self.screenDimension[0], height = self.screenDimension[1])
-            self.canvas.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-            self.canvas.configure(background = colors["background"])
-            self.canvas.pack()
-
-            x = 0
-            y = 0
-            self.ScritteIngredienti = []
-            for i in self.elenco_pizze:
-                if y >= self.righe_max:
-                    y = 0
-                    x += 1
-                self.cell_coordinates = [self.margini[0]+self.cell_dimension[0]*x, self.margini[1]+self.cell_dimension[1]*y, self.margini[0]+self.cell_dimension[0]*(x+1), self.margini[1]+self.cell_dimension[1]*(y+1)]
-                self.scritte(self.cell_coordinates, i)
-                y += 1
-
-    def showAggiunte(self):
-        coords = [resolutionConverter(25), self.margini[3]+10, (self.margini[2]*(4/5)+resolutionConverter(500)), self.screenDimension[1]-resolutionConverter(20)]
-        self.canvas.pack()
-
-        font_titolo = "Times " + str(resolutionConverter(22)) + " bold"
-        font_aggiunte = "Times " + str(resolutionConverter(16))
-
-        self.ScritteAggiunte = {}
-        ### TITOLO ###
-        canvas = self.canvas.create_text(coords[0], coords[1], anchor= tk.NW, fill=colors["generic_text"],font=font_titolo, text= "Aggiunte")
-        self.ScritteAggiunte.update({'titolo': canvas})
-
-        ### AGGIUNTE ###
-        canvas = self.canvas.create_text(coords[0], coords[3]-resolutionConverter(5), anchor= tk.SW, fill=colors["generic_text"],font=font_aggiunte, text= self.testo_aggiunte, width = (coords[2]-coords[0]))
-        self.ScritteAggiunte.update({'aggiunte': canvas})
-
-    def scritte(self, coords, pizza):
-
-        font_nome = "Times " + str(resolutionConverter(20)) + " bold"
-        font_prezzo = "Times " + str(resolutionConverter(18)) + " bold"
-        font_ingredienti = "Times " + str(resolutionConverter(15))
-        font_tipo = "Times " + str(resolutionConverter(36)) + " bold"
-
-        if "nome" in pizza:
-
-            if pizza["nome"] == "Estiva":
-                pizza["ingredienti"] += " tutto fuori cottura"
-            
-            ### NOME ###
-            self.canvas.create_text(coords[0]+resolutionConverter(5), coords[1]+resolutionConverter(5), anchor= tk.NW, fill=colors["titolo"],font=font_nome, text= pizza["nome"])
-
-            ### PREZZO ###
-            self.canvas.create_text(coords[2]-resolutionConverter(10), coords[1]+resolutionConverter(10), anchor= tk.NE, fill=colors["price"],font=font_prezzo, text= pizza["prezzo"])
-
-            ### INGREDIENTI ###
-            self.ScritteIngredienti.append(self.canvas.create_text(coords[0]+resolutionConverter(5), (coords[3]+coords[1])/2-resolutionConverter(10), anchor= tk.NW, fill=colors["generic_text"],font=font_ingredienti, text= pizza["ingredienti"], width=(self.cell_dimension[0]-resolutionConverter(10))))
-        else:
-            ### TIPO ###
-            a = 3
-            self.canvas.create_line(coords[0], coords[1], coords[2]-resolutionConverter(40), coords[1], fill="#ff8000", width="3")
-            self.canvas.create_line(coords[0], coords[3]-resolutionConverter(15), coords[2]-resolutionConverter(40), coords[3]-resolutionConverter(15), fill="#ff8000", width="3")
-
-            self.canvas.create_text(coords[0]+resolutionConverter(5)+a, coords[3]-resolutionConverter(25)+a, anchor= tk.SW, fill="#BBBBBB", font=font_tipo, text= pizza["tipo"])
-            self.canvas.create_text(coords[0]+resolutionConverter(5)+1, coords[3]-resolutionConverter(25)+1, anchor= tk.SW, fill="#000000", font=font_tipo, text= pizza["tipo"])
-            self.canvas.create_text(coords[0]+resolutionConverter(5)-1, coords[3]-resolutionConverter(25)-1, anchor= tk.SW, fill="#000000", font=font_tipo, text= pizza["tipo"])
-
-            self.canvas.create_text(coords[0]+resolutionConverter(5), coords[3]-resolutionConverter(25), anchor= tk.SW, fill=colors["p_tipo"], font=font_tipo, text= pizza["tipo"])
-
-    def updateScritte(self):    #this function updates the text boxes
-        lingua = self.getLingua()
-        if lingua == "nome_italiano":   #modifies the ingredients
-            testoLingua = "ingredienti"
-            self.canvas.itemconfig(self.ScritteAggiunte["titolo"], text="Aggiunte")
-            self.canvas.itemconfig(self.ScritteAggiunte["aggiunte"], text=self.testo_aggiunte)
-        elif lingua == "nome_inglese":
-            testoLingua = "ingredientiInglese"
-            self.canvas.itemconfig(self.ScritteAggiunte["titolo"], text="Custom")
-            self.canvas.itemconfig(self.ScritteAggiunte["aggiunte"], text=self.testo_aggiunte_inglese)
-        j = 0
-        for i in self.elenco_pizze:
-            if "id" in i:
-                self.canvas.itemconfig(self.ScritteIngredienti[j], text=i[testoLingua])
-                j += 1
-
-    def getLingua(self):
-        return self.db.getCurrentLanguage()
+from elencoGenerator import Elenco
 
 class PizzaMenu1:
     def __init__(self):
@@ -132,8 +21,7 @@ class PizzaMenu1:
         self.window.bind("<F11>", self.toggleFullScreen)
         self.window.bind("<Escape>", self.quitFullScreen)
         self.screenDimension = self.window.winfo_screenwidth(), self.window.winfo_screenheight()
-        global colors
-        global ris
+        self.windowSpecs = WindowSpecs(self.screenDimension)
 
         ### These are all the pretty combinations I've found
         #colors = {"background" : "#003049", "generic_text" : "#EAE2B7", "titolo" : "#FCBF49","price" : "#D62828", "p_tipo" : "#F77F00","p_classica" : "#FF0000", "p_bianca" : "#0000FF", "p_speciale" : "#FF0000"}
@@ -148,11 +36,10 @@ class PizzaMenu1:
         #colors = {"background" : "#0B0014", "p_tipo" : "#FFFFFF", "titolo" : "#ef233c", "generic_text" : "#F5E9E2", "price" : "#fdc500"}
         colors = data["colors"] # colors are taken from the setup file
 
-        ris = self.screenDimension[0]
         self.window.config(cursor="none")
         self.pizze = self.pizzeCreator()
         self.aggiunte = self.aggiunteCreator()
-        self.menu = Elenco(self.window, self.pizze, self.aggiunte, [resolutionConverter(25), resolutionConverter(25), self.screenDimension[0]-resolutionConverter(50), self.screenDimension[1]-resolutionConverter(100)], data)
+        self.menu = Elenco(self.window, self.pizze, self.aggiunte, [self.windowSpecs.resolutionConverter(25), self.windowSpecs.resolutionConverter(25), self.screenDimension[0]-self.windowSpecs.resolutionConverter(50), self.screenDimension[1]-self.windowSpecs.resolutionConverter(100)], data, colors, self.screenDimension)
 
         self.ShowAll()
         self.Update()
@@ -208,10 +95,6 @@ class PizzaMenu1:
     def Update(self):
         self.menu.updateScritte()
         self.window.after(2000, self.Update)
-
-#converts the ratio from 2560x1440 to ris
-def resolutionConverter(n):
-    return int(n/(2560/ris))
 
 def waitForConnection(url='http://www.google.com/', timeout=5):
     initTime = time.time()
