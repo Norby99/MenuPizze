@@ -1,10 +1,10 @@
-from PizzaHandler import Pizzas
+from libraries.PizzaHandler import Pizzas
 import tkinter as tk
 import time
-from windowsSpecs import WindowSpecs
+from libraries.windowsSpecs import WindowSpecs
 import json
 import requests
-from elencoGenerator import Elenco
+from libraries.elencoGenerator import Elenco
 
 class PizzaMenu1:
     def __init__(self):

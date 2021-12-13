@@ -1,8 +1,8 @@
-from cloud import Cloud
+from libraries.cloud import Cloud
 import json
 import os
 from datetime import datetime, time
-from database import database, list2Json, saveJsonFile
+from libraries.database import database, list2Json, saveJsonFile
 
 class Pizzas():
     def __init__(self, jsonData):

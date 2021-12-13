@@ -1,7 +1,7 @@
 import math
-from database import database
+from libraries.database import database
 import tkinter as tk
-from windowsSpecs import WindowSpecs
+from libraries.windowsSpecs import WindowSpecs
 
 class Elenco:
     def __init__(self, window, elenco_pizze, aggiunte, margini, jsonData, color, screenDimension):
