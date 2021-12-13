@@ -117,7 +117,7 @@ class Elenco:
     def getLingua(self):
         return self.db.getCurrentLanguage()
 
-class Fullscreen:
+class PizzaMenu1:
     def __init__(self):
         fname = "setup.json"
         with open(fname) as f:
@@ -230,4 +230,4 @@ def waitForConnection(url='http://www.google.com/', timeout=5):
 
 if __name__ == '__main__':
     waitForConnection()
-    app = Fullscreen()
+    app = PizzaMenu1()
