@@ -10,7 +10,7 @@ import json
 import requests
 
 class Elenco:
-    def __init__(self, window, elenco_pizze, aggiunte, margini, fname):
+    def __init__(self, window, elenco_pizze, aggiunte, margini, jsonData):
         self.window = window
         self.elenco_pizze = elenco_pizze
         self.elenco_aggiunte = aggiunte
@@ -26,10 +26,9 @@ class Elenco:
         self.testo_aggiunte_inglese = ""
         for i in self.elenco_aggiunte:
             self.testo_aggiunte_inglese += "| " + i["nomeInglese"] + " : " + i["prezzo"] + " "
+        
+        self.db = database("localhost", jsonData["dbUserName"], jsonData["dbPassword"], jsonData["dbData"])
 
-        with open(fname) as f:
-            data = json.load(f)
-        self.db = database("localhost", data["dbUserName"], data["dbPassword"], data["dbData"])
     
     def show(self, update=False):
         if update:
@@ -121,7 +120,9 @@ class Elenco:
 class Fullscreen:
     def __init__(self):
         fname = "setup.json"
-        self.p = Pizzas(fname)
+        with open(fname) as f:
+            data = json.load(f)
+        self.p = Pizzas(data)
         self.p.downloadAllFromCloud()
         
         self.window = tk.Tk()
@@ -134,6 +135,7 @@ class Fullscreen:
         global colors
         global ris
 
+        ### These are all the pretty combinations I've found
         #colors = {"background" : "#003049", "generic_text" : "#EAE2B7", "titolo" : "#FCBF49","price" : "#D62828", "p_tipo" : "#F77F00","p_classica" : "#FF0000", "p_bianca" : "#0000FF", "p_speciale" : "#FF0000"}
         #colors = {"background" : "#000000", "p_tipo" : "#FCA311", "titolo" : "#14213D", "generic_text" : "#E5E5E5", "price" : "#FFFFFF"}
         #colors = {"background" : "#1D3557", "p_tipo" : "#E63946", "titolo" : "#F1FAEE", "generic_text" : "#A8DADC", "price" : "#457B9D"}
@@ -149,7 +151,7 @@ class Fullscreen:
         self.window.config(cursor="none")
         self.pizze = self.pizzeCreator()
         self.aggiunte = self.aggiunteCreator()
-        self.menu = Elenco(self.window, self.pizze, self.aggiunte, [resolutionConverter(25), resolutionConverter(25), self.screenDimension[0]-resolutionConverter(50), self.screenDimension[1]-resolutionConverter(100)], fname)
+        self.menu = Elenco(self.window, self.pizze, self.aggiunte, [resolutionConverter(25), resolutionConverter(25), self.screenDimension[0]-resolutionConverter(50), self.screenDimension[1]-resolutionConverter(100)], data)
 
         self.ShowAll()
         self.Update()

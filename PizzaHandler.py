@@ -5,9 +5,8 @@ from datetime import datetime, time
 from database import database, list2Json, saveJsonFile
 
 class Pizzas():
-    def __init__(self, fname):
-        with open(fname) as f:
-            self.data = json.load(f)
+    def __init__(self, jsonData):
+        self.data = jsonData
         self.c = Cloud(self.data["m_key"])
 
     def downloadAllFromCloud(self, control=True): #downloads all from the cloud and creats the json files
