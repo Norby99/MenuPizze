@@ -83,7 +83,7 @@ class Elenco:
             
             ### NOME ###
             self.canvas.create_text(coords[0]+self.windowSpecs.resolutionConverter(5), coords[1]+self.windowSpecs.resolutionConverter(5), anchor= tk.NW, fill=self.colors["titolo"],font=font_nome, text= pizza["nome"])
-            self.canvas.create_image(10, coords[1]+self.windowSpecs.resolutionConverter(5), anchor=tk.NW, image=self.alleggeni["glutine"])
+            self.canvas.create_image(10, coords[1]+self.windowSpecs.resolutionConverter(5)+5, anchor=tk.NW, image=self.alleggeni["glutine"])
 
             ### PREZZO ###
             self.canvas.create_text(coords[2]-self.windowSpecs.resolutionConverter(10), coords[1]+self.windowSpecs.resolutionConverter(10), anchor= tk.NE, fill=self.colors["price"],font=font_prezzo, text= pizza["prezzo"])
@@ -120,11 +120,13 @@ class Elenco:
 
     def loadAllergeni(self):
         targetFile = os.path.join(os.path.curdir, 'resources', "allergeni")
-        uova = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "uova.png")).resize((20, 20), Image.ANTIALIAS))
+        resizeFormat = (int(119/4), int(121/4))
+
+        uova = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "uova.png")).resize(resizeFormat, Image.ANTIALIAS))
         pesce = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "pesce.png")))
         noci = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "noci.png")))
         soia = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "soia.png")))
-        glutine = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "glutine.png")).resize((int(119/4), int(121/4)), Image.ANTIALIAS))
+        glutine = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "glutine.png")).resize(resizeFormat, Image.ANTIALIAS))
         latticini = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "latticini.png")))
         return { "uova" : uova, "pesce" : pesce, "noci" : noci, "soia" : soia, "glutine" : glutine, "latticini" : latticini }
 
