@@ -2,6 +2,8 @@ import math
 from libraries.database import database
 import tkinter as tk
 from libraries.windowsSpecs import WindowSpecs
+from PIL import ImageTk,Image 
+import os
 
 class Elenco:
     def __init__(self, window, elenco_pizze, aggiunte, margini, jsonData, color, screenDimension):
@@ -110,6 +112,16 @@ class Elenco:
             if "id" in i:
                 self.canvas.itemconfig(self.ScritteIngredienti[j], text=i[testoLingua])
                 j += 1
+
+    def loadAllergeni(self):
+        targetFile = os.path.join(os.path.curdir, 'resources', "allergeni")
+        uova = Image.open(os.path.join(targetFile, "uova.png"))
+        pesce = Image.open(os.path.join(targetFile, "pesce.png"))
+        noci = Image.open(os.path.join(targetFile, "noci.png"))
+        soia = Image.open(os.path.join(targetFile, "soia.png"))
+        glutine = Image.open(os.path.join(targetFile, "glutine.png"))
+        latticini = Image.open(os.path.join(targetFile, "latticini.png"))
+        self.alleggeni = { "uova" : uova, "pesce" : pesce, "noci" : noci, "soia" : soia, "glutine" : glutine, "latticini" : latticini }
 
     def getLingua(self):
         return self.db.getCurrentLanguage()
