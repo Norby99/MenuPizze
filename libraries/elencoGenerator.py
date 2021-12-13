@@ -124,7 +124,7 @@ class Elenco:
         pesce = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "pesce.png")))
         noci = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "noci.png")))
         soia = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "soia.png")))
-        glutine = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "glutine.png")).resize((int(119/5), int(121/5)), Image.ANTIALIAS))
+        glutine = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "glutine.png")).resize((int(119/4), int(121/4)), Image.ANTIALIAS))
         latticini = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "latticini.png")))
         return { "uova" : uova, "pesce" : pesce, "noci" : noci, "soia" : soia, "glutine" : glutine, "latticini" : latticini }
 
