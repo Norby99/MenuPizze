@@ -108,8 +108,6 @@ def waitForConnection(url='http://www.google.com/', timeout=5):
         if (nowTime-initTime)/60 > 3:
             print("No internet connection available.")
             break
-    return
-
 
 if __name__ == '__main__':
     waitForConnection()
