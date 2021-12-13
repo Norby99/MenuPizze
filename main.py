@@ -145,7 +145,8 @@ class Fullscreen:
         #colors = {"background" : "#2b2e4a", "p_tipo" : "#e84545", "titolo" : "#903749", "generic_text" : "#53354a", "price" : "#903749"}
         #colors = {"background" : "#540B0E", "p_tipo" : "#e84545", "titolo" : "#E09F3E", "generic_text" : "#FFF3B0", "price" : "#335C67"}
         #colors = {"background" : "#2B2D42", "p_tipo" : "#EF233C", "titolo" : "#8D99AE", "generic_text" : "#EDF2F4", "price" : "#EF233C"}598392
-        colors = {"background" : "#0B0014", "p_tipo" : "#FFFFFF", "titolo" : "#ef233c", "generic_text" : "#F5E9E2", "price" : "#fdc500"}
+        #colors = {"background" : "#0B0014", "p_tipo" : "#FFFFFF", "titolo" : "#ef233c", "generic_text" : "#F5E9E2", "price" : "#fdc500"}
+        colors = data["colors"] # colors are taken from the setup file
 
         ris = self.screenDimension[0]
         self.window.config(cursor="none")
