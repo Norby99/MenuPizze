@@ -10,6 +10,7 @@ class Elenco:
         self.window = window
         self.elenco_pizze = elenco_pizze
         self.elenco_aggiunte = aggiunte
+        self.alleggeni = self.loadAllergeni()
         self.colors = color
         self.screenDimension = screenDimension
         self.windowSpecs = WindowSpecs(self.screenDimension)
@@ -65,6 +66,9 @@ class Elenco:
         canvas = self.canvas.create_text(coords[0], coords[3]-self.windowSpecs.resolutionConverter(5), anchor= tk.SW, fill=self.colors["generic_text"],font=font_aggiunte, text= self.testo_aggiunte, width = (coords[2]-coords[0]))
         self.ScritteAggiunte.update({'aggiunte': canvas})
 
+    def showAllergeni():
+        pass
+
     def scritte(self, coords, pizza):
 
         font_nome = "Times " + str(self.windowSpecs.resolutionConverter(20)) + " bold"
@@ -79,6 +83,7 @@ class Elenco:
             
             ### NOME ###
             self.canvas.create_text(coords[0]+self.windowSpecs.resolutionConverter(5), coords[1]+self.windowSpecs.resolutionConverter(5), anchor= tk.NW, fill=self.colors["titolo"],font=font_nome, text= pizza["nome"])
+            self.canvas.create_image(10, coords[1]+self.windowSpecs.resolutionConverter(5), anchor=tk.NW, image=self.alleggeni["glutine"])
 
             ### PREZZO ###
             self.canvas.create_text(coords[2]-self.windowSpecs.resolutionConverter(10), coords[1]+self.windowSpecs.resolutionConverter(10), anchor= tk.NE, fill=self.colors["price"],font=font_prezzo, text= pizza["prezzo"])
@@ -115,13 +120,13 @@ class Elenco:
 
     def loadAllergeni(self):
         targetFile = os.path.join(os.path.curdir, 'resources', "allergeni")
-        uova = Image.open(os.path.join(targetFile, "uova.png"))
-        pesce = Image.open(os.path.join(targetFile, "pesce.png"))
-        noci = Image.open(os.path.join(targetFile, "noci.png"))
-        soia = Image.open(os.path.join(targetFile, "soia.png"))
-        glutine = Image.open(os.path.join(targetFile, "glutine.png"))
-        latticini = Image.open(os.path.join(targetFile, "latticini.png"))
-        self.alleggeni = { "uova" : uova, "pesce" : pesce, "noci" : noci, "soia" : soia, "glutine" : glutine, "latticini" : latticini }
+        uova = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "uova.png")).resize((20, 20), Image.ANTIALIAS))
+        pesce = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "pesce.png")))
+        noci = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "noci.png")))
+        soia = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "soia.png")))
+        glutine = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "glutine.png")).resize((16, 20), Image.ANTIALIAS))
+        latticini = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "latticini.png")))
+        return { "uova" : uova, "pesce" : pesce, "noci" : noci, "soia" : soia, "glutine" : glutine, "latticini" : latticini }
 
     def getLingua(self):
         return self.db.getCurrentLanguage()
