@@ -7,11 +7,13 @@ import requests
 from libraries.elencoGenerator import Elenco
 
 class PizzaMenu1:
+
     def __init__(self):
         fname = "setup.json"
         with open(fname) as f:
             data = json.load(f)
         self.p = Pizzas(data)
+        self.pizzaTypesRequered = ["Pizze classiche", "Pizze bianche", "Pizze conditissime"] # the pizza types that have to be visualized
         self.p.downloadAllFromCloud()
         
         self.window = tk.Tk()
@@ -37,7 +39,7 @@ class PizzaMenu1:
         colors = data["colors"] # colors are taken from the setup file
 
         self.window.config(cursor="none")
-        self.pizze = self.pizzeCreator()
+        self.pizze = self.pizzeCreator(self.pizzaTypesRequered)
         self.aggiunte = self.aggiunteCreator()
         self.menu = Elenco(self.window, self.pizze, self.aggiunte, [self.windowSpecs.resolutionConverter(25), self.windowSpecs.resolutionConverter(25), self.screenDimension[0]-self.windowSpecs.resolutionConverter(50), self.screenDimension[1]-self.windowSpecs.resolutionConverter(100)], data, colors, self.screenDimension)
 
@@ -56,24 +58,30 @@ class PizzaMenu1:
             })
         return aggiunte
 
-    def pizzeCreator(self):     ### crea un dizionario con tutte le pizze e i suoi atributi
+    
+    def pizzeCreator(self, pizzaType="*"):     ### crea un dizionario con tutte le pizze e i suoi atributi
+        """
+        creates a dictionary with all the pizzas that have the @pizzaType
+        @pizzaType it's a list, or it can be "*" (default) for all elements
+        """
         pizze = []
         data = self.p.get_pizzas(True)
         tipo_pizza = ""
 
         for i in data:
-            if i["nome_tipo"] != tipo_pizza:
-                pizze.append({"tipo" : i["nome_tipo"]})
-                tipo_pizza = i["nome_tipo"]
+            if (i["nome_tipo"] in pizzaType) or pizzaType == "*":
+                if i["nome_tipo"] != tipo_pizza:
+                    pizze.append({"tipo" : i["nome_tipo"]})
+                    tipo_pizza = i["nome_tipo"]
 
-            pizze.append({
-                        "id" : int(i["id"]),
-                        "nome": i["nomePizza"],
-                        "tipo" : i["nome_tipo"],
-                        "prezzo" : '€ {:,.2f}'.format(float(i["prezzo"])),
-                        "ingredienti" : (", ".join(str(x) for x in i["ingredienti"].split(","))).capitalize(),
-                        "ingredientiInglese" : (", ".join(str(x) for x in i["ingredientiInglese"].split(","))).capitalize()
-                    })
+                pizze.append({
+                            "id" : int(i["id"]),
+                            "nome": i["nomePizza"],
+                            "tipo" : i["nome_tipo"],
+                            "prezzo" : '€ {:,.2f}'.format(float(i["prezzo"])),
+                            "ingredienti" : (", ".join(str(x) for x in i["ingredienti"].split(","))).capitalize(),
+                            "ingredientiInglese" : (", ".join(str(x) for x in i["ingredientiInglese"].split(","))).capitalize()
+                        })
         return pizze
         
     def close(self, event):
