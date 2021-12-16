@@ -15,10 +15,11 @@ class Pizzas():
         self.data = jsonData
         self.c = Cloud(self.data["m_key"])
 
-    def downloadAllFromCloud(self):
+    def downloadAllFromCloud(self, controlOnly = FALSE):
         """ Checks if the files are too old and then downloads all from the cloud and creats the json files """
 
         fname = "aggiunte.json"
+        fileIsOld = False
         if os.path.isfile(fname):
             print("Existing file detected!")
             midnight = datetime.combine(datetime.today(), time.min).timestamp() #in realta segna le 11, ma vabbeh
@@ -33,8 +34,11 @@ class Pizzas():
 
             else:
                 print("But is too old.")
-                self.effectiveDownload()
+                fileIsOld = True
         else:
+            fileIsOld = True
+
+        if fileIsOld and not controlOnly:
             self.effectiveDownload()
 
     def effectiveDownload(self):
