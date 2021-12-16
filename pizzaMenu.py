@@ -1,12 +1,14 @@
-from libraries.PizzaHandler import Pizzas
 import tkinter as tk
-from libraries.utils import capfirst, waitForConnection
-from libraries.windowsSpecs import WindowSpecs
+from libraries.utils import capfirst
 import json
-from libraries.elencoGenerator import Elenco
 from abc import ABC
 
 class PizzaMenu(ABC):
+
+    def loadSetupData(self):
+        fname = "setup.json"
+        with open(fname) as f:
+            return json.load(f)
 
     def aggiunteCreator(self):
         aggiunte = []

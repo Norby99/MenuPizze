@@ -1,17 +1,13 @@
 from libraries.PizzaHandler import Pizzas
-import tkinter as tk
-from libraries.utils import capfirst, waitForConnection
+from libraries.utils import waitForConnection
 from libraries.windowsSpecs import WindowSpecs
-import json
 from libraries.elencoGenerator import Elenco
 from pizzaMenu import PizzaMenu
 
 class PizzaMenu1(PizzaMenu):
 
     def __init__(self):
-        fname = "setup.json"
-        with open(fname) as f:
-            data = json.load(f)
+        data = self.loadSetupData()
         self.p = Pizzas(data)
         self.pizzaTypesRequered = ["Pizze classiche", "Pizze bianche", "Pizze conditissime"] # the pizza types that have to be visualized
         self.p.downloadAllFromCloud()
