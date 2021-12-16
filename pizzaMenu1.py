@@ -79,8 +79,8 @@ class PizzaMenu1:
                             "nome": i["nomePizza"],
                             "tipo" : i["nome_tipo"],
                             "prezzo" : '€ {:,.2f}'.format(float(i["prezzo"])),
-                            "ingredienti" : (", ".join(str(x) for x in i["ingredienti"].split(","))).capitalize(),
-                            "ingredientiInglese" : (", ".join(str(x) for x in i["ingredientiInglese"].split(","))).capitalize()
+                            "ingredienti" : capfirst(", ".join(str(x) for x in i["ingredienti"].split(","))),
+                            "ingredientiInglese" : capfirst(", ".join(str(x) for x in i["ingredientiInglese"].split(",")))
                         })
         return pizze
         
@@ -103,6 +103,10 @@ class PizzaMenu1:
     def Update(self):
         self.menu.updateScritte()
         self.window.after(2000, self.Update)
+
+def capfirst(s):
+    """Capitalize the first letter of a string without touching the others"""
+    return s[:1].upper() + s[1:]
 
 def waitForConnection(url='http://www.google.com/', timeout=5):
     initTime = time.time()
