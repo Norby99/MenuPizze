@@ -15,40 +15,41 @@ class Pizzas():
         self.data = jsonData
         self.c = Cloud(self.data["m_key"])
 
-    def downloadAllFromCloud(self, control=True): #downloads all from the cloud and creats the json files
-        if control: #controls if the file is recent (max 1 day old)
-            fname = "aggiunte.json"
-            if os.path.isfile(fname):
-                print("Existing file detected!")
-                midnight = datetime.combine(datetime.today(), time.min).timestamp() #in realta segna le 11, ma vabbeh
-                if midnight-creation_date(fname) < 0:   #the file was modified today
+    def downloadAllFromCloud(self):
+        """ Checks if the files are too old and then downloads all from the cloud and creats the json files """
 
-                    with open('pizze.json') as f:   #reading the json-data from local files
-                        self.ElencoPizze = json.load(f)
-                    with open('ingredienti.json') as f:
-                        self.ElencoIngredienti = json.load(f)
-                    with open('aggiunte.json') as f:
-                        self.ElencoAggiunte = json.load(f)
+        fname = "aggiunte.json"
+        if os.path.isfile(fname):
+            print("Existing file detected!")
+            midnight = datetime.combine(datetime.today(), time.min).timestamp() #in realta segna le 11, ma vabbeh
+            if midnight-creation_date(fname) < 0:   #the file was modified today
 
-                else:
-                    print("But is too old.")
-                    self.downloadAllFromCloud(False)
+                with open('pizze.json') as f:
+                    self.ElencoPizze = json.load(f)
+                with open('ingredienti.json') as f:
+                    self.ElencoIngredienti = json.load(f)
+                with open('aggiunte.json') as f:
+                    self.ElencoAggiunte = json.load(f)
+
             else:
-                self.downloadAllFromCloud(False)
-
+                print("But is too old.")
+                self.effectiveDownload()
         else:
-            print("Downloading the files from the cloud...")
-            self.ElencoPizze = self.c.read(self.data["pizze"])
-            self.ElencoIngredienti = self.c.read(self.data["ingredienti"])
-            self.ElencoAggiunte = self.c.read(self.data["aggiunte"])
+            self.effectiveDownload()
 
-            saveJsonFile("pizze", self.ElencoPizze)
-            saveJsonFile("ingredienti", self.ElencoIngredienti)
-            saveJsonFile("aggiunte", self.ElencoAggiunte)
+    def effectiveDownload(self):
+        print("Downloading the files from the cloud...")
+        self.ElencoPizze = self.c.read(self.data["pizze"])
+        self.ElencoIngredienti = self.c.read(self.data["ingredienti"])
+        self.ElencoAggiunte = self.c.read(self.data["aggiunte"])
 
-            self.ElencoPizze = json.loads(self.ElencoPizze)
-            self.ElencoIngredienti = json.loads(self.ElencoIngredienti)
-            self.ElencoAggiunte = json.loads(self.ElencoAggiunte)
+        saveJsonFile("pizze", self.ElencoPizze)
+        saveJsonFile("ingredienti", self.ElencoIngredienti)
+        saveJsonFile("aggiunte", self.ElencoAggiunte)
+
+        self.ElencoPizze = json.loads(self.ElencoPizze)
+        self.ElencoIngredienti = json.loads(self.ElencoIngredienti)
+        self.ElencoAggiunte = json.loads(self.ElencoAggiunte)
 
     def uploadAll(self):
         """
@@ -114,7 +115,7 @@ class Pizzas():
 
 if __name__ == "__main__":
     """p = Pizzas("setup.json")
-    p.downloadAllFromCloud(False)"""
+    p.downloadAllFromCloud()"""
 
     #la seguente parte di codice mi servira per uploaddare il menu modificato
     p = Pizzas("setup.json")
