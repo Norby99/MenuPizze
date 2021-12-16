@@ -12,7 +12,7 @@ class PizzaMenu(ABC):
 
     def aggiunteCreator(self):
         aggiunte = []
-        data = self.p.get_aggiunte()
+        data = self.pizza.get_aggiunte()
         for i in data:
             aggiunte.append({
                 "nome" : (", ".join(str(x) for x in i["nome_aggiunta"].split(","))).capitalize(),
@@ -28,7 +28,7 @@ class PizzaMenu(ABC):
         @pizzaType it's a list, or it can be "*" (default) for all elements
         """
         pizze = []
-        data = self.p.get_pizzas(True)
+        data = self.pizza.get_pizzas(True)
         tipo_pizza = ""
 
         for i in data:

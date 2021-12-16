@@ -8,9 +8,9 @@ class PizzaMenu1(PizzaMenu):
 
     def __init__(self):
         data = self.loadSetupData()
-        self.p = Pizzas(data)
+        self.pizza = Pizzas(data)
         self.pizzaTypesRequered = ["Pizze classiche", "Pizze bianche", "Pizze conditissime"] # the pizza types that have to be visualized
-        self.p.downloadAllFromCloud()
+        self.pizza.downloadAllFromCloud()
         
         self.tkWindowSetup()
         self.windowSpecs = WindowSpecs(self.screenDimension)
