@@ -6,6 +6,11 @@ from libraries.database import database, list2Json, saveJsonFile
 from libraries.utils import creation_date
 
 class Pizzas():
+    """
+    This class handles the pizzas:
+    - downloads the json files from the website
+    - reads the pizzas from the json files
+    """
     def __init__(self, jsonData):
         self.data = jsonData
         self.c = Cloud(self.data["m_key"])
@@ -46,7 +51,10 @@ class Pizzas():
             self.ElencoAggiunte = json.loads(self.ElencoAggiunte)
 
     def uploadAll(self):
-        #uploadda le pizze
+        """
+        Deprecated!
+        This method uploads the DB data to a website
+        """
         db = database("localhost", self.data["dbUserName"], self.data["dbPassword"], self.data["dbData2BeUploaded"])
         queryPizze = ("""
             SELECT pizze.id, nomePizza, nome_tipo, prezzo, GROUP_CONCAT(`pizza-ingredienti`.`id_ingrediente` ORDER BY `pizza-ingredienti`.`id_collegamento`) AS "ingredienti"
@@ -74,8 +82,10 @@ class Pizzas():
         dbAggiunteList = db.readByQuery(queryAggiunte, "json")
         self.c.update(dbAggiunteList, self.data["aggiunte"])
 
-    # loads the pizzas from the json file
     def get_pizzas(self, merge=False):
+        """
+        Gets all the pizzas and ingredients and merge them toghether
+        """
         if merge:
             elencoEsteso = []
             for i in self.ElencoPizze:  #scorro le pizze
