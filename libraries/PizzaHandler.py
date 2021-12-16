@@ -15,7 +15,7 @@ class Pizzas():
         self.data = jsonData
         self.c = Cloud(self.data["m_key"])
 
-    def downloadAllFromCloud(self, controlOnly = FALSE):
+    def downloadAllFromCloud(self, controlOnly=False):
         """ Checks if the files are too old and then downloads all from the cloud and creats the json files """
 
         fname = "aggiunte.json"
