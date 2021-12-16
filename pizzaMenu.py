@@ -44,6 +44,21 @@ class PizzaMenu(ABC):
                             "ingredientiInglese" : capfirst(", ".join(str(x) for x in i["ingredientiInglese"].split(",")))
                         })
         return pizze
+
+    def tkWindowSetup(self):
+        """
+        Creates a window(Tk) and a @screenDimension[width, height] that contains the current screen dimension
+        Sets the screen to full screen and creates an attribute @fullScreebState that tracks the full screen state
+        It binds:   F12 to close(); F11 to FullScreen(); Escape to quitFullScreen()
+        """
+
+        self.window = tk.Tk()
+        self.window.attributes('-fullscreen', True)  
+        self.fullScreenState = False
+        self.window.bind("<F12>", self.close)
+        self.window.bind("<F11>", self.toggleFullScreen)
+        self.window.bind("<Escape>", self.quitFullScreen)
+        self.screenDimension = self.window.winfo_screenwidth(), self.window.winfo_screenheight()
         
     def close(self, event):
         self.window.destroy()

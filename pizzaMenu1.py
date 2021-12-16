@@ -16,13 +16,7 @@ class PizzaMenu1(PizzaMenu):
         self.pizzaTypesRequered = ["Pizze classiche", "Pizze bianche", "Pizze conditissime"] # the pizza types that have to be visualized
         self.p.downloadAllFromCloud()
         
-        self.window = tk.Tk()
-        self.window.attributes('-fullscreen', True)  
-        self.fullScreenState = False
-        self.window.bind("<F12>", self.close)
-        self.window.bind("<F11>", self.toggleFullScreen)
-        self.window.bind("<Escape>", self.quitFullScreen)
-        self.screenDimension = self.window.winfo_screenwidth(), self.window.winfo_screenheight()
+        self.tkWindowSetup()
         self.windowSpecs = WindowSpecs(self.screenDimension)
 
         ### These are all the pretty combinations I've found
