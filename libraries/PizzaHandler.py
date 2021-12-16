@@ -3,6 +3,7 @@ import json
 import os
 from datetime import datetime, time
 from libraries.database import database, list2Json, saveJsonFile
+from libraries.utils import creation_date
 
 class Pizzas():
     def __init__(self, jsonData):
@@ -100,10 +101,6 @@ class Pizzas():
 
     def get_ingredienti(self):
         return self.ElencoIngredienti
-
-def creation_date(path_to_file):
-    return os.path.getmtime(path_to_file)
-
 
 if __name__ == "__main__":
     """p = Pizzas("setup.json")

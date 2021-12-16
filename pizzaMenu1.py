@@ -1,9 +1,8 @@
 from libraries.PizzaHandler import Pizzas
 import tkinter as tk
-import time
+from libraries.utils import capfirst, waitForConnection
 from libraries.windowsSpecs import WindowSpecs
 import json
-import requests
 from libraries.elencoGenerator import Elenco
 
 class PizzaMenu1:
@@ -103,23 +102,6 @@ class PizzaMenu1:
     def Update(self):
         self.menu.updateScritte()
         self.window.after(2000, self.Update)
-
-def capfirst(s):
-    """Capitalize the first letter of a string without touching the others"""
-    return s[:1].upper() + s[1:]
-
-def waitForConnection(url='http://www.google.com/', timeout=5):
-    initTime = time.time()
-    while True:
-        try:
-            _ = requests.head(url, timeout=timeout)
-            break
-        except requests.ConnectionError:
-            pass
-        nowTime = time.time()
-        if (nowTime-initTime)/60 > 3:
-            print("No internet connection available.")
-            break
 
 if __name__ == '__main__':
     waitForConnection()
