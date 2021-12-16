@@ -73,6 +73,7 @@ class Pizzas():
         dbAggiunteList = db.readByQuery(queryAggiunte, "json")
         self.c.update(dbAggiunteList, self.data["aggiunte"])
 
+    # loads the pizzas from the json file
     def get_pizzas(self, merge=False):
         if merge:
             elencoEsteso = []
