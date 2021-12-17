@@ -78,7 +78,6 @@ class PizzaMenu(ABC):
 
     def ShowAll(self):
         self.menu.show()
-        self.menu.showAggiunte()
 
     def Update(self):
         self.menu.updateScritte()
