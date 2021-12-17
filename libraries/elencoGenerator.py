@@ -6,10 +6,9 @@ from PIL import ImageTk,Image
 import os
 
 class Elenco:
-    def __init__(self, window, elenco_pizze, aggiunte, margini, jsonData, color, screenDimension):
+    def __init__(self, window, elenco_pizze, margini, jsonData, color, screenDimension):
         self.window = window
         self.elenco_pizze = elenco_pizze
-        self.elenco_aggiunte = aggiunte
         self.alleggeni = self.loadAllergeni()
         self.colors = color
         self.screenDimension = screenDimension
@@ -19,13 +18,6 @@ class Elenco:
         self.margini = margini
         self.screenDimension = self.window.winfo_screenwidth(), self.window.winfo_screenheight()
         self.cell_dimension = [(self.margini[2]-self.margini[0])/self.colonne_max, (self.margini[3]-self.margini[1])/self.righe_max]
-        
-        self.testo_aggiunte = ""
-        for i in self.elenco_aggiunte:
-            self.testo_aggiunte += "| " + i["nome"] + " : " + i["prezzo"] + " "
-        self.testo_aggiunte_inglese = ""
-        for i in self.elenco_aggiunte:
-            self.testo_aggiunte_inglese += "| " + i["nomeInglese"] + " : " + i["prezzo"] + " "
         
         self.db = database("localhost", jsonData["dbUserName"], jsonData["dbPassword"], jsonData["dbData"])
 
@@ -106,12 +98,9 @@ class Elenco:
         lingua = self.getLingua()
         if lingua == "nome_italiano":   #modifies the ingredients
             testoLingua = "ingredienti"
-            self.canvas.itemconfig(self.ScritteAggiunte["titolo"], text="Aggiunte")
-            self.canvas.itemconfig(self.ScritteAggiunte["aggiunte"], text=self.testo_aggiunte)
         elif lingua == "nome_inglese":
             testoLingua = "ingredientiInglese"
-            self.canvas.itemconfig(self.ScritteAggiunte["titolo"], text="Custom")
-            self.canvas.itemconfig(self.ScritteAggiunte["aggiunte"], text=self.testo_aggiunte_inglese)
+
         j = 0
         for i in self.elenco_pizze:
             if "id" in i:
