@@ -6,18 +6,18 @@ from PIL import ImageTk,Image
 import os
 
 class Elenco:
-    def __init__(self, window, elenco_pizze, margini, jsonData, color, screenDimension):
+    def __init__(self, window, elenco_pizze, margini, jsonData, color, screenDimension, maxColumns=5):
         self.window = window
         self.elenco_pizze = elenco_pizze
         self.alleggeni = self.loadAllergeni()
         self.colors = color
         self.screenDimension = screenDimension
         self.windowSpecs = WindowSpecs(self.screenDimension)
-        self.colonne_max = 5
-        self.righe_max = math.ceil(len(self.elenco_pizze)/self.colonne_max)   #numero di pizze per colonna
+        self.maxColumns = maxColumns
+        self.righe_max = math.ceil(len(self.elenco_pizze)/self.maxColumns)   #numero di pizze per colonna
         self.margini = margini
         self.screenDimension = self.window.winfo_screenwidth(), self.window.winfo_screenheight()
-        self.cell_dimension = [(self.margini[2]-self.margini[0])/self.colonne_max, (self.margini[3]-self.margini[1])/self.righe_max]
+        self.cell_dimension = [(self.margini[2]-self.margini[0])/self.maxColumns, (self.margini[3]-self.margini[1])/self.righe_max]
         
         self.db = database("localhost", jsonData["dbUserName"], jsonData["dbPassword"], jsonData["dbData"])
 
