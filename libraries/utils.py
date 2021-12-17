@@ -16,9 +16,26 @@ def waitForConnection(url='http://www.google.com/', timeout=5):
         except requests.ConnectionError:
             pass
         nowTime = time.time()
-        if (nowTime-initTime)/60 > 3:
+        if (nowTime-initTime)/60 > 3:   # do this for 3 minutes
             print("No internet connection available.")
             break
+
+def waitForFilesUpdate(fname='aggiunte.json'):
+    """
+    Checks if the file is too old (for 3 minutes), after that returns:
+    - True : if the file is updated
+    - False : if it's not
+    """
+    initTime = time.time()
+    while True:
+        nowTime = time.time()
+        if not fileIsOld(fname):
+            return True
+        
+        if (nowTime-initTime)/60 > 3:   # do this for 3 minutes
+            print("Can't update the files.")
+            return False
+        time.sleep(5)
 
 def fileIsOld(fname):
     """ Given a fname, it returns true, if the file il older than yesterday, or if the file doesn't exists """
