@@ -1,6 +1,7 @@
 import time
 import requests
 import os
+import datetime
 
 def capfirst(s):
     """Capitalize the first letter of a string without touching the others"""
@@ -18,6 +19,21 @@ def waitForConnection(url='http://www.google.com/', timeout=5):
         if (nowTime-initTime)/60 > 3:
             print("No internet connection available.")
             break
+
+def fileIsOld(fname):
+    """ Given a fname, it returns true, if the file il older than yesterday, or if the file doesn't exists """
+    fileIsOld = False
+    if os.path.isfile(fname):
+        print("Existing file detected!")
+        midnight = datetime.datetime.combine(datetime.datetime.today(), datetime.time.min).timestamp() #in realta segna le 11, ma vabbeh
+        if midnight-creation_date(fname) < 0:   #the file was modified today
+            fileIsOld = False
+        else:
+            print("But is too old.")
+            fileIsOld = True
+    else:
+        fileIsOld = True
+    return fileIsOld
 
 def creation_date(path_to_file):
     return os.path.getmtime(path_to_file)

@@ -1,9 +1,7 @@
 from libraries.cloud import Cloud
 import json
-import os
-from datetime import datetime, time
-from libraries.database import database, list2Json, saveJsonFile
-from libraries.utils import creation_date
+from libraries.database import database, saveJsonFile
+from libraries.utils import fileIsOld
 
 class Pizzas():
     """
@@ -15,31 +13,18 @@ class Pizzas():
         self.data = jsonData
         self.c = Cloud(self.data["m_key"])
 
-    def downloadAllFromCloud(self, controlOnly=False):
+    def downloadAllFromCloud(self):
         """ Checks if the files are too old and then downloads all from the cloud and creats the json files """
 
-        fname = "aggiunte.json"
-        fileIsOld = False
-        if os.path.isfile(fname):
-            print("Existing file detected!")
-            midnight = datetime.combine(datetime.today(), time.min).timestamp() #in realta segna le 11, ma vabbeh
-            if midnight-creation_date(fname) < 0:   #the file was modified today
-
-                with open('pizze.json') as f:
-                    self.ElencoPizze = json.load(f)
-                with open('ingredienti.json') as f:
-                    self.ElencoIngredienti = json.load(f)
-                with open('aggiunte.json') as f:
-                    self.ElencoAggiunte = json.load(f)
-
-            else:
-                print("But is too old.")
-                fileIsOld = True
-        else:
-            fileIsOld = True
-
-        if fileIsOld and not controlOnly:
+        if fileIsOld("aggiunte.json"):
             self.effectiveDownload()
+        else:
+            with open('pizze.json') as f:
+                self.ElencoPizze = json.load(f)
+            with open('ingredienti.json') as f:
+                self.ElencoIngredienti = json.load(f)
+            with open('aggiunte.json') as f:
+                self.ElencoAggiunte = json.load(f)
 
     def effectiveDownload(self):
         print("Downloading the files from the cloud...")
