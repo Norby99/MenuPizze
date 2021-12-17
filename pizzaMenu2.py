@@ -18,7 +18,7 @@ class PizzaMenu2(PizzaMenu):
         colors = data["colors"] # colors are taken from the setup file
 
         self.pizze = self.pizzeCreator(self.pizzaTypesRequered)
-        self.menu = Elenco(self.window, self.pizze, [self.windowSpecs.resolutionConverter(25), self.windowSpecs.resolutionConverter(25), self.screenDimension[0]-self.windowSpecs.resolutionConverter(25), self.screenDimension[1]-self.windowSpecs.resolutionConverter(25)], data, colors, self.screenDimension)
+        self.menu = Elenco(self.window, self.pizze, [self.windowSpecs.resolutionConverter(25), self.windowSpecs.resolutionConverter(25), self.screenDimension[0]*3/4, self.screenDimension[1]-self.windowSpecs.resolutionConverter(25)], data, colors, self.screenDimension, maxColumns=3)
 
         self.ShowAll()
         self.Update()
