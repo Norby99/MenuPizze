@@ -19,12 +19,15 @@ class Pizzas():
         if fileIsOld("aggiunte.json"):
             self.effectiveDownload()
         else:
-            with open('pizze.json') as f:
-                self.ElencoPizze = json.load(f)
-            with open('ingredienti.json') as f:
-                self.ElencoIngredienti = json.load(f)
-            with open('aggiunte.json') as f:
-                self.ElencoAggiunte = json.load(f)
+            self.loadPizzasFromJson()
+
+    def loadPizzasFromJson(self):
+        with open('pizze.json') as f:
+            self.ElencoPizze = json.load(f)
+        with open('ingredienti.json') as f:
+            self.ElencoIngredienti = json.load(f)
+        with open('aggiunte.json') as f:
+            self.ElencoAggiunte = json.load(f)
 
     def effectiveDownload(self):
         print("Downloading the files from the cloud...")
