@@ -12,13 +12,13 @@ class TitleCell(Cell):
         self.createTitle(self.title)
         self.setBorders()
 
-    def createTitle(self, title):
+    def createTitle(self):
         shadowPosition = 3
 
-        self.canvas.create_text(self.relativeXPostion(5)+shadowPosition, self.relativeYPostion(-self.windowSpecs.resolutionConverter(25))+shadowPosition, anchor= tk.SW, fill="#BBBBBB", font=self.font, text=title) # shadow text
-        self.canvas.create_text(self.relativeXPostion(5)+1, self.relativeYPostion(-self.windowSpecs.resolutionConverter(25))+1, anchor= tk.SW, fill="#000000", font=self.font, text=title) # outer outline
-        self.canvas.create_text(self.relativeXPostion(5)-1, self.relativeYPostion(-self.windowSpecs.resolutionConverter(25))-1, anchor= tk.SW, fill="#000000", font=self.font, text=title) # inner outline
-        self.canvas.create_text(self.relativeXPostion(5), self.relativeYPostion(-self.windowSpecs.resolutionConverter(25)), anchor= tk.SW, fill=self.textColor, font=self.font, text=title) # text body
+        self.canvas.create_text(self.relativeXPostion(5)+shadowPosition, self.relativeYPostion(-self.windowSpecs.resolutionConverter(25))+shadowPosition, anchor= tk.SW, fill="#BBBBBB", font=self.font, text=self.title) # shadow text
+        self.canvas.create_text(self.relativeXPostion(5)+1, self.relativeYPostion(-self.windowSpecs.resolutionConverter(25))+1, anchor= tk.SW, fill="#000000", font=self.font, text=self.title) # outer outline
+        self.canvas.create_text(self.relativeXPostion(5)-1, self.relativeYPostion(-self.windowSpecs.resolutionConverter(25))-1, anchor= tk.SW, fill="#000000", font=self.font, text=self.title) # inner outline
+        self.canvas.create_text(self.relativeXPostion(5), self.relativeYPostion(-self.windowSpecs.resolutionConverter(25)), anchor= tk.SW, fill=self.textColor, font=self.font, text=self.title) # text body
 
     def setBorders(self):
         self.canvas.create_line(self.relativeXPostion(0), self.relativeYPostion(0), self.relativeXPostion(-1)-self.windowSpecs.resolutionConverter(40), self.relativeYPostion(0), fill="#ff8000", width="3")
