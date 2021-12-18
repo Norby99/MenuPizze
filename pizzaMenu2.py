@@ -1,7 +1,7 @@
 from pizzaMenu import PizzaMenu
 from libraries.PizzaHandler import Pizzas
 from libraries.utils import waitForConnection, waitForFilesUpdate
-from libraries.windowsSpecs import WindowSpecs
+from libraries.windowSpecs import WindowSpecs
 from libraries.verticalGrid import VerticalGrid
 
 class PizzaMenu2(PizzaMenu):

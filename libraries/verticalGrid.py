@@ -1,7 +1,7 @@
 import math
 from libraries.database import database
 import tkinter as tk
-from libraries.windowsSpecs import WindowSpecs
+from libraries.windowSpecs import WindowSpecs
 from PIL import ImageTk,Image 
 import os
 
