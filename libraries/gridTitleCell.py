@@ -9,7 +9,7 @@ class TitleCell(Cell):
         self.title = title
         self.textColor = textColor
         self.font = "Times " + str(self.windowSpecs.resolutionConverter(36)) + " bold"
-        self.createTitle(self.title)
+        self.createTitle()
         self.setBorders()
 
     def createTitle(self):
