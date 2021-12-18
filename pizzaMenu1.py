@@ -1,7 +1,7 @@
 from libraries.PizzaHandler import Pizzas
 from libraries.utils import waitForConnection
 from libraries.windowsSpecs import WindowSpecs
-from libraries.elencoGenerator import Elenco
+from libraries.elencoGenerator import VerticalGrid
 from pizzaMenu import PizzaMenu
 
 class PizzaMenu1(PizzaMenu):
@@ -29,7 +29,7 @@ class PizzaMenu1(PizzaMenu):
         colors = data["colors"] # colors are taken from the setup file
 
         self.pizze = self.pizzeCreator(self.pizzaTypesRequered)
-        self.menu = Elenco(self.window, self.pizze, [self.windowSpecs.resolutionConverter(25), self.windowSpecs.resolutionConverter(25), self.screenDimension[0]-self.windowSpecs.resolutionConverter(25), self.screenDimension[1]-self.windowSpecs.resolutionConverter(25)], data, colors, self.screenDimension)
+        self.menu = VerticalGrid(self.window, self.pizze, [self.windowSpecs.resolutionConverter(25), self.windowSpecs.resolutionConverter(25), self.screenDimension[0]-self.windowSpecs.resolutionConverter(25), self.screenDimension[1]-self.windowSpecs.resolutionConverter(25)], data, colors, self.screenDimension)
 
         self.ShowAll()
         self.Update()

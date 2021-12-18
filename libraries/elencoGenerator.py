@@ -5,7 +5,7 @@ from libraries.windowsSpecs import WindowSpecs
 from PIL import ImageTk,Image 
 import os
 
-class Elenco:
+class VerticalGrid:
     def __init__(self, window, elenco_pizze, margini, jsonData, color, screenDimension, maxColumns=5):
         self.window = window
         self.elenco_pizze = elenco_pizze
