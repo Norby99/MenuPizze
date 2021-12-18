@@ -13,7 +13,7 @@ class PizzaMenu1(PizzaMenu):
         self.pizza.downloadAllFromCloud()
         
         self.tkWindowSetup()
-        self.windowSpecs = WindowSpecs(self.screenDimension)
+        self.windowSpecs = WindowSpecs()
 
         ### These are all the pretty combinations I've found
         #colors = {"background" : "#003049", "generic_text" : "#EAE2B7", "titolo" : "#FCBF49","price" : "#D62828", "p_tipo" : "#F77F00","p_classica" : "#FF0000", "p_bianca" : "#0000FF", "p_speciale" : "#FF0000"}
@@ -29,7 +29,7 @@ class PizzaMenu1(PizzaMenu):
         colors = data["colors"] # colors are taken from the setup file
 
         self.pizze = self.pizzeCreator(self.pizzaTypesRequered)
-        self.menu = VerticalGrid(self.window, self.pizze, [self.windowSpecs.resolutionConverter(25), self.windowSpecs.resolutionConverter(25), self.screenDimension[0]-self.windowSpecs.resolutionConverter(25), self.screenDimension[1]-self.windowSpecs.resolutionConverter(25)], data, colors, self.screenDimension)
+        self.menu = VerticalGrid(self.window, self.pizze, [self.windowSpecs.resolutionConverter(25), self.windowSpecs.resolutionConverter(25), self.screenDimension[0]-self.windowSpecs.resolutionConverter(25), self.screenDimension[1]-self.windowSpecs.resolutionConverter(25)], data, colors)
 
         self.ShowAll()
         self.Update()

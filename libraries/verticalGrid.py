@@ -6,13 +6,12 @@ from PIL import ImageTk,Image
 import os
 
 class VerticalGrid:
-    def __init__(self, window, elenco_pizze, margini, jsonData, color, screenDimension, maxColumns=5):
+    def __init__(self, window, elenco_pizze, margini, jsonData, color, maxColumns=5):
         self.window = window
         self.elenco_pizze = elenco_pizze
         self.alleggeni = self.loadAllergeni()
         self.colors = color
-        self.screenDimension = screenDimension
-        self.windowSpecs = WindowSpecs(self.screenDimension)
+        self.windowSpecs = WindowSpecs()
         self.maxColumns = maxColumns
         self.righe_max = math.ceil(len(self.elenco_pizze)/self.maxColumns)   #numero di pizze per colonna
         self.margini = margini
