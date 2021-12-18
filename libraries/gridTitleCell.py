@@ -9,11 +9,10 @@ class TitleCell(Cell):
         self.title = title
         self.textColor = textColor
         self.font = "Times " + str(self.windowSpecs.resolutionConverter(36)) + " bold"
-        self.setTitle(self.title)
+        self.createTitle(self.title)
         self.setBorders()
 
-    def setTitle(self, title):
-        self.title = title
+    def createTitle(self, title):
         shadowPosition = 3
 
         self.canvas.create_text(self.relativeXPostion(5)+shadowPosition, self.relativeYPostion(-self.windowSpecs.resolutionConverter(25))+shadowPosition, anchor= tk.SW, fill="#BBBBBB", font=self.font, text=title) # shadow text
