@@ -1,3 +1,4 @@
+from libraries.windowSpecs import WindowSpecs
 from abc import ABC
 
 class Cell(ABC):
@@ -6,3 +7,4 @@ class Cell(ABC):
         self.position = position
         self.dimensions = dimensions
         self.canvas = canvas
+        self.windowSpecs = WindowSpecs()
