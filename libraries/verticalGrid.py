@@ -15,20 +15,16 @@ class VerticalGrid:
         self.maxColumns = maxColumns
         self.righe_max = math.ceil(len(self.elenco_pizze)/self.maxColumns)   #numero di pizze per colonna
         self.margini = margini
-        self.screenDimension = self.window.winfo_screenwidth(), self.window.winfo_screenheight()
         self.cell_dimension = [(self.margini[2]-self.margini[0])/self.maxColumns, (self.margini[3]-self.margini[1])/self.righe_max]
-        
+
         self.db = database("localhost", jsonData["dbUserName"], jsonData["dbPassword"], jsonData["dbData"])
 
-    
     def show(self, update=False):
         if update:
             self.updateScritte()
         else:
-            self.canvas = tk.Canvas(self.window, width =self.screenDimension[0], height = self.screenDimension[1])
+            self.canvas = tk.Canvas(self.window, bg=self.colors["background"], width=self.margini[2], height=self.margini[3])
             self.canvas.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
-            self.canvas.configure(background = self.colors["background"])
-            self.canvas.pack()
 
             x = 0
             y = 0
@@ -42,7 +38,7 @@ class VerticalGrid:
                 y += 1
 
     def showAggiunte(self):
-        coords = [self.windowSpecs.resolutionConverter(25), self.margini[3]+10, (self.margini[2]*(4/5)+self.windowSpecs.resolutionConverter(500)), self.screenDimension[1]-self.windowSpecs.resolutionConverter(20)]
+        coords = [self.windowSpecs.resolutionConverter(25), self.margini[3]+10, (self.margini[2]*(4/5)+self.windowSpecs.resolutionConverter(500)), self.margini[3]-self.windowSpecs.resolutionConverter(20)]
         self.canvas.pack()
 
         font_titolo = "Times " + str(self.windowSpecs.resolutionConverter(22)) + " bold"
