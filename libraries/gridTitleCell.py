@@ -1,6 +1,7 @@
 from libraries.gridCell import Cell
 
 class TitleCell(Cell):
+    """ This cell contains a big title and a border """
 
     def __init__(self, canvas, position, dimensions, title):
         super().__init__(canvas, position, dimensions)
