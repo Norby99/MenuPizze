@@ -21,6 +21,19 @@ class PizzaCell(Cell):
         self.ingredientsColor = ingredientsColor
         self.ingredientsFont = "Times " + str(self.windowSpecs.resolutionConverter(15))
 
+        self.createName()
+        self.createPrice()
+        self.createIngredients()
+
+    def createName(self):
+        pass
+
+    def createPrice(self):
+        pass
+
+    def createIngredients(self):
+        pass
+
     def setnameFont(self, font):
         self.nameFont = font
 
