@@ -2,11 +2,14 @@ import tkinter
 
 class WindowSpecs:
 
-    def __init__(self):
-        root = tkinter.Tk()
-        self.screenDimension = root.winfo_screenwidth(), root.winfo_screenheight()
-        root.quit()
-        root.destroy()
+    def __init__(self, dimensions=[0,0]):
+        if dimensions == [0,0]:
+            root = tkinter.Tk()
+            self.screenDimension = root.winfo_screenwidth(), root.winfo_screenheight()
+            root.quit()
+            root.destroy()
+        else:
+            self.screenDimension = dimensions
 
     def getScreenDimension(self):
         """ Returns a tuple containing the resolution of the display """

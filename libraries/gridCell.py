@@ -3,11 +3,15 @@ from abc import ABC
 
 class Cell(ABC):
 
-    def __init__(self, canvas, position, dimensions):
+    def __init__(self, canvas, position, dimensions, winInfoBase=False):
+        """screenDim is an object that is used to avoid creating a tkinter class every time"""
         self.position = position
         self.dimensions = dimensions
         self.canvas = canvas
-        self.windowSpecs = WindowSpecs()
+        if winInfoBase:
+            self.windowSpecs = winInfoBase
+        else:
+            self.windowSpecs = WindowSpecs()
 
     def relativeXPostion(self, pos):
         """Returns the relative X position of a given coordinate"""

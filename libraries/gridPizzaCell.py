@@ -9,8 +9,8 @@ class PizzaCell(Cell):
     - ingredients
     - allergens
     """
-    def __init__(self, canvas, name, nameColor, price, priceColor, ingredients, ingredientsColor, position, dimensions):
-        super().__init__(canvas, position, dimensions)
+    def __init__(self, canvas, name, nameColor, price, priceColor, ingredients, ingredientsColor, position, dimensions, winInfo=False):
+        super().__init__(canvas, position, dimensions, winInfoBase=winInfo)
         self.name = name    # name setup
         self.nameColor = nameColor
         self.nameFont = "Times " + str(self.windowSpecs.resolutionConverter(20)) + " bold"
