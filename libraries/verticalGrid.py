@@ -7,6 +7,9 @@ from libraries.gridPizzaCell import PizzaCell
 from PIL import ImageTk,Image 
 import os
 
+#!  self.canvas.create_image(10, coords[1]+self.windowSpecs.resolutionConverter(5)+5, anchor=tk.NW, image=self.alleggeni["glutine"])
+#? add next cell Y pos by the previouse one hight and set a default hight
+
 class VerticalGrid:
     def __init__(self, window, elenco_pizze, margini, jsonData, color, maxColumns=5):
         self.window = window
@@ -26,7 +29,7 @@ class VerticalGrid:
         if update:
             self.updateScritte()
         else:
-            self.canvas = tk.Canvas(self.window, bg=self.colors["background"], width=self.margini[2], height=self.margini[3])
+            self.canvas = tk.Canvas(self.window, bg=self.colors["background"], width=self.margini[2], height=self.margini[3])   # creating main canvas
             self.canvas.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
             x = 0
@@ -38,10 +41,10 @@ class VerticalGrid:
                     x += 1
 
                 cellPosition = [self.margini[0]+self.cell_dimension[0]*x, self.margini[1]+self.cell_dimension[1]*y]
-                if "nome" in pizza:
-                    tempCell = PizzaCell(self.canvas, pizza["nome"], self.colors["titolo"], pizza["prezzo"], self.colors["price"], pizza["ingredienti"], self.colors["generic_text"], cellPosition, self.cell_dimension, winInfo=self.windowSpecs)
+                if "nome" in pizza: # populating the grid with the cells
+                    tempCell = PizzaCell(self.window, pizza["nome"], self.colors["titolo"], pizza["prezzo"], self.colors["price"], pizza["ingredienti"], self.colors["generic_text"], cellPosition, self.cell_dimension, winInfo=self.windowSpecs)
                 else:
-                    tempCell = TitleCell(self.canvas, pizza["tipo"], self.colors["p_tipo"], cellPosition, self.cell_dimension, winInfo=self.windowSpecs)
+                    tempCell = TitleCell(self.window, pizza["tipo"], self.colors["p_tipo"], cellPosition, self.cell_dimension, winInfo=self.windowSpecs)
                 self.cells.append(tempCell)
                 y += 1
 
@@ -60,19 +63,6 @@ class VerticalGrid:
         ### AGGIUNTE ###
         canvas = self.canvas.create_text(coords[0], coords[3]-self.windowSpecs.resolutionConverter(5), anchor= tk.SW, fill=self.colors["generic_text"],font=font_aggiunte, text= self.testo_aggiunte, width = (coords[2]-coords[0]))
         self.ScritteAggiunte.update({'aggiunte': canvas})
-
-    def scritte(self, coords, pizza):
-
-        ### NOME ###
-        self.canvas.create_text(coords[0]+self.windowSpecs.resolutionConverter(5), coords[1]+self.windowSpecs.resolutionConverter(5), anchor= tk.NW, fill=self.colors["titolo"],font=self.font_nome, text= pizza["nome"])
-        self.canvas.create_image(10, coords[1]+self.windowSpecs.resolutionConverter(5)+5, anchor=tk.NW, image=self.alleggeni["glutine"])
-
-        ### PREZZO ###
-        self.canvas.create_text(coords[2]-self.windowSpecs.resolutionConverter(10), coords[1]+self.windowSpecs.resolutionConverter(10), anchor= tk.NE, fill=self.colors["price"],font=self.font_prezzo, text= pizza["prezzo"])
-
-        ### INGREDIENTI ###
-        self.ScritteIngredienti.append(self.canvas.create_text(coords[0]+self.windowSpecs.resolutionConverter(5), (coords[3]+coords[1])/2-self.windowSpecs.resolutionConverter(10), anchor= tk.NW, fill=self.colors["generic_text"],font=self.font_ingredienti, text= pizza["ingredienti"], width=(self.cell_dimension[0]-self.windowSpecs.resolutionConverter(10))))
-
 
     def updateScritte(self):    #this function updates the text boxes
         lingua = self.getLingua()
