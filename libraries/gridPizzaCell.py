@@ -26,13 +26,13 @@ class PizzaCell(Cell):
         self.createIngredients()
 
     def createName(self):
-        self.canvas.create_text(self.windowSpecs.resolutionConverter(5), self.windowSpecs.resolutionConverter(5), anchor= tk.NW, fill=self.nameColor,font=self.nameFont, text=self.name)
+        self.canvas.create_text(self.windowSpecs.resolutionConverter(5), 0, anchor= tk.NW, fill=self.nameColor,font=self.nameFont, text=self.name)
 
     def createPrice(self):
-        self.canvas.create_text(self.dimensions[0]-self.windowSpecs.resolutionConverter(10), self.windowSpecs.resolutionConverter(10), anchor= tk.NE, fill=self.priceColor,font=self.priceFont, text=self.price)
+        self.canvas.create_text(self.dimensions[0]-self.windowSpecs.resolutionConverter(10), self.windowSpecs.resolutionConverter(5), anchor= tk.NE, fill=self.priceColor,font=self.priceFont, text=self.price)
 
     def createIngredients(self):
-        self.canvas.create_text(self.windowSpecs.resolutionConverter(5), (self.dimensions[1])/2-self.windowSpecs.resolutionConverter(10), anchor= tk.NW, fill=self.ingredientsColor,font=self.ingredientsFont, text=self.ingredients, width=(self.dimensions[0]-self.windowSpecs.resolutionConverter(10)))
+        self.canvas.create_text(self.windowSpecs.resolutionConverter(5), self.dimensions[1]/2-self.windowSpecs.resolutionConverter(20), anchor= tk.NW, fill=self.ingredientsColor,font=self.ingredientsFont, text=self.ingredients, width=(self.dimensions[0]-self.windowSpecs.resolutionConverter(5)))
 
     def setNameFont(self, font):
         self.nameFont = font
