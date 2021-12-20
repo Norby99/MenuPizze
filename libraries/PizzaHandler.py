@@ -87,14 +87,17 @@ class Pizzas():
                 ingredientiScrittiInglese = []
                 ingredienti = i["ingredienti"]
                 ingredienti = list(ingredienti.split(","))
+                allergens = set()
                 for id_ingrediente in ingredienti:  #scorro gli ingredienti della pizza
                     for id_elencoIngrediente in self.ElencoIngredienti: #scorro tutti gli ingredienti
                         if int(id_elencoIngrediente["id_ingrediente"]) == int(id_ingrediente):
                             ingredientiScritti.append(id_elencoIngrediente["nome_italiano"])
                             ingredientiScrittiInglese.append(id_elencoIngrediente["nome_inglese"])
+                            allergens.add(id_elencoIngrediente["allergeni"])
                             
                 elencoEsteso[-1]["ingredienti"] = ','.join(ingredientiScritti)
                 elencoEsteso[-1]["ingredientiInglese"] = ','.join(ingredientiScrittiInglese)
+                elencoEsteso[-1]["allergeni"] = allergens
             return elencoEsteso
         else:
             return self.ElencoPizze

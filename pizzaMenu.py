@@ -43,7 +43,8 @@ class PizzaMenu(ABC):
                             "tipo" : i["nome_tipo"],
                             "prezzo" : '€ {:,.2f}'.format(float(i["prezzo"])),
                             "ingredienti" : capfirst(", ".join(str(x) for x in i["ingredienti"].split(","))),
-                            "ingredientiInglese" : capfirst(", ".join(str(x) for x in i["ingredientiInglese"].split(",")))
+                            "ingredientiInglese" : capfirst(", ".join(str(x) for x in i["ingredientiInglese"].split(","))),
+                            "allergens" : i["allergeni"]
                         })
         return pizze
 
