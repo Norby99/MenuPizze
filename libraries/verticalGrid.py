@@ -42,7 +42,7 @@ class VerticalGrid:
 
                 cellPosition = [self.margini[0]+self.cell_dimension[0]*x, self.margini[1]+self.cell_dimension[1]*y]
                 if "nome" in pizza: # populating the grid with the cells
-                    tempCell = PizzaCell(self.window, pizza["nome"], self.colors["titolo"], pizza["prezzo"], self.colors["price"], pizza["ingredienti"], self.colors["generic_text"], cellPosition, self.cell_dimension)
+                    tempCell = PizzaCell(self.window, pizza["nome"], self.colors["titolo"], pizza["prezzo"], self.colors["price"], {"ingredienti" : pizza["ingredienti"], "ingredientiInglese" : pizza["ingredientiInglese"]}, self.colors["generic_text"], cellPosition, self.cell_dimension)
                 else:
                     tempCell = TitleCell(self.window, pizza["tipo"], self.colors["p_tipo"], cellPosition, self.cell_dimension)
                 self.cells.append(tempCell)
@@ -64,18 +64,18 @@ class VerticalGrid:
         canvas = self.canvas.create_text(coords[0], coords[3]-self.windowSpecs.resolutionConverter(5), anchor= tk.SW, fill=self.colors["generic_text"],font=font_aggiunte, text= self.testo_aggiunte, width = (coords[2]-coords[0]))
         self.ScritteAggiunte.update({'aggiunte': canvas})
 
-    def updateScritte(self):    #this function updates the text boxes
+    def updateCells(self):    #this function updates the text boxes
         lingua = self.getLingua()
         if lingua == "nome_italiano":   #modifies the ingredients
             testoLingua = "ingredienti"
         elif lingua == "nome_inglese":
             testoLingua = "ingredientiInglese"
 
-        j = 0
-        for i in self.elenco_pizze:
-            if "id" in i:
-                self.canvas.itemconfig(self.ScritteIngredienti[j], text=i[testoLingua])
-                j += 1
+        print(lingua)
+
+        for i in self.cells:
+            if isinstance(i, PizzaCell):
+                i.update(testoLingua)
 
     def loadAllergeni(self):
         targetFile = os.path.join(os.path.curdir, 'resources', "allergeni")
