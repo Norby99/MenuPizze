@@ -9,7 +9,7 @@ class PizzaCell(Cell):
     - ingredients
     - allergens
     """
-    def __init__(self, window, name, nameColor, price, priceColor, ingredients, ingredientsColor, position, width, proportion=5.76):
+    def __init__(self, window, name, nameColor, price, priceColor, ingredients, ingredientsColor, allergens, position, width, proportion=5.76):
         super().__init__(window, position, width, proportion)
         self.name = name    # name setup
         self.nameColor = nameColor
@@ -20,10 +20,12 @@ class PizzaCell(Cell):
         self.ingredients = ingredients  # ingredients setup
         self.ingredientsColor = ingredientsColor
         self.ingredientsFont = "Times " + str(self.windowSpecs.resolutionConverter(15))
+        self.allergens = allergens
 
         self.createName()
         self.createPrice()
         self.createIngredients()
+        self.showAllergeni()
 
     def createName(self):
         self.textName = self.canvas.create_text(self.windowSpecs.resolutionConverter(5), 0, anchor= tk.NW, fill=self.nameColor,font=self.nameFont, text=self.name)
@@ -33,6 +35,9 @@ class PizzaCell(Cell):
 
     def createIngredients(self):
         self.textIngredients = self.canvas.create_text(self.windowSpecs.resolutionConverter(5), self.dimensions[1]/2-self.windowSpecs.resolutionConverter(13), anchor= tk.NW, fill=self.ingredientsColor,font=self.ingredientsFont, text=next(iter(self.ingredients)), width=(self.dimensions[0]-self.windowSpecs.resolutionConverter(5)))
+
+    def showAllergeni(self):
+        self.canvas.create_image(10, self.windowSpecs.resolutionConverter(5), anchor=tk.NW, image=self.allergens["glutine"])
 
     def setNameFont(self, font):
         self.nameFont = font
