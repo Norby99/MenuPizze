@@ -87,7 +87,7 @@ class Pizzas():
                 ingredientiScrittiInglese = []
                 ingredienti = i["ingredienti"]
                 ingredienti = list(ingredienti.split(","))
-                allergens = set()
+                allergens = self.getAllergenByPizzaType(i["nome_tipo"])
                 for id_ingrediente in ingredienti:  #scorro gli ingredienti della pizza
                     for id_elencoIngrediente in self.ElencoIngredienti: #scorro tutti gli ingredienti
                         if int(id_elencoIngrediente["id_ingrediente"]) == int(id_ingrediente):
@@ -99,9 +99,21 @@ class Pizzas():
                 elencoEsteso[-1]["ingredienti"] = ','.join(ingredientiScritti)
                 elencoEsteso[-1]["ingredientiInglese"] = ','.join(ingredientiScrittiInglese)
                 elencoEsteso[-1]["allergeni"] = allergens
+
             return elencoEsteso
         else:
             return self.ElencoPizze
+
+    def getAllergenByPizzaType(self, pizzaType):
+        """
+        Given a type of pizza, it returns a set of it's allergens
+        """
+        allergens = set()
+        if pizzaType in ["Pizze classiche", "Pizze bianche", "Pizze conditissime", "Pizze Dolci"]:
+            allergens.update(["glutine", "soia"])
+        elif pizzaType in ["Impasto Napoletano"]:
+            allergens.add("glutine")
+        return allergens
 
     def get_aggiunte(self):
         return self.ElencoAggiunte
