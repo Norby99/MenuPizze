@@ -94,7 +94,7 @@ class Pizzas():
                             ingredientiScritti.append(id_elencoIngrediente["nome_italiano"])
                             ingredientiScrittiInglese.append(id_elencoIngrediente["nome_inglese"])
                             if id_elencoIngrediente["tipo"] != "Null":
-                                allergens.add(id_elencoIngrediente["tipo"])
+                                allergens.add(id_elencoIngrediente["tipo"].lower())
                             
                 elencoEsteso[-1]["ingredienti"] = ','.join(ingredientiScritti)
                 elencoEsteso[-1]["ingredientiInglese"] = ','.join(ingredientiScrittiInglese)
