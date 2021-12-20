@@ -51,16 +51,16 @@ class PizzaMenu(ABC):
         """
         - Creates a window(Tk) and a @screenDimension[width, height] that contains the current screen dimension
         - Sets the screen to full screen and creates an attribute @fullScreebState that tracks the full screen state
-        - It binds:   F12 to close(); F11 to FullScreen(); Escape to quitFullScreen()
+        - It binds:   F12 to quitFullScreen(); F11 to FullScreen(); Escape to close()
         - Hides cursor
         """
 
         self.window = tk.Tk()
         self.window.attributes('-fullscreen', True)  
         self.fullScreenState = False
-        self.window.bind("<F12>", self.close)
+        self.window.bind("<F12>", self.quitFullScreen)
         self.window.bind("<F11>", self.toggleFullScreen)
-        self.window.bind("<Escape>", self.quitFullScreen)
+        self.window.bind("<Escape>", self.close)
         self.screenDimension = self.window.winfo_screenwidth(), self.window.winfo_screenheight()
         self.window.config(cursor="none")
         
@@ -80,5 +80,5 @@ class PizzaMenu(ABC):
         self.menu.show()
 
     def Update(self):
-        self.menu.updateScritte()
+        self.menu.updateCells()
         self.window.after(2000, self.Update)
