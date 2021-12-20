@@ -42,9 +42,9 @@ class VerticalGrid:
 
                 cellPosition = [self.margini[0]+self.cell_dimension[0]*x, self.margini[1]+self.cell_dimension[1]*y]
                 if "nome" in pizza: # populating the grid with the cells
-                    tempCell = PizzaCell(self.window, pizza["nome"], self.colors["titolo"], pizza["prezzo"], self.colors["price"], pizza["ingredienti"], self.colors["generic_text"], cellPosition, self.cell_dimension, winInfo=self.windowSpecs)
+                    tempCell = PizzaCell(self.window, pizza["nome"], self.colors["titolo"], pizza["prezzo"], self.colors["price"], pizza["ingredienti"], self.colors["generic_text"], cellPosition, self.cell_dimension)
                 else:
-                    tempCell = TitleCell(self.window, pizza["tipo"], self.colors["p_tipo"], cellPosition, self.cell_dimension, winInfo=self.windowSpecs)
+                    tempCell = TitleCell(self.window, pizza["tipo"], self.colors["p_tipo"], cellPosition, self.cell_dimension)
                 self.cells.append(tempCell)
                 y += 1
 
