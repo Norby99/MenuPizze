@@ -1,5 +1,6 @@
 from libraries.gridCell import Cell
 import tkinter as tk
+import tkinter.font as TkFont
 
 class TitleCell(Cell):
     """ This cell contains a big title and a border """
@@ -8,7 +9,7 @@ class TitleCell(Cell):
         super().__init__(window, position, width, proportion)
         self.title = title
         self.textColor = textColor
-        self.font = "Times " + str(self.windowSpecs.resolutionConverter(36)) + " bold"
+        self.font = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(36), weight='bold')
         self.createTitle()
         self.setBorders()
 
