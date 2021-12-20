@@ -71,8 +71,6 @@ class VerticalGrid:
         elif lingua == "nome_inglese":
             testoLingua = "ingredientiInglese"
 
-        print(lingua)
-
         for i in self.cells:
             if isinstance(i, PizzaCell):
                 i.update(testoLingua)
