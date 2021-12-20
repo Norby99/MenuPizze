@@ -102,7 +102,7 @@ class database():
                     FROM `lingua`"""
             cursor.execute(query)
             self.con.close()
-            return cursor.fetchone()[1]
+            return cursor.fetchone()[0]
         except:
             return "nome_italiano"
 
