@@ -27,10 +27,11 @@ class PizzaMenu1(PizzaMenu):
         #colors = {"background" : "#2B2D42", "p_tipo" : "#EF233C", "titolo" : "#8D99AE", "generic_text" : "#EDF2F4", "price" : "#EF233C"}598392
         #colors = {"background" : "#0B0014", "p_tipo" : "#FFFFFF", "titolo" : "#ef233c", "generic_text" : "#F5E9E2", "price" : "#fdc500"}
         colors = data["colors"] # colors are taken from the setup file
+        padding = 20
         self.window.configure(background=colors["background"])
 
         self.pizze = self.pizzeCreator(self.pizzaTypesRequered)
-        self.menu = VerticalGrid(self.window, self.pizze, [self.windowSpecs.resolutionConverter(25), self.windowSpecs.resolutionConverter(25), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(25), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(25)], data, colors)
+        self.menu = VerticalGrid(self.window, self.pizze, [self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding)], data, colors)
 
         self.ShowAll()
         self.Update()
