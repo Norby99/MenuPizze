@@ -29,19 +29,19 @@ class PizzaCell(Cell):
         self.showAllergeni()
 
     def createName(self):
-        self.textName = self.canvas.create_text(self.windowSpecs.resolutionConverter(5), 0, anchor= tk.NW, fill=self.nameColor,font=self.nameFont, text=self.name)
+        self.textNamePos = [self.windowSpecs.resolutionConverter(5), 0]
+        self.textName = self.canvas.create_text(self.textNamePos[0], self.textNamePos[1], anchor= tk.NW, fill=self.nameColor,font=self.nameFont, text=self.name)
 
     def createPrice(self):
-        self.textPrice = self.canvas.create_text(self.dimensions[0]-self.windowSpecs.resolutionConverter(10), self.windowSpecs.resolutionConverter(5), anchor= tk.NE, fill=self.priceColor,font=self.priceFont, text=self.price)
+        self.textPricePos = [self.dimensions[0]-self.windowSpecs.resolutionConverter(10), self.windowSpecs.resolutionConverter(5)]
+        self.textPrice = self.canvas.create_text(self.textPricePos[0], self.textPricePos[1], anchor= tk.NE, fill=self.priceColor,font=self.priceFont, text=self.price)
 
     def createIngredients(self):
-        self.textIngredients = self.canvas.create_text(self.windowSpecs.resolutionConverter(5), self.dimensions[1]/2-self.windowSpecs.resolutionConverter(13), anchor= tk.NW, fill=self.ingredientsColor,font=self.ingredientsFont, text=next(iter(self.ingredients)), width=(self.dimensions[0]-self.windowSpecs.resolutionConverter(5)))
+        self.textIngredientsPos = [self.windowSpecs.resolutionConverter(5), self.dimensions[1]/2-self.windowSpecs.resolutionConverter(13)]
+        self.textIngredients = self.canvas.create_text(self.textIngredientsPos[0], self.textIngredientsPos[1], anchor= tk.NW, fill=self.ingredientsColor,font=self.ingredientsFont, text=next(iter(self.ingredients)), width=(self.dimensions[0]-self.windowSpecs.resolutionConverter(5)))
 
     def showAllergeni(self):
-        """ TkFont.Font(self.nameFont)
-        print(self.nameFont.cget('width'))
-        exit() """
-        self.canvas.create_image(10, self.windowSpecs.resolutionConverter(5), anchor=tk.NW, image=self.allergens["glutine"])
+        self.canvas.create_image(self.textNamePos[0]+self.nameFont.measure(self.name)+self.windowSpecs.resolutionConverter(5), self.textNamePos[1]+self.windowSpecs.resolutionConverter(5), anchor=tk.NW, image=self.allergens["glutine"])
 
     def setNameFont(self, font):
         self.nameFont = font
