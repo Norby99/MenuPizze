@@ -93,7 +93,7 @@ class Pizzas():
                         if int(id_elencoIngrediente["id_ingrediente"]) == int(id_ingrediente):
                             ingredientiScritti.append(id_elencoIngrediente["nome_italiano"])
                             ingredientiScrittiInglese.append(id_elencoIngrediente["nome_inglese"])
-                            allergens.add(id_elencoIngrediente["allergeni"])
+                            allergens.add(id_elencoIngrediente["tipo"])
                             
                 elencoEsteso[-1]["ingredienti"] = ','.join(ingredientiScritti)
                 elencoEsteso[-1]["ingredientiInglese"] = ','.join(ingredientiScrittiInglese)
