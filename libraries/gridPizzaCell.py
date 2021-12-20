@@ -1,5 +1,6 @@
 from libraries.gridCell import Cell
 import tkinter as tk
+import tkinter.font as TkFont
 
 class PizzaCell(Cell):
     """
@@ -13,13 +14,13 @@ class PizzaCell(Cell):
         super().__init__(window, position, width, proportion)
         self.name = name    # name setup
         self.nameColor = nameColor
-        self.nameFont = "Times " + str(self.windowSpecs.resolutionConverter(20)) + " bold"
+        self.nameFont = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(20), weight='bold')
         self.price = price  # price setup
         self.priceColor = priceColor
-        self.priceFont = "Times " + str(self.windowSpecs.resolutionConverter(18)) + " bold"
+        self.priceFont = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(18), weight='bold')
         self.ingredients = ingredients  # ingredients setup
         self.ingredientsColor = ingredientsColor
-        self.ingredientsFont = "Times " + str(self.windowSpecs.resolutionConverter(15))
+        self.ingredientsFont = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(15))
         self.allergens = allergens
 
         self.createName()
@@ -37,6 +38,9 @@ class PizzaCell(Cell):
         self.textIngredients = self.canvas.create_text(self.windowSpecs.resolutionConverter(5), self.dimensions[1]/2-self.windowSpecs.resolutionConverter(13), anchor= tk.NW, fill=self.ingredientsColor,font=self.ingredientsFont, text=next(iter(self.ingredients)), width=(self.dimensions[0]-self.windowSpecs.resolutionConverter(5)))
 
     def showAllergeni(self):
+        """ TkFont.Font(self.nameFont)
+        print(self.nameFont.cget('width'))
+        exit() """
         self.canvas.create_image(10, self.windowSpecs.resolutionConverter(5), anchor=tk.NW, image=self.allergens["glutine"])
 
     def setNameFont(self, font):
