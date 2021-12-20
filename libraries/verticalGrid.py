@@ -8,7 +8,6 @@ from PIL import ImageTk,Image
 import os
 
 #!  self.canvas.create_image(10, coords[1]+self.windowSpecs.resolutionConverter(5)+5, anchor=tk.NW, image=self.alleggeni["glutine"])
-#? add next cell Y pos by the previouse one hight and set a default hight
 
 class VerticalGrid:
     def __init__(self, window, elenco_pizze, margini, jsonData, color, maxColumns=5):
