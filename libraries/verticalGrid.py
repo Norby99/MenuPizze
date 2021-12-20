@@ -7,13 +7,11 @@ from libraries.gridPizzaCell import PizzaCell
 from PIL import ImageTk,Image 
 import os
 
-#!  self.canvas.create_image(10, coords[1]+self.windowSpecs.resolutionConverter(5)+5, anchor=tk.NW, image=self.alleggeni["glutine"])
-
 class VerticalGrid:
     def __init__(self, window, elenco_pizze, margini, jsonData, color, maxColumns=5):
         self.window = window
         self.elenco_pizze = elenco_pizze
-        self.alleggeni = self.loadAllergeni()
+        self.allergens = self.loadAllergeni()
         self.colors = color
         self.windowSpecs = WindowSpecs()
         self.maxColumns = maxColumns
@@ -34,7 +32,7 @@ class VerticalGrid:
             self.ScritteIngredienti = []
             for pizza in self.elenco_pizze:
                 if "nome" in pizza: # populating the grid with the cells
-                    tempCell = PizzaCell(self.window, pizza["nome"], self.colors["titolo"], pizza["prezzo"], self.colors["price"], {"ingredienti" : pizza["ingredienti"], "ingredientiInglese" : pizza["ingredientiInglese"]}, self.colors["generic_text"], cellPosition, self.cell_width)
+                    tempCell = PizzaCell(self.window, pizza["nome"], self.colors["titolo"], pizza["prezzo"], self.colors["price"], {"ingredienti" : pizza["ingredienti"], "ingredientiInglese" : pizza["ingredientiInglese"]}, self.colors["generic_text"], self.allergens, cellPosition, self.cell_width)
                 else:
                     tempCell = TitleCell(self.window, pizza["tipo"], self.colors["p_tipo"], cellPosition, self.cell_width)
                 self.cells.append(tempCell)
@@ -77,7 +75,7 @@ class VerticalGrid:
 
     def loadAllergeni(self):
         targetFile = os.path.join(os.path.curdir, 'resources', "allergeni")
-        resizeFormat = (int(119/4), int(121/4))
+        resizeFormat = (int(119/6), int(121/6))
 
         uova = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "uova.png")).resize(resizeFormat, Image.ANTIALIAS))
         pesce = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "pesce.png")))
