@@ -22,6 +22,8 @@ class PizzaCell(Cell):
         self.ingredientsColor = ingredientsColor
         self.ingredientsFont = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(15))
         self.allergens = allergens
+        if self.allergens:
+            self.allergensImageSize = self.allergens[0].width()
 
         self.createName()
         self.createPrice()
@@ -41,7 +43,9 @@ class PizzaCell(Cell):
         self.textIngredients = self.canvas.create_text(self.textIngredientsPos[0], self.textIngredientsPos[1], anchor= tk.NW, fill=self.ingredientsColor,font=self.ingredientsFont, text=next(iter(self.ingredients)), width=(self.dimensions[0]-self.windowSpecs.resolutionConverter(5)))
 
     def showAllergeni(self):
-        self.canvas.create_image(self.textNamePos[0]+self.nameFont.measure(self.name)+self.windowSpecs.resolutionConverter(5), self.textNamePos[1]+self.windowSpecs.resolutionConverter(5), anchor=tk.NW, image=self.allergens["glutine"])
+        for i, allergen in enumerate(self.allergens):
+            allergenSpacing = i*(self.allergensImageSize+self.windowSpecs.resolutionConverter(5))
+            self.canvas.create_image(self.textNamePos[0]+self.nameFont.measure(self.name)+self.windowSpecs.resolutionConverter(5)+allergenSpacing, self.textNamePos[1]+self.windowSpecs.resolutionConverter(5), anchor=tk.NW, image=allergen)
 
     def setNameFont(self, font):
         self.nameFont = font
