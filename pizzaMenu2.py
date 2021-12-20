@@ -16,9 +16,11 @@ class PizzaMenu2(PizzaMenu):
         self.tkWindowSetup()
         self.windowSpecs = WindowSpecs()
         colors = data["colors"] # colors are taken from the setup file
+        padding = 20
+        self.window.configure(background=colors["background"])
 
         self.pizze = self.pizzeCreator(self.pizzaTypesRequered)
-        self.menu = VerticalGrid(self.window, self.pizze, [self.windowSpecs.resolutionConverter(25), self.windowSpecs.resolutionConverter(25), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(25), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(25)], data, colors)
+        self.menu = VerticalGrid(self.window, self.pizze, [self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding)], data, colors)
 
         self.ShowAll()
         self.Update()
