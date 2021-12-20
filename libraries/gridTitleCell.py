@@ -4,8 +4,8 @@ import tkinter as tk
 class TitleCell(Cell):
     """ This cell contains a big title and a border """
 
-    def __init__(self, window, title, textColor, position, width):
-        super().__init__(window, position, width)
+    def __init__(self, window, title, textColor, position, width, proportion=5.77841726618705):
+        super().__init__(window, position, width, proportion)
         self.title = title
         self.textColor = textColor
         self.font = "Times " + str(self.windowSpecs.resolutionConverter(36)) + " bold"

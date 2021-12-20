@@ -9,8 +9,8 @@ class PizzaCell(Cell):
     - ingredients
     - allergens
     """
-    def __init__(self, window, name, nameColor, price, priceColor, ingredients, ingredientsColor, position, width):
-        super().__init__(window, position, width)
+    def __init__(self, window, name, nameColor, price, priceColor, ingredients, ingredientsColor, position, width, proportion=5.76):
+        super().__init__(window, position, width, proportion)
         self.name = name    # name setup
         self.nameColor = nameColor
         self.nameFont = "Times " + str(self.windowSpecs.resolutionConverter(20)) + " bold"
@@ -19,7 +19,7 @@ class PizzaCell(Cell):
         self.priceFont = "Times " + str(self.windowSpecs.resolutionConverter(18)) + " bold"
         self.ingredients = ingredients  # ingredients setup
         self.ingredientsColor = ingredientsColor
-        self.ingredientsFont = "Times " + str(self.windowSpecs.resolutionConverter(14))
+        self.ingredientsFont = "Times " + str(self.windowSpecs.resolutionConverter(15))
 
         self.createName()
         self.createPrice()
