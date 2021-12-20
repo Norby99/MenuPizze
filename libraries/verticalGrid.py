@@ -32,7 +32,8 @@ class VerticalGrid:
             self.ScritteIngredienti = []
             for pizza in self.elenco_pizze:
                 if "nome" in pizza: # populating the grid with the cells
-                    tempCell = PizzaCell(self.window, pizza["nome"], self.colors["titolo"], pizza["prezzo"], self.colors["price"], {"ingredienti" : pizza["ingredienti"], "ingredientiInglese" : pizza["ingredientiInglese"]}, self.colors["generic_text"], self.allergens, cellPosition, self.cell_width)
+                    pizzaAllergens = [self.allergens[x] for x in pizza["allergens"]]    # filters the allergens to show only those that are in the pizza
+                    tempCell = PizzaCell(self.window, pizza["nome"], self.colors["titolo"], pizza["prezzo"], self.colors["price"], {"ingredienti" : pizza["ingredienti"], "ingredientiInglese" : pizza["ingredientiInglese"]}, self.colors["generic_text"], pizzaAllergens, cellPosition, self.cell_width)
                 else:
                     tempCell = TitleCell(self.window, pizza["tipo"], self.colors["p_tipo"], cellPosition, self.cell_width)
                 self.cells.append(tempCell)
@@ -78,11 +79,11 @@ class VerticalGrid:
         resizeFormat = (int(119/6), int(121/6))
 
         uova = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "uova.png")).resize(resizeFormat, Image.ANTIALIAS))
-        pesce = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "pesce.png")))
-        noci = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "noci.png")))
-        soia = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "soia.png")))
+        pesce = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "pesce.png")).resize(resizeFormat, Image.ANTIALIAS))
+        noci = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "noci.png")).resize(resizeFormat, Image.ANTIALIAS))
+        soia = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "soia.png")).resize(resizeFormat, Image.ANTIALIAS))
         glutine = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "glutine.png")).resize(resizeFormat, Image.ANTIALIAS))
-        latticini = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "latticini.png")))
+        latticini = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "latticini.png")).resize(resizeFormat, Image.ANTIALIAS))
         return { "uova" : uova, "pesce" : pesce, "noci" : noci, "soia" : soia, "glutine" : glutine, "latticini" : latticini }
 
     def getLingua(self):
