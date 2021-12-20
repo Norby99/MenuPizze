@@ -11,7 +11,7 @@ class Pizzas():
     """
     def __init__(self, jsonData):
         self.data = jsonData
-        self.c = Cloud(self.data["m_key"])
+        self.cloud = Cloud(self.data["m_key"])
 
     def downloadAllFromCloud(self):
         """ Checks if the files are too old and then downloads all from the cloud and creats the json files """
@@ -31,9 +31,9 @@ class Pizzas():
 
     def effectiveDownload(self):
         print("Downloading the files from the cloud...")
-        self.ElencoPizze = self.c.read(self.data["pizze"])
-        self.ElencoIngredienti = self.c.read(self.data["ingredienti"])
-        self.ElencoAggiunte = self.c.read(self.data["aggiunte"])
+        self.ElencoPizze = self.cloud.read(self.data["pizze"])
+        self.ElencoIngredienti = self.cloud.read(self.data["ingredienti"])
+        self.ElencoAggiunte = self.cloud.read(self.data["aggiunte"])
 
         saveJsonFile("pizze", self.ElencoPizze)
         saveJsonFile("ingredienti", self.ElencoIngredienti)
@@ -58,7 +58,7 @@ class Pizzas():
             ORDER BY pizze.id
         """)
         dbPizzaList = db.readByQuery(queryPizze, "json")
-        self.c.update(dbPizzaList, self.data["pizze"])
+        self.cloud.update(dbPizzaList, self.data["pizze"])
 
         #uploadda gli ingredienti
         queryingredienti = ("""
@@ -66,14 +66,14 @@ class Pizzas():
             FROM `ingredienti`
         """)
         dbIngredientsList = db.readByQuery(queryingredienti, "json")
-        self.c.update(dbIngredientsList, self.data["ingredienti"])
+        self.cloud.update(dbIngredientsList, self.data["ingredienti"])
         #uploadda le aggiunte
         queryAggiunte = ("""
             SELECT *
             FROM `aggiunte`
         """)
         dbAggiunteList = db.readByQuery(queryAggiunte, "json")
-        self.c.update(dbAggiunteList, self.data["aggiunte"])
+        self.cloud.update(dbAggiunteList, self.data["aggiunte"])
 
     def get_pizzas(self, merge=False):
         """
