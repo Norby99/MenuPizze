@@ -18,9 +18,8 @@ class VerticalGrid:
         self.colors = color
         self.windowSpecs = WindowSpecs()
         self.maxColumns = maxColumns
-        self.righe_max = math.ceil(len(self.elenco_pizze)/self.maxColumns)   #numero di pizze per colonna
-        self.margini = margini
-        self.cell_dimension = [(self.margini[2]-self.margini[0])/self.maxColumns, (self.margini[3]-self.margini[1])/self.righe_max]
+        self.margin = margini
+        self.cell_width = (self.margin[2]-self.margin[0])/self.maxColumns
         self.cells = []
 
         self.db = database("localhost", jsonData["dbUserName"], jsonData["dbPassword"], jsonData["dbData"])
@@ -29,27 +28,29 @@ class VerticalGrid:
         if update:
             self.updateScritte()
         else:
-            self.canvas = tk.Canvas(self.window, bg=self.colors["background"], width=self.margini[2], height=self.margini[3])   # creating main canvas
+            self.canvas = tk.Canvas(self.window, bg=self.colors["background"], width=self.margin[2], height=self.margin[3])   # creating main canvas
             self.canvas.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-            x = 0
-            y = 0
+            cellPosition = [self.margin[0], self.margin[1]]
             self.ScritteIngredienti = []
             for pizza in self.elenco_pizze:
-                if y >= self.righe_max:
-                    y = 0
-                    x += 1
-
-                cellPosition = [self.margini[0]+self.cell_dimension[0]*x, self.margini[1]+self.cell_dimension[1]*y]
                 if "nome" in pizza: # populating the grid with the cells
-                    tempCell = PizzaCell(self.window, pizza["nome"], self.colors["titolo"], pizza["prezzo"], self.colors["price"], {"ingredienti" : pizza["ingredienti"], "ingredientiInglese" : pizza["ingredientiInglese"]}, self.colors["generic_text"], cellPosition, self.cell_dimension)
+                    tempCell = PizzaCell(self.window, pizza["nome"], self.colors["titolo"], pizza["prezzo"], self.colors["price"], {"ingredienti" : pizza["ingredienti"], "ingredientiInglese" : pizza["ingredientiInglese"]}, self.colors["generic_text"], cellPosition, self.cell_width)
                 else:
-                    tempCell = TitleCell(self.window, pizza["tipo"], self.colors["p_tipo"], cellPosition, self.cell_dimension)
+                    tempCell = TitleCell(self.window, pizza["tipo"], self.colors["p_tipo"], cellPosition, self.cell_width)
                 self.cells.append(tempCell)
-                y += 1
+
+                if tempCell.getBottomCoordinate() > self.margin[3]:
+                    cellPosition = [tempCell.getRightCoordinate(), self.margin[1]]
+
+                tempCell.setPostion(cellPosition)
+                cellPosition[1] = tempCell.getBottomCoordinate()
+
+                if tempCell.getRightCoordinate() > self.margin[2]:
+                    raise IndexError("Given too many Cell's")
 
     def showAggiunte(self):
-        coords = [self.windowSpecs.resolutionConverter(25), self.margini[3]+10, (self.margini[2]*(4/5)+self.windowSpecs.resolutionConverter(500)), self.margini[3]-self.windowSpecs.resolutionConverter(20)]
+        coords = [self.windowSpecs.resolutionConverter(25), self.margin[3]+10, (self.margin[2]*(4/5)+self.windowSpecs.resolutionConverter(500)), self.margin[3]-self.windowSpecs.resolutionConverter(20)]
         self.canvas.pack()
 
         font_titolo = "Times " + str(self.windowSpecs.resolutionConverter(22)) + " bold"
