@@ -4,7 +4,7 @@ from abc import ABC
 
 class Cell(ABC):
 
-    def __init__(self, window, position, width, proportion=5.77841726618705):
+    def __init__(self, window, position, width, proportion):
         """
         window is the tkinter root object
         given a width it calculates it's hight by the given proportion
