@@ -1,4 +1,4 @@
-from pizzaMenu import PizzaMenu
+from libraries.pizzaMenu import PizzaMenu
 from libraries.PizzaHandler import Pizzas
 from libraries.utils import waitForConnection, waitForFilesUpdate
 from libraries.windowSpecs import WindowSpecs
