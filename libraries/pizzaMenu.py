@@ -20,7 +20,6 @@ class PizzaMenu(ABC):
                 "prezzo" : '€ {:,.2f}'.format(float(i["prezzo_aggiunta"]))
             })
         return aggiunte
-
     
     def pizzeCreator(self, pizzaType="*"):     ### crea un dizionario con tutte le pizze e i suoi atributi
         """
@@ -34,10 +33,11 @@ class PizzaMenu(ABC):
         for i in data:
             if (i["nome_tipo"] in pizzaType) or pizzaType == "*":
                 if i["nome_tipo"] != tipo_pizza:
-                    pizze.append({"tipo" : i["nome_tipo"]})
+                    pizze.append({"objType" : "pizzaType", "tipo" : i["nome_tipo"]})
                     tipo_pizza = i["nome_tipo"]
 
                 pizze.append({
+                            "objType" : "pizza",
                             "id" : int(i["id"]),
                             "nome": i["nomePizza"],
                             "tipo" : i["nome_tipo"],
@@ -48,6 +48,13 @@ class PizzaMenu(ABC):
                         })
         return pizze
 
+    def elementCreator(self, pizzaType="*"):
+        """
+        creates a dictionary with all the pizzas that have the @pizzaType and also other objects
+        @pizzaType it's a list, or it can be "*" (default) for all elements
+        """
+        pizze = self.pizzeCreator(pizzaType)
+
     def tkWindowSetup(self):
         """
         - Creates a window(Tk) and a @screenDimension[width, height] that contains the current screen dimension
@@ -55,7 +62,6 @@ class PizzaMenu(ABC):
         - It binds:   F12 to quitFullScreen(); F11 to FullScreen(); Escape to close()
         - Hides cursor
         """
-
         self.window = tk.Tk()
         self.window.attributes('-fullscreen', True)  
         self.fullScreenState = False

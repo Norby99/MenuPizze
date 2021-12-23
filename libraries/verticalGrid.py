@@ -8,9 +8,9 @@ from PIL import ImageTk,Image
 import os
 
 class VerticalGrid:
-    def __init__(self, window, elenco_pizze, margini, jsonData, color, maxColumns=5):
+    def __init__(self, window, objectsList, margini, jsonData, color, maxColumns=5):
         self.window = window
-        self.elenco_pizze = elenco_pizze
+        self.objectsList = objectsList
         self.allergens = self.loadAllergeni()
         self.colors = color
         self.windowSpecs = WindowSpecs()
@@ -30,17 +30,16 @@ class VerticalGrid:
 
             cellPosition = [self.margin[0], self.margin[1]]
             self.ScritteIngredienti = []
-            for pizza in self.elenco_pizze:
-                if "nome" in pizza: # populating the grid with the cells
-                    pizzaAllergens = [self.allergens[x] for x in pizza["allergens"]]    # filters the allergens to show only those that are in the pizza
-                    tempCell = PizzaCell(self.window, pizza["nome"], self.colors["titolo"], pizza["prezzo"], self.colors["price"], {"ingredienti" : pizza["ingredienti"], "ingredientiInglese" : pizza["ingredientiInglese"]}, self.colors["generic_text"], pizzaAllergens, cellPosition, self.cell_width)
-                else:
-                    tempCell = TitleCell(self.window, pizza["tipo"], self.colors["p_tipo"], cellPosition, self.cell_width)
+            for object in self.objectsList:
+                if object["objType"] == "pizza": # populating the grid with the cells
+                    pizzaAllergens = [self.allergens[x] for x in object["allergens"]]    # filters the allergens to show only those that are in the pizza
+                    tempCell = PizzaCell(self.window, object["nome"], self.colors["titolo"], object["prezzo"], self.colors["price"], {"ingredienti" : object["ingredienti"], "ingredientiInglese" : object["ingredientiInglese"]}, self.colors["generic_text"], pizzaAllergens, cellPosition, self.cell_width)
+                elif object["objType"] == "pizzaType":
+                    tempCell = TitleCell(self.window, object["tipo"], self.colors["p_tipo"], cellPosition, self.cell_width)
                 self.cells.append(tempCell)
 
-                if tempCell.getBottomCoordinate() > self.margin[3]:
+                if tempCell.getBottomCoordinate() > self.margin[3]: # getting next element position
                     cellPosition = [tempCell.getRightCoordinate(), self.margin[1]]
-
                 tempCell.setPostion(cellPosition)
                 cellPosition[1] = tempCell.getBottomCoordinate()
 
