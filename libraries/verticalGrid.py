@@ -31,20 +31,25 @@ class VerticalGrid:
             cellPosition = [self.margin[0], self.margin[1]]
             self.ScritteIngredienti = []
             for object in self.objectsList:
+                newCellExists = False
                 if object["objType"] == "pizza": # populating the grid with the cells
                     pizzaAllergens = [self.allergens[x] for x in object["allergens"]]    # filters the allergens to show only those that are in the pizza
                     tempCell = PizzaCell(self.window, object["nome"], self.colors["titolo"], object["prezzo"], self.colors["price"], {"ingredienti" : object["ingredienti"], "ingredientiInglese" : object["ingredientiInglese"]}, self.colors["generic_text"], pizzaAllergens, cellPosition, self.cell_width)
+                    newCellExists = True
                 elif object["objType"] == "pizzaType":
                     tempCell = TitleCell(self.window, object["tipo"], self.colors["p_tipo"], cellPosition, self.cell_width)
-                self.cells.append(tempCell)
+                    newCellExists = True
 
-                if tempCell.getBottomCoordinate() > self.margin[3]: # getting next element position
-                    cellPosition = [tempCell.getRightCoordinate(), self.margin[1]]
-                tempCell.setPostion(cellPosition)
-                cellPosition[1] = tempCell.getBottomCoordinate()
+                if newCellExists:
+                    self.cells.append(tempCell)
 
-                if tempCell.getRightCoordinate() > self.margin[2]:
-                    raise IndexError("Given too many Cell's")
+                    if tempCell.getBottomCoordinate() > self.margin[3]: # getting next element position
+                        cellPosition = [tempCell.getRightCoordinate(), self.margin[1]]
+                    tempCell.setPostion(cellPosition)
+                    cellPosition[1] = tempCell.getBottomCoordinate()
+
+                    if tempCell.getRightCoordinate() > self.margin[2]:
+                        raise IndexError("Given too many Cell's")
 
     def showAggiunte(self):
         coords = [self.windowSpecs.resolutionConverter(25), self.margin[3]+10, (self.margin[2]*(4/5)+self.windowSpecs.resolutionConverter(500)), self.margin[3]-self.windowSpecs.resolutionConverter(20)]
