@@ -19,8 +19,11 @@ class PizzaMenu2(PizzaMenu):
         padding = 20
         self.window.configure(background=colors["background"])
 
-        self.pizze = self.pizzeCreator(self.pizzaTypesRequered)
-        self.menu = VerticalGrid(self.window, self.pizze, [self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding)], data, colors)
+        pizze = self.pizzeCreator(self.pizzaTypesRequered)
+        aggiunte = self.aggiunteCreator()
+        self.elements = pizze + aggiunte
+
+        self.menu = VerticalGrid(self.window, self.elements, [self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding)], data, colors)
 
         self.ShowAll()
         self.Update()
