@@ -48,12 +48,14 @@ class PizzaMenu(ABC):
                         })
         return pizze
 
-    def elementCreator(self, pizzaType="*"):
+    def aggiunteCreator(self):
         """
-        creates a dictionary with all the pizzas that have the @pizzaType and also other objects
-        @pizzaType it's a list, or it can be "*" (default) for all elements
+        creates a dictionary with all the aggiunte
         """
-        pizze = self.pizzeCreator(pizzaType)
+        aggiunte = self.pizza.get_aggiunte()
+        for i in aggiunte:
+            i["objType"] = "aggiunta"
+        return aggiunte
 
     def tkWindowSetup(self):
         """
