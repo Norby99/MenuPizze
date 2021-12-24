@@ -35,7 +35,7 @@ class PizzaCell(Cell):
         self.textName = self.canvas.create_text(self.textNamePos[0], self.textNamePos[1], anchor= tk.NW, fill=self.nameColor,font=self.nameFont, text=self.name)
 
     def createPrice(self):
-        self.textPricePos = [self.dimensions[0]-self.windowSpecs.resolutionConverter(10), self.windowSpecs.resolutionConverter(5)]
+        self.textPricePos = [self.dimensions[0]-self.windowSpecs.resolutionConverter(10), 0]
         self.textPrice = self.canvas.create_text(self.textPricePos[0], self.textPricePos[1], anchor= tk.NE, fill=self.priceColor,font=self.priceFont, text=self.price)
 
     def createIngredients(self):
