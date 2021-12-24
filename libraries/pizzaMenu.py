@@ -55,6 +55,7 @@ class PizzaMenu(ABC):
         aggiunte = self.pizza.get_aggiunte()
         for i in aggiunte:
             i["objType"] = "aggiunta"
+            i["prezzo_aggiunta"] = '€ {:,.2f}'.format(float(i["prezzo_aggiunta"]))
         return aggiunte
 
     def tkWindowSetup(self):
