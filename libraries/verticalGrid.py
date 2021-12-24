@@ -41,7 +41,7 @@ class VerticalGrid:
                     tempCell = TitleCell(self.window, object["tipo"], self.colors["p_tipo"], cellPosition, self.cell_width)
                     newCellExists = True
                 elif object["objType"] == "aggiunta":
-                    tempCell = AggiuntaCell(self.window, object["nome_aggiunta"], self.colors["titolo"], object["prezzo_aggiunta"], self.colors["price"], cellPosition, self.cell_width)
+                    tempCell = AggiuntaCell(self.window, object["nome_aggiunta"], self.colors["generic_text"], object["prezzo_aggiunta"], self.colors["price"], cellPosition, self.cell_width)
                     newCellExists = True
 
                 if newCellExists:
