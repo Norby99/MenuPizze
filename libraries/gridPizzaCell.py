@@ -40,7 +40,7 @@ class PizzaCell(Cell):
 
     def createIngredients(self):
         self.textIngredientsPos = [self.windowSpecs.resolutionConverter(5), self.dimensions[1]/2-self.windowSpecs.resolutionConverter(13)]
-        self.textIngredients = self.canvas.create_text(self.textIngredientsPos[0], self.textIngredientsPos[1], anchor= tk.NW, fill=self.ingredientsColor,font=self.ingredientsFont, text=next(iter(self.ingredients)), width=(self.dimensions[0]-self.windowSpecs.resolutionConverter(5)))
+        self.textIngredients = self.canvas.create_text(self.textIngredientsPos[0], self.textIngredientsPos[1], anchor= tk.NW, fill=self.ingredientsColor,font=self.ingredientsFont, text=self.ingredients[next(iter(self.ingredients))], width=(self.dimensions[0]-self.windowSpecs.resolutionConverter(5)))
 
     def showAllergeni(self):
         for i, allergen in enumerate(self.allergens):
