@@ -35,18 +35,17 @@ class VerticalGrid:
                 newCellExists = False
                 if object["objType"] == "pizza": # populating the grid with the cells
                     pizzaAllergens = [self.allergens[x] for x in object["allergens"]]    # filters the allergens to show only those that are in the pizza
-                    tempCell = PizzaCell(self.window, object["nome"], self.colors["titolo"], object["prezzo"], self.colors["price"], {"ingredienti" : object["ingredienti"], "ingredientiInglese" : object["ingredientiInglese"]}, self.colors["generic_text"], pizzaAllergens, cellPosition, self.cell_width)
+                    tempCell = PizzaCell(self.window, object["nome"], self.colors["titolo"], object["prezzo"], self.colors["price"], {"nome_italiano" : object["ingredienti"], "nome_inglese" : object["ingredientiInglese"]}, self.colors["generic_text"], pizzaAllergens, cellPosition, self.cell_width)
                     newCellExists = True
                 elif object["objType"] == "pizzaType":
                     tempCell = TitleCell(self.window, object["tipo"], self.colors["p_tipo"], cellPosition, self.cell_width)
                     newCellExists = True
                 elif object["objType"] == "aggiunta":
-                    tempCell = AggiuntaCell(self.window, object["nome_aggiunta"], self.colors["generic_text"], object["prezzo_aggiunta"], self.colors["price"], cellPosition, self.cell_width)
+                    tempCell = AggiuntaCell(self.window, {"nome_italiano" : object["nome_aggiunta"], "nome_inglese" : object["nome_inglese"]}, self.colors["generic_text"], object["prezzo_aggiunta"], self.colors["price"], cellPosition, self.cell_width)
                     newCellExists = True
 
                 if newCellExists:
                     self.cells.append(tempCell)
-
                     if tempCell.getBottomCoordinate() > self.margin[3]: # getting next element position
                         cellPosition = [tempCell.getRightCoordinate(), self.margin[1]]
                     tempCell.setPostion(cellPosition)
@@ -72,14 +71,10 @@ class VerticalGrid:
         self.ScritteAggiunte.update({'aggiunte': canvas})
 
     def updateCells(self):    #this function updates the text boxes
-        lingua = self.getLingua()
-        if lingua == "nome_italiano":   #modifies the ingredients
-            testoLingua = "ingredienti"
-        elif lingua == "nome_inglese":
-            testoLingua = "ingredientiInglese"
+        testoLingua = self.getLingua()
 
         for i in self.cells:
-            if isinstance(i, PizzaCell):
+            if hasattr(i, 'update'):
                 i.update(testoLingua)
 
     def loadAllergeni(self):
