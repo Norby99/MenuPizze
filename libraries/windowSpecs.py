@@ -11,6 +11,7 @@ class WindowSpecs:
         if dimensions == [0,0]:
             root = tkinter.Tk()
             self.screenDimension = [root.winfo_screenwidth(), root.winfo_screenheight()]
+            print(self.screenDimension[0], self.screenDimension[1])
             root.quit()
             root.destroy()
         else:
@@ -18,7 +19,6 @@ class WindowSpecs:
 
         if checker:
             self.convertDoubleMonitorResolution()
-        print(self.screenDimension[0]/self.screenDimension[1])
 
     def convertDoubleMonitorResolution(self):
         proportion = self.screenDimension[0]/self.screenDimension[1]
