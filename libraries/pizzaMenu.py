@@ -75,7 +75,6 @@ class PizzaMenu(ABC):
         self.window.bind("<Escape>", self.close)
         self.screenDimension = self.window.winfo_screenwidth(), self.window.winfo_screenheight()
         self.window.config(cursor="none")
-        print("Display: ", self.window.winfo_screenwidth(), self.window.winfo_screenheight())   #! to be delete
         
     def close(self, event):
         self.window.destroy()
