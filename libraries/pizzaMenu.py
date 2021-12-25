@@ -1,5 +1,6 @@
 import tkinter as tk
 from libraries.utils import capfirst
+from libraries.windowSpecs import WindowSpecs
 import json
 from abc import ABC
 
@@ -73,7 +74,8 @@ class PizzaMenu(ABC):
         self.window.bind("<F12>", self.quitFullScreen)
         self.window.bind("<F11>", self.toggleFullScreen)
         self.window.bind("<Escape>", self.close)
-        self.screenDimension = self.window.winfo_screenwidth(), self.window.winfo_screenheight()
+        self.windowSpecs = WindowSpecs()
+        self.screenDimension = self.windowSpecs.getScreenDimension()
         self.window.config(cursor="none")
         
     def close(self, event):

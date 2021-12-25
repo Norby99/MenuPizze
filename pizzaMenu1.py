@@ -1,6 +1,5 @@
 from libraries.PizzaHandler import Pizzas
 from libraries.utils import waitForConnection
-from libraries.windowSpecs import WindowSpecs
 from libraries.verticalGrid import VerticalGrid
 from libraries.pizzaMenu import PizzaMenu
 
@@ -13,7 +12,6 @@ class PizzaMenu1(PizzaMenu):
         self.pizza.downloadAllFromCloud()
         
         self.tkWindowSetup()
-        self.windowSpecs = WindowSpecs()
 
         ### These are all the pretty combinations I've found
         #colors = {"background" : "#003049", "generic_text" : "#EAE2B7", "titolo" : "#FCBF49","price" : "#D62828", "p_tipo" : "#F77F00","p_classica" : "#FF0000", "p_bianca" : "#0000FF", "p_speciale" : "#FF0000"}
