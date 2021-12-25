@@ -14,7 +14,6 @@ class PizzaMenu2(PizzaMenu):
         self.pizza.loadPizzasFromJson()
         
         self.tkWindowSetup()
-        self.windowSpecs = WindowSpecs()
         colors = data["colors"] # colors are taken from the setup file
         padding = 20
         self.window.configure(background=colors["background"])
