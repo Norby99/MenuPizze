@@ -26,7 +26,7 @@ class VerticalGrid:
         if update:
             self.updateScritte()
         else:
-            self.canvas = tk.Canvas(self.window, bg=self.colors["background"], width=self.margin[2], height=self.margin[3])   # creating main canvas
+            self.canvas = tk.Canvas(self.window, bg=self.colors["background"], width=self.margin[2], height=self.margin[3], highlightthickness=0, bd=0)   # creating main canvas
             self.canvas.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
             cellPosition = [self.margin[0], self.margin[1]]
