@@ -19,7 +19,7 @@ class AggiuntaCell(Cell):
 
     def createName(self):
         self.textNamePos = [self.windowSpecs.resolutionConverter(5), 0]
-        self.textName = self.canvas.create_text(self.textNamePos[0], self.textNamePos[1], anchor= tk.NW, fill=self.nameColor,font=self.nameFont, text=self.name)
+        self.textName = self.canvas.create_text(self.textNamePos[0], self.textNamePos[1], anchor= tk.NW, fill=self.nameColor,font=self.nameFont, text=self.name[next(iter(self.name))])
 
     def createPrice(self):
         self.textPricePos = [self.dimensions[0]-self.windowSpecs.resolutionConverter(10), 0]
@@ -31,4 +31,5 @@ class AggiuntaCell(Cell):
     def setPriceFont(self, font):
         self.priceFont = font
 
-# TODO language changer
+    def update(self, language):
+        self.canvas.itemconfig(self.textName, text=self.name[language])
