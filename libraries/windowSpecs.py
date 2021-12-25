@@ -5,7 +5,7 @@ class WindowSpecs:
     def __init__(self, dimensions=[0,0]):
         if dimensions == [0,0]:
             root = tkinter.Tk()
-            self.screenDimension = root.winfo_screenwidth(), root.winfo_screenheight()
+            self.screenDimension = [root.winfo_screenwidth(), root.winfo_screenheight()]
 
             proportion = self.screenDimension[0]/self.screenDimension[1]
             if not (1 < proportion < 2) :  # if the screen resolution isn't between 4:3 and 16:9 (for example a 32:9)
