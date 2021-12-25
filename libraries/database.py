@@ -98,7 +98,7 @@ class database():
         try:
             self.con = self.connect()
             cursor = self.con.cursor(buffered=True)
-            query = """SELECT *
+            query = """SELECT lingua
                     FROM `lingua`"""
             cursor.execute(query)
             self.con.close()
