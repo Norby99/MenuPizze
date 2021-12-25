@@ -17,7 +17,8 @@ class WindowSpecs:
             self.screenDimension = dimensions
 
         if checker:
-                self.convertDoubleMonitorResolution()
+            self.convertDoubleMonitorResolution()
+        print(self.screenDimension[0]/self.screenDimension[1])
 
     def convertDoubleMonitorResolution(self):
         proportion = self.screenDimension[0]/self.screenDimension[1]
