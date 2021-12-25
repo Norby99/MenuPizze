@@ -22,7 +22,7 @@ class PizzaMenu2(PizzaMenu):
         aggiunte = self.aggiunteCreator()
         self.elements = pizze + aggiunte
 
-        self.menu = VerticalGrid(self.window, self.elements, [self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding)], data, colors)
+        self.menu = VerticalGrid(self.window, self.elements, [self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*3/4-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding)], data, colors, maxColumns=3)
 
         self.ShowAll()
         self.Update()
