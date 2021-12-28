@@ -6,12 +6,20 @@ class Cloud():
     def __init__(self, mKey):
         self.mKey = mKey
 
-    def read(self, url):    #reads the data from the cloud
+    def read(self, url):
+        """
+        Given an @url, it returns the data formated as json
+        It returns False if the server is not responding
+        """
         headers = {'X-Master-Key': self.mKey}
 
-        req = requests.get(url, headers=headers)
-        data = json.dumps(req.json(), indent = 4)
-        return data
+        try:
+            req = requests.get(url, headers=headers)
+            data = json.dumps(req.json(), indent = 4)
+            return data
+        except requests.exceptions.RequestException as err:
+            print(f"Host is not responding!\n{err}")
+            return False
 
     def update(self, data, url):
         headers = {'Content-Type': 'application/json',
