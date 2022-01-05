@@ -9,7 +9,7 @@ from PIL import ImageTk,Image
 import os
 
 class VerticalGrid:
-    def __init__(self, window, objectsList, margini, jsonData, color, maxColumns=5):
+    def __init__(self, window, objectsList, margini, jsonData, color, maxColumns=5, ):
         self.window = window
         self.objectsList = objectsList
         self.allergens = self.loadAllergeni()
@@ -33,12 +33,12 @@ class VerticalGrid:
             self.ScritteIngredienti = []
             for object in self.objectsList:
                 newCellExists = False
-                if object["objType"] == "pizza": # populating the grid with the cells
+                if object["objType"] == "title": # populating the grid with the cells
+                    tempCell = TitleCell(self.window, object["tipo"], self.colors["p_tipo"], cellPosition, self.cell_width)
+                    newCellExists = True
+                elif object["objType"] == "pizza":
                     pizzaAllergens = [self.allergens[x] for x in object["allergens"]]    # filters the allergens to show only those that are in the pizza
                     tempCell = PizzaCell(self.window, object["nome"], self.colors["titolo"], object["prezzo"], self.colors["price"], {"nome_italiano" : object["ingredienti"], "nome_inglese" : object["ingredientiInglese"]}, self.colors["generic_text"], pizzaAllergens, cellPosition, self.cell_width)
-                    newCellExists = True
-                elif object["objType"] == "title":
-                    tempCell = TitleCell(self.window, object["tipo"], self.colors["p_tipo"], cellPosition, self.cell_width)
                     newCellExists = True
                 elif object["objType"] == "aggiunta":
                     tempCell = AggiuntaCell(self.window, {"nome_italiano" : object["nome_aggiunta"], "nome_inglese" : object["nome_inglese"]}, self.colors["generic_text"], object["prezzo"], self.colors["price"], cellPosition, self.cell_width)
@@ -49,7 +49,6 @@ class VerticalGrid:
 
                 if newCellExists:
                     self.cells.append(tempCell)
-                    print("Cell: " ,tempCell.getBottomCoordinate() , " Margin: " , self.margin[3])
                     if tempCell.getBottomCoordinate() > self.margin[3]: # getting next element position
                         cellPosition = [tempCell.getRightCoordinate(), self.margin[1]]
                     tempCell.setPostion(cellPosition)
