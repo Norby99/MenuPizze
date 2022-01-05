@@ -26,7 +26,7 @@ class VerticalGrid:
         if update:
             self.updateScritte()
         else:
-            self.canvas = tk.Canvas(self.window, bg="white", width=self.margin[2], height=self.margin[3], highlightthickness=0, bd=0)   # creating main canvas
+            self.canvas = tk.Canvas(self.window, bg=self.colors["background"], width=self.margin[2], height=self.margin[3], highlightthickness=0, bd=0)   # creating main canvas
             self.canvas.place(x=self.margin[0], y=self.margin[1], anchor=tk.NW)
 
             cellPosition = [self.margin[0], self.margin[1]]
@@ -45,10 +45,11 @@ class VerticalGrid:
                     newCellExists = True
                 elif object["objType"] == "insalata":
                     pass
-                    newCellExists = True
+                    #newCellExists = True
 
                 if newCellExists:
                     self.cells.append(tempCell)
+                    print("Cell: " ,tempCell.getBottomCoordinate() , " Margin: " , self.margin[3])
                     if tempCell.getBottomCoordinate() > self.margin[3]: # getting next element position
                         cellPosition = [tempCell.getRightCoordinate(), self.margin[1]]
                     tempCell.setPostion(cellPosition)
