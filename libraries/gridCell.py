@@ -22,6 +22,12 @@ class Cell(ABC):
     def getRightCoordinate(self):
         return self.position[0]+self.dimensions[0]
 
+    def getWidth(self):
+        return self.dimensions[0]
+
+    def getHeight(self):
+        return self.dimensions[1]
+
     def setPostion(self, coord):
         self.position = coord
         self.canvas.place(x=self.position[0], y=self.position[1], anchor=tk.NW)
