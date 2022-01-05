@@ -9,13 +9,19 @@ from PIL import ImageTk,Image
 import os
 
 class VerticalGrid:
-    def __init__(self, window, objectsList, margini, jsonData, color, maxColumns=5, ):
+    def __init__(self, window, objectsList, margini, jsonData, color, maxColumns=5, maxRows=False):
+        """
+        Defines a vertical grid that show some cell
+        @maxRows if defined, sets a max height for all cells (default to False)
+        """
         self.window = window
         self.objectsList = objectsList
         self.allergens = self.loadAllergeni()
         self.colors = color
         self.windowSpecs = WindowSpecs()
         self.maxColumns = maxColumns
+        if maxRows:
+            self.maxCellHeight = (self.margin[3]-self.margin[1])/maxRows
         self.margin = margini
         self.cell_width = (self.margin[2]-self.margin[0])/self.maxColumns
         self.cells = []
@@ -31,7 +37,7 @@ class VerticalGrid:
 
             cellPosition = [self.margin[0], self.margin[1]]
             self.ScritteIngredienti = []
-            for object in self.objectsList:
+            for object in self.objectsList: # TODO: for more scalability trasform all this stuff in a list outside of this class
                 newCellExists = False
                 if object["objType"] == "title": # populating the grid with the cells
                     tempCell = TitleCell(self.window, object["tipo"], self.colors["p_tipo"], cellPosition, self.cell_width)
