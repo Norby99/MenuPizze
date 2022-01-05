@@ -11,17 +11,6 @@ class PizzaMenu(ABC):
         with open(fname) as f:
             return json.load(f)
 
-    def aggiunteCreator(self):
-        aggiunte = []
-        data = self.pizza.get_aggiunte()
-        for i in data:
-            aggiunte.append({
-                "nome" : (", ".join(str(x) for x in i["nome_aggiunta"].split(","))).capitalize(),
-                "nomeInglese" : (", ".join(str(x) for x in i["nome_inglese"].split(","))).capitalize(),
-                "prezzo" : '€ {:,.2f}'.format(float(i["prezzo_aggiunta"]))
-            })
-        return aggiunte
-    
     def pizzeCreator(self, pizzaType="*"):     ### crea un dizionario con tutte le pizze e i suoi atributi
         """
         creates a dictionary with all the pizzas that have the @pizzaType
@@ -56,7 +45,7 @@ class PizzaMenu(ABC):
         aggiunte = self.pizza.get_aggiunte()
         for i in aggiunte:
             i["objType"] = "aggiunta"
-            i["prezzo_aggiunta"] = '€ {:,.2f}'.format(float(i["prezzo_aggiunta"]))
+            i["prezzo"] = '€ {:,.2f}'.format(float(i["prezzo"]))
 
         aggiunte.insert(0, {"objType" : "pizzaType", "tipo" : "Aggiunte"})  # added title aggiunte
         return aggiunte
