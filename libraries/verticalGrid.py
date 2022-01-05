@@ -37,7 +37,7 @@ class VerticalGrid:
                     pizzaAllergens = [self.allergens[x] for x in object["allergens"]]    # filters the allergens to show only those that are in the pizza
                     tempCell = PizzaCell(self.window, object["nome"], self.colors["titolo"], object["prezzo"], self.colors["price"], {"nome_italiano" : object["ingredienti"], "nome_inglese" : object["ingredientiInglese"]}, self.colors["generic_text"], pizzaAllergens, cellPosition, self.cell_width)
                     newCellExists = True
-                elif object["objType"] == "pizzaType":
+                elif object["objType"] == "title":
                     tempCell = TitleCell(self.window, object["tipo"], self.colors["p_tipo"], cellPosition, self.cell_width)
                     newCellExists = True
                 elif object["objType"] == "aggiunta":

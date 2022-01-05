@@ -23,7 +23,7 @@ class PizzaMenu(ABC):
         for i in data:
             if (i["nome_tipo"] in pizzaType) or pizzaType == "*":
                 if i["nome_tipo"] != tipo_pizza:
-                    pizze.append({"objType" : "pizzaType", "tipo" : i["nome_tipo"]})
+                    pizze.append({"objType" : "title", "tipo" : i["nome_tipo"]})
                     tipo_pizza = i["nome_tipo"]
 
                 pizze.append({
@@ -47,7 +47,7 @@ class PizzaMenu(ABC):
             i["objType"] = "aggiunta"
             i["prezzo"] = '€ {:,.2f}'.format(float(i["prezzo"]))
 
-        aggiunte.insert(0, {"objType" : "pizzaType", "tipo" : "Aggiunte"})  # added title aggiunte
+        aggiunte.insert(0, {"objType" : "title", "tipo" : "Aggiunte"})  # added title aggiunte
         return aggiunte
 
     def insalateCreator(self):
