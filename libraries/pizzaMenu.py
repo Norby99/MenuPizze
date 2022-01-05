@@ -50,6 +50,26 @@ class PizzaMenu(ABC):
         aggiunte.insert(0, {"objType" : "pizzaType", "tipo" : "Aggiunte"})  # added title aggiunte
         return aggiunte
 
+    def insalateCreator(self):
+        """
+        creates a dictionary with all the "insalate"
+        """
+        insalate = []
+        data = self.pizza.get_insalate(True)
+
+        for i in data:
+            insalate.append({
+                            "objType" : "insalata",
+                            "id" : int(i["id"]),
+                            "nome": i["nomeInsalata"],
+                            "prezzo" : '€ {:,.2f}'.format(float(i["prezzo"])),
+                            "ingredienti" : capfirst(", ".join(str(x) for x in i["ingredienti"].split(","))),
+                            "ingredientiInglese" : capfirst(", ".join(str(x) for x in i["ingredientiInglese"].split(","))),
+                            "allergens" : i["allergeni"]
+                        })
+
+        return insalate
+
     def tkWindowSetup(self):
         """
         - Creates a window(Tk) and a @screenDimension[width, height] that contains the current screen dimension
