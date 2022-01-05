@@ -5,7 +5,7 @@ import tkinter.font as TkFont
 class TitleCell(Cell):
     """ This cell contains a big title and a border """
 
-    def __init__(self, window, title, textColor, position, width, proportion=5.77841726618705):
+    def __init__(self, window, title, textColor, position, width, proportion=5.76):
         super().__init__(window, position, width, proportion)
         self.title = title
         self.textColor = textColor
