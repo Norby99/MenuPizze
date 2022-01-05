@@ -28,6 +28,8 @@ class Pizzas():
             self.ElencoIngredienti = json.load(f)
         with open('aggiunte.json') as f:
             self.ElencoAggiunte = json.load(f)
+        with open('insalate.json') as f:
+            self.ElencoInsalate = json.load(f)
 
     def effectiveDownload(self):
         print("Downloading the files from the cloud...")
@@ -36,14 +38,17 @@ class Pizzas():
         if self.ElencoPizze:    # if the server is responding
             self.ElencoIngredienti = self.cloud.read(self.data["ingredienti"])
             self.ElencoAggiunte = self.cloud.read(self.data["aggiunte"])
+            self.ElencoInsalate = self.cloud.read(self.data["insalate"])
 
             saveJsonFile("pizze", self.ElencoPizze)
             saveJsonFile("ingredienti", self.ElencoIngredienti)
             saveJsonFile("aggiunte", self.ElencoAggiunte)
+            saveJsonFile("insalate", self.ElencoInsalate)
 
             self.ElencoPizze = json.loads(self.ElencoPizze)
             self.ElencoIngredienti = json.loads(self.ElencoIngredienti)
             self.ElencoAggiunte = json.loads(self.ElencoAggiunte)
+            self.ElencoInsalate = json.loads(self.ElencoInsalate)
         else:   # if the server is not responding
             self.loadPizzasFromJson()
 
@@ -91,7 +96,36 @@ class Pizzas():
                 ingredientiScrittiInglese = []
                 ingredienti = i["ingredienti"]
                 ingredienti = list(ingredienti.split(","))
-                allergens = self.getAllergenByPizzaType(i["nome_tipo"])
+                allergens = self.getAllergenByPizzaType(i["nome_tipo"]) # getting the allergens of the pizza dough
+                for id_ingrediente in ingredienti:  #scorro gli ingredienti della pizza
+                    for id_elencoIngrediente in self.ElencoIngredienti: #scorro tutti gli ingredienti
+                        if int(id_elencoIngrediente["id_ingrediente"]) == int(id_ingrediente):
+                            ingredientiScritti.append(id_elencoIngrediente["nome_italiano"])
+                            ingredientiScrittiInglese.append(id_elencoIngrediente["nome_inglese"])
+                            if id_elencoIngrediente["tipo"] != "Null":
+                                allergens.add(id_elencoIngrediente["tipo"].lower())
+                            
+                elencoEsteso[-1]["ingredienti"] = ','.join(ingredientiScritti)
+                elencoEsteso[-1]["ingredientiInglese"] = ','.join(ingredientiScrittiInglese)
+                elencoEsteso[-1]["allergeni"] = allergens
+
+            return elencoEsteso
+        else:
+            return self.ElencoPizze
+
+    def get_insalate(self, merge=False):
+        """
+        Gets all the insalate and ingredients and merge them toghether
+        """
+        if merge:
+            elencoEsteso = []
+            for i in self.ElencoInsalate:  #scorro le pizze
+                elencoEsteso.append(i)
+                ingredientiScritti = []
+                ingredientiScrittiInglese = []
+                ingredienti = i["ingredienti"]
+                ingredienti = list(ingredienti.split(","))
+                allergens = set()
                 for id_ingrediente in ingredienti:  #scorro gli ingredienti della pizza
                     for id_elencoIngrediente in self.ElencoIngredienti: #scorro tutti gli ingredienti
                         if int(id_elencoIngrediente["id_ingrediente"]) == int(id_ingrediente):
