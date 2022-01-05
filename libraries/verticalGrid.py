@@ -26,8 +26,8 @@ class VerticalGrid:
         if update:
             self.updateScritte()
         else:
-            self.canvas = tk.Canvas(self.window, bg=self.colors["background"], width=self.margin[2], height=self.margin[3], highlightthickness=0, bd=0)   # creating main canvas
-            self.canvas.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+            self.canvas = tk.Canvas(self.window, bg="white", width=self.margin[2], height=self.margin[3], highlightthickness=0, bd=0)   # creating main canvas
+            self.canvas.place(x=self.margin[0], y=self.margin[1], anchor=tk.NW)
 
             cellPosition = [self.margin[0], self.margin[1]]
             self.ScritteIngredienti = []
@@ -42,6 +42,9 @@ class VerticalGrid:
                     newCellExists = True
                 elif object["objType"] == "aggiunta":
                     tempCell = AggiuntaCell(self.window, {"nome_italiano" : object["nome_aggiunta"], "nome_inglese" : object["nome_inglese"]}, self.colors["generic_text"], object["prezzo"], self.colors["price"], cellPosition, self.cell_width)
+                    newCellExists = True
+                elif object["objType"] == "insalata":
+                    pass
                     newCellExists = True
 
                 if newCellExists:
