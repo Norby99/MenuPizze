@@ -9,7 +9,7 @@ from PIL import ImageTk,Image
 import os
 
 class VerticalGrid:
-    def __init__(self, window, objectsList, margini, jsonData, color, maxColumns=5, maxRows=False):
+    def __init__(self, window, objectsList, margini, jsonData, color, maxColumns=5):
         """
         Defines a vertical grid that show some cell
         @maxRows if defined, sets a max height for all cells (default to False)
@@ -23,11 +23,6 @@ class VerticalGrid:
         self.margin = margini
         self.cell_width = (self.margin[2]-self.margin[0])/self.maxColumns
         self.cells = []
-
-        if maxRows:
-            self.maxCellHeight = (self.margin[3]-self.margin[1])/maxRows
-        else:
-            self.maxCellHeight = False
 
         self.db = database("localhost", jsonData["dbUserName"], jsonData["dbPassword"], jsonData["dbData"])
 
