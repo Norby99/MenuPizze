@@ -20,11 +20,14 @@ class VerticalGrid:
         self.colors = color
         self.windowSpecs = WindowSpecs()
         self.maxColumns = maxColumns
-        if maxRows:
-            self.maxCellHeight = (self.margin[3]-self.margin[1])/maxRows
         self.margin = margini
         self.cell_width = (self.margin[2]-self.margin[0])/self.maxColumns
         self.cells = []
+
+        if maxRows:
+            self.maxCellHeight = (self.margin[3]-self.margin[1])/maxRows
+        else:
+            self.maxCellHeight = False
 
         self.db = database("localhost", jsonData["dbUserName"], jsonData["dbPassword"], jsonData["dbData"])
 
@@ -40,7 +43,11 @@ class VerticalGrid:
             for object in self.objectsList: # TODO: for more scalability trasform all this stuff in a list outside of this class
                 newCellExists = False
                 if object["objType"] == "title": # populating the grid with the cells
-                    tempCell = TitleCell(self.window, object["tipo"], self.colors["p_tipo"], cellPosition, self.cell_width)
+                    if self.maxColumns >= 5:
+                        proportion = 5.76
+                    else:
+                        proportion = 7.89
+                    tempCell = TitleCell(self.window, object["tipo"], self.colors["p_tipo"], cellPosition, self.cell_width, proportion=proportion)
                     newCellExists = True
                 elif object["objType"] == "pizza":
                     pizzaAllergens = [self.allergens[x] for x in object["allergens"]]    # filters the allergens to show only those that are in the pizza
