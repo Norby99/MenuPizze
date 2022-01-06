@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
 import json
+import os
 import datetime
 
 class database():
@@ -114,8 +115,8 @@ def list2Json(table, columns):  #translates a matrix into a json
     return dictionary
 
 def saveJsonFile(fileName, jsonObj):
-        with open(fileName+'.json', 'w') as f:
-            f.write(jsonObj)
+    with open(fileName, 'w') as f:
+        f.write(jsonObj)
 
 if __name__ == "__main__":
     with open("setup.json") as f:
