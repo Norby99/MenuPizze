@@ -4,5 +4,5 @@ __pycache__
 *.temp
 *.txt
 *.dat
-*.json
+setup.json
 *.php
