@@ -1,5 +1,6 @@
 from libraries.cloud import Cloud
 import json
+from os import path
 from libraries.database import database, saveJsonFile
 from libraries.utils import fileIsOld
 
@@ -16,19 +17,19 @@ class Pizzas():
     def downloadAllFromCloud(self):
         """ Checks if the files are too old and then downloads all from the cloud and creats the json files """
 
-        if fileIsOld("aggiunte.json"):
+        if fileIsOld(self.filePathInResources("aggiunte.json")):
             self.effectiveDownload()
         else:
             self.loadPizzasFromJson()
 
     def loadPizzasFromJson(self):
-        with open('pizze.json') as f:
+        with open(self.filePathInResources('pizze.json')) as f:
             self.ElencoPizze = json.load(f)
-        with open('ingredienti.json') as f:
+        with open(self.filePathInResources('ingredienti.json')) as f:
             self.ElencoIngredienti = json.load(f)
-        with open('aggiunte.json') as f:
+        with open(self.filePathInResources('aggiunte.json')) as f:
             self.ElencoAggiunte = json.load(f)
-        with open('insalate.json') as f:
+        with open(self.filePathInResources('insalate.json')) as f:
             self.ElencoInsalate = json.load(f)
 
     def effectiveDownload(self):
@@ -40,10 +41,11 @@ class Pizzas():
             self.ElencoAggiunte = self.cloud.read(self.data["aggiunte"])
             self.ElencoInsalate = self.cloud.read(self.data["insalate"])
 
-            saveJsonFile("pizze", self.ElencoPizze)
-            saveJsonFile("ingredienti", self.ElencoIngredienti)
-            saveJsonFile("aggiunte", self.ElencoAggiunte)
-            saveJsonFile("insalate", self.ElencoInsalate)
+            print(self.filePathInResources("pizze.json"))
+            saveJsonFile(self.filePathInResources("pizze.json"), self.ElencoPizze)
+            saveJsonFile(self.filePathInResources("ingredienti.json"), self.ElencoIngredienti)
+            saveJsonFile(self.filePathInResources("aggiunte.json"), self.ElencoAggiunte)
+            saveJsonFile(self.filePathInResources("insalate.json"), self.ElencoInsalate)
 
             self.ElencoPizze = json.loads(self.ElencoPizze)
             self.ElencoIngredienti = json.loads(self.ElencoIngredienti)
@@ -158,6 +160,10 @@ class Pizzas():
 
     def get_ingredienti(self):
         return self.ElencoIngredienti
+
+    def filePathInResources(self, file):
+        """ Return the absolute path of the given @file in the resource/pizzeJson folder """
+        return path.join("resources", "pizzeJson", file)
 
 if __name__ == "__main__":
     """p = Pizzas("setup.json")
