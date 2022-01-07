@@ -29,7 +29,7 @@ class PizzaMenu2(PizzaMenu):
         menu = VerticalGrid(cells, firstGridPosition, data, maxColumns=2)
 
         self.show(menu)
-        self.Update(menu)
+        self.update(menu)
         self.window.mainloop()
 
 if __name__ == '__main__':
