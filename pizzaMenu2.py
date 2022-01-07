@@ -22,8 +22,7 @@ class PizzaMenu2(PizzaMenu):
         aggiunte = self.aggiunteCreator()
         insalate = self.insalateCreator()
         allergeni = self.loadAllergeni()
-
-        insalate.append(allergeni)
+        allergeniObj = self.allergeniCreator(allergeni)
 
         firstGridColumns = 2    # first menu part generator
         firstGridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*firstGridColumns/menuMaxColumns, self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
@@ -31,7 +30,7 @@ class PizzaMenu2(PizzaMenu):
 
         secondGridColumns = 1    # second menu part generator
         secondGridPosition = (firstGridPosition[2], self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*secondGridColumns/menuMaxColumns+firstGridPosition[2], self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
-        cells2 = self.createCells(insalate, allergeni, colors, (secondGridPosition[2]-secondGridPosition[0])/secondGridColumns)
+        cells2 = self.createCells(insalate+allergeniObj, allergeni, colors, (secondGridPosition[2]-secondGridPosition[0])/secondGridColumns)
 
         menuPizze = VerticalGrid(cells1, firstGridPosition, data, maxColumns=firstGridColumns)  # creating the menu part
         menuInsalate = VerticalGrid(cells2, secondGridPosition, data, maxColumns=secondGridColumns)
