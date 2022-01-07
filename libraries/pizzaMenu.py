@@ -140,11 +140,17 @@ class PizzaMenu(ABC):
         self.fullScreenState = False
         self.window.attributes("-fullscreen", self.fullScreenState)
 
-    def show(self, menus):
-        for i in menus:
-            i.show()
+    def show(self, menu):
+        if isinstance(menu, list):
+            for i in menu:
+                i.show()
+        else:
+            menu.show()
 
-    def Update(self, menus):
-        for i in menus:
-            i.updateCells()
-        self.window.after(2000, self.Update)
+    def update(self, menu):
+        if isinstance(menu, list):
+            for i in menu:
+                i.updateCells()
+        else:
+            menu.show()
+        self.window.after(2000, self.update)
