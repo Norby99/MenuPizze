@@ -79,6 +79,20 @@ class PizzaMenu(ABC):
 
         return insalate
 
+    def allergeniCreator(self, allergens):
+        allergensList = []
+        keys = sorted(allergens.keys())
+
+        for i in range(len(keys) -1):
+            allergensList.append({
+                "objType" : "allergeni",
+                "first" : [keys[i], allergens[keys[i]]],
+                "second" : [keys[i+1], allergens[keys[i+1]]]
+            })
+        allergensList.insert(0, {"objType" : "title", "tipo" : "Legenda allergeni"})  # added title Allergeni
+
+        return allergensList
+
     def createCells(self, objList, allergens, colors, cellWidth):
         cellPosition = [0, 0]
         cells = []
@@ -112,7 +126,7 @@ class PizzaMenu(ABC):
         soia = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "soia.png")).resize(resizeFormat, Image.ANTIALIAS))
         glutine = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "glutine.png")).resize(resizeFormat, Image.ANTIALIAS))
         latticini = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "latticini.png")).resize(resizeFormat, Image.ANTIALIAS))
-        return { "objType" : "allergeni", "uova" : uova, "pesce" : pesce, "noci" : noci, "soia" : soia, "glutine" : glutine, "latticini" : latticini }
+        return { "uova" : uova, "pesce" : pesce, "noci" : noci, "soia" : soia, "glutine" : glutine, "latticini" : latticini }
 
     def tkWindowSetup(self):
         """
