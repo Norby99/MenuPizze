@@ -5,7 +5,7 @@ import tkinter.font as TkFont
 class AggiuntaCell(Cell):
     """ This cell contains the aggiunta name and the price """
 
-    def __init__(self, window, name, nameColor, price, priceColor, position, width, proportion=15):
+    def __init__(self, window, name, nameColor, price, priceColor, position, width, proportion=12):
         super().__init__(window, position, width, proportion)
         self.name = name    # name setup
         self.nameColor = nameColor
