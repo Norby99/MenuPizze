@@ -15,6 +15,7 @@ class PizzaMenu2(PizzaMenu):
         self.tkWindowSetup()
         colors = data["colors"] # colors are taken from the setup file
         padding = 20
+        menuMaxColumns = 4
         self.window.configure(background=colors["background"])
 
         pizze = self.pizzeCreator(self.pizzaTypesRequered)
@@ -23,11 +24,11 @@ class PizzaMenu2(PizzaMenu):
         elements = pizze + aggiunte
 
         firstGridColumns = 2
-        firstGridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*firstGridColumns/4, self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
+        firstGridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*firstGridColumns/menuMaxColumns, self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
         cells1 = self.createCells(elements, colors, (firstGridPosition[2]-firstGridPosition[0])/firstGridColumns)
 
         secondGridColumns = 1
-        secondGridPosition = (firstGridPosition[2], self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*secondGridColumns/4+firstGridPosition[2], self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
+        secondGridPosition = (firstGridPosition[2], self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*secondGridColumns/menuMaxColumns+firstGridPosition[2], self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
         cells2 = self.createCells(insalate, colors, (secondGridPosition[2]-secondGridPosition[0])/secondGridColumns)
 
         menuPizze = VerticalGrid(cells1, firstGridPosition, data, maxColumns=firstGridColumns)
