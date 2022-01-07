@@ -34,10 +34,10 @@ class PizzaMenu1(PizzaMenu):
         gridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
         cells = self.createCells(pizze, colors, (gridPosition[2]-gridPosition[0])/gridColumns)
 
-        self.menu = VerticalGrid(cells, gridPosition, data, maxColumns=2)
+        menu = VerticalGrid(cells, gridPosition, data, maxColumns=2)
 
-        self.ShowAll()
-        self.Update()
+        self.show(menu)
+        self.Update(menu)
         self.window.mainloop()
 
 if __name__ == '__main__':
