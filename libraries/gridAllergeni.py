@@ -5,21 +5,21 @@ import tkinter.font as TkFont
 class AllergeniCell(Cell):
     """ This cell contains the legend of Allergens """
 
-    def __init__(self, window, allergens, textColor, position, width):
-        super().__init__(window, position, width, proportion=1)
+    def __init__(self, window, allergen, textColor, position, width, proportion=15):
+        super().__init__(window, position, width, proportion=proportion)
+        self.backGroundColor = window["background"]
+        self.width = width
 
-        del allergens["objType"]
-        self.allergens = allergens
-        
+        self.allergens = allergen["first"] + allergen["second"]
+
         self.textColor = textColor
-        self.allergensFont = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(15), weight='bold')
-        self.canvas.configure(bg='cyan')    #! testing
+        self.font = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(15), weight='bold')
 
         self.createAllergens()
 
     def createAllergens(self):
-        self.textNamePos = [self.windowSpecs.resolutionConverter(5), self.windowSpecs.resolutionConverter(5)]
-        self.textName = self.canvas.create_text(self.textNamePos[0], self.textNamePos[1], anchor= tk.NW, fill=self.nameColor,font=self.nameFont, text=self.name[next(iter(self.name))])
+        self.textName =  self.canvas.create_text(0, 0, anchor= tk.NW, fill=self.textColor, font=self.font, text=self.allergens[0])
+        self.textName =  self.canvas.create_text(self.width, 0, anchor= tk.NE, fill=self.textColor, font=self.font, text=self.allergens[2])
 
     def setAllergensFontFont(self, font):
-        self.allergensFont = font
+        self.font = font
