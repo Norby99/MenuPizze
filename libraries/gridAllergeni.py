@@ -7,7 +7,10 @@ class AllergeniCell(Cell):
 
     def __init__(self, window, allergens, textColor, position, width):
         super().__init__(window, position, width, proportion=1)
-        self.allergens = allergens    # name setup
+
+        del allergens["objType"]
+        self.allergens = allergens
+        
         self.textColor = textColor
         self.allergensFont = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(15), weight='bold')
         self.canvas.configure(bg='cyan')    #! testing
