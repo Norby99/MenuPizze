@@ -21,10 +21,12 @@ class VerticalGrid:
         else:
             cellPosition = [self.margin[0], self.margin[1]]
             for object in self.cells:
-                if object.getBottomCoordinate() > self.margin[3]: # getting next element position
-                    cellPosition = [object.getRightCoordinate(), self.margin[1]]
                 object.setPostion(cellPosition)
                 cellPosition[1] = object.getBottomCoordinate()
+
+                prevObject = object
+                if prevObject.getBottomCoordinate() > self.margin[3]: # getting next element position
+                    cellPosition = [prevObject.getRightCoordinate(), self.margin[1]]
 
                 if object.getRightCoordinate() > self.margin[2]:
                     raise IndexError("Given too many Cell's")
