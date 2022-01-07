@@ -20,9 +20,13 @@ class PizzaMenu2(PizzaMenu):
         pizze = self.pizzeCreator(self.pizzaTypesRequered)
         aggiunte = self.aggiunteCreator()
         insalate = self.insalateCreator()
-        self.elements = pizze + aggiunte + insalate
+        elements = pizze + aggiunte
 
-        self.menu = VerticalGrid(self.window, self.elements, [self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*3/4, self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding)], data, colors, maxColumns=3)
+        firstGridColumns = 2
+        firstGridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*firstGridColumns/4, self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
+        cells = self.createCells(elements, colors, (firstGridPosition[2]-firstGridPosition[0])/firstGridColumns)
+
+        self.menu = VerticalGrid(cells, firstGridPosition, data, maxColumns=2)
 
         self.ShowAll()
         self.Update()
