@@ -68,6 +68,8 @@ class PizzaMenu(ABC):
                             "allergens" : i["allergeni"]
                         })
 
+        insalate.insert(0, {"objType" : "title", "tipo" : "Insalate"})  # added title aggiunte
+
         return insalate
 
     def tkWindowSetup(self):
