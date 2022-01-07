@@ -11,7 +11,7 @@ class InsalataCell(PizzaCell):
     - allergens
     """
     def __init__(self, window, name, nameColor, price, priceColor, ingredients, ingredientsColor, allergens, position, width, proportion=5.76):
-        super().__init__(window, name, nameColor, price, priceColor, ingredients, ingredientsColor, allergens, position, width, proportion=5.76)
+        super().__init__(window, name, nameColor, price, priceColor, ingredients, ingredientsColor, allergens, position, width, proportion=proportion)
         self.name = name    # name setup
         self.nameColor = nameColor
         self.nameFont = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(20), weight='bold')
