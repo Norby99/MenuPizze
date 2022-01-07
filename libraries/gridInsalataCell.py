@@ -2,7 +2,7 @@ from libraries.gridPizzaCell import PizzaCell
 import tkinter as tk
 import tkinter.font as TkFont
 
-class PizzaCell(PizzaCell):
+class InsalataCell(PizzaCell):
     """
     This cell contains:
     - insalata name
