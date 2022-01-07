@@ -76,7 +76,7 @@ class PizzaMenu(ABC):
                             "allergens" : i["allergeni"]
                         })
 
-        insalate.insert(0, {"objType" : "title", "tipo" : "Insalate"})  # added title aggiunte
+        insalate.insert(0, {"objType" : "title", "tipo" : "Insalate  (+spianata)"})  # added title aggiunte
 
         return insalate
 
