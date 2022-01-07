@@ -5,6 +5,7 @@ from libraries.windowSpecs import WindowSpecs
 from libraries.gridTitleCell import TitleCell
 from libraries.gridPizzaCell import PizzaCell
 from libraries.gridAggiuntaCell import AggiuntaCell
+from libraries.gridInsalataCell import InsalataCell
 from PIL import ImageTk,Image 
 import os
 
@@ -52,8 +53,8 @@ class VerticalGrid:
                     tempCell = AggiuntaCell(self.window, {"nome_italiano" : object["nome_aggiunta"], "nome_inglese" : object["nome_inglese"]}, self.colors["generic_text"], object["prezzo"], self.colors["price"], cellPosition, self.cell_width)
                     newCellExists = True
                 elif object["objType"] == "insalata":
-                    pass
-                    #newCellExists = True
+                    tempCell = InsalataCell(self.window, object["nome"], self.colors["titolo"], object["prezzo"], self.colors["price"], {"nome_italiano" : object["ingredienti"], "nome_inglese" : object["ingredientiInglese"]}, self.colors["generic_text"], pizzaAllergens, cellPosition, self.cell_width)
+                    newCellExists = True
 
                 if newCellExists:
                     self.cells.append(tempCell)
