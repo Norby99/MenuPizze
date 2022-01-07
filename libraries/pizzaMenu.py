@@ -78,10 +78,9 @@ class PizzaMenu(ABC):
 
         return insalate
 
-    def createCells(self, objList, colors, cellWidth):
+    def createCells(self, objList, allergens, colors, cellWidth):
         cellPosition = [0, 0]
         cells = []
-        allergens = self.loadAllergeni()
 
         for obj in objList:
             tempCell = False
@@ -142,16 +141,21 @@ class PizzaMenu(ABC):
         self.window.attributes("-fullscreen", self.fullScreenState)
 
     def show(self, menu):
+        """
+        Shows all menu.
+        NOTE : Must be call before update
+        """
+        self.CACHEDMENU = menu
         if isinstance(menu, list):
             for i in menu:
                 i.show()
         else:
             menu.show()
 
-    def update(self, menu):
-        if isinstance(menu, list):
-            for i in menu:
+    def update(self):
+        if isinstance(self.CACHEDMENU, list):
+            for i in self.CACHEDMENU:
                 i.updateCells()
         else:
-            menu.show()
+            self.CACHEDMENU.show()
         self.window.after(2000, self.update)
