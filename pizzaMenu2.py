@@ -24,9 +24,16 @@ class PizzaMenu2(PizzaMenu):
 
         firstGridColumns = 2
         firstGridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*firstGridColumns/4, self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
-        cells = self.createCells(elements, colors, (firstGridPosition[2]-firstGridPosition[0])/firstGridColumns)
+        cells1 = self.createCells(elements, colors, (firstGridPosition[2]-firstGridPosition[0])/firstGridColumns)
 
-        menu = VerticalGrid(cells, firstGridPosition, data, maxColumns=2)
+        secondGridColumns = 1
+        secondGridPosition = (firstGridPosition[2], self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*secondGridColumns/4+firstGridPosition[2], self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
+        cells2 = self.createCells(insalate, colors, (secondGridPosition[2]-secondGridPosition[0])/secondGridColumns)
+
+        menuPizze = VerticalGrid(cells1, firstGridPosition, data, maxColumns=firstGridColumns)
+        menuInsalate = VerticalGrid(cells2, secondGridPosition, data, maxColumns=secondGridColumns)
+
+        menu = [menuPizze, menuInsalate]
 
         self.show(menu)
         self.update(menu)
