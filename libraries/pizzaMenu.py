@@ -5,6 +5,7 @@ from libraries.gridTitleCell import TitleCell
 from libraries.gridPizzaCell import PizzaCell
 from libraries.gridAggiuntaCell import AggiuntaCell
 from libraries.gridInsalataCell import InsalataCell
+from libraries.gridAllergeni import AllergeniCell
 import json
 from PIL import ImageTk,Image 
 import os
@@ -94,6 +95,8 @@ class PizzaMenu(ABC):
             elif obj["objType"] == "insalata":
                 insalataAllergens = [allergens[x] for x in obj["allergens"]]    # filters the allergens to show only those that are in the pizza
                 tempCell = InsalataCell(self.window, obj["nome"], colors["titolo"], obj["prezzo"], colors["price"], {"nome_italiano" : obj["ingredienti"], "nome_inglese" : obj["ingredientiInglese"]}, colors["generic_text"], insalataAllergens, cellPosition, cellWidth)
+            elif obj["objType"] == "allergeni":
+                tempCell = AllergeniCell(self.window, obj, colors["generic_text"], cellPosition, cellWidth)
 
             if tempCell:
                 cells.append(tempCell)
@@ -109,7 +112,7 @@ class PizzaMenu(ABC):
         soia = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "soia.png")).resize(resizeFormat, Image.ANTIALIAS))
         glutine = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "glutine.png")).resize(resizeFormat, Image.ANTIALIAS))
         latticini = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "latticini.png")).resize(resizeFormat, Image.ANTIALIAS))
-        return { "uova" : uova, "pesce" : pesce, "noci" : noci, "soia" : soia, "glutine" : glutine, "latticini" : latticini }
+        return { "objType" : "allergeni", "uova" : uova, "pesce" : pesce, "noci" : noci, "soia" : soia, "glutine" : glutine, "latticini" : latticini }
 
     def tkWindowSetup(self):
         """
