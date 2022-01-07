@@ -23,15 +23,15 @@ class PizzaMenu2(PizzaMenu):
         insalate = self.insalateCreator()
         elements = pizze + aggiunte
 
-        firstGridColumns = 2
+        firstGridColumns = 2    # first menu part generator
         firstGridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*firstGridColumns/menuMaxColumns, self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
         cells1 = self.createCells(elements, colors, (firstGridPosition[2]-firstGridPosition[0])/firstGridColumns)
 
-        secondGridColumns = 1
+        secondGridColumns = 1    # second menu part generator
         secondGridPosition = (firstGridPosition[2], self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*secondGridColumns/menuMaxColumns+firstGridPosition[2], self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
         cells2 = self.createCells(insalate, colors, (secondGridPosition[2]-secondGridPosition[0])/secondGridColumns)
 
-        menuPizze = VerticalGrid(cells1, firstGridPosition, data, maxColumns=firstGridColumns)
+        menuPizze = VerticalGrid(cells1, firstGridPosition, data, maxColumns=firstGridColumns)  # creating the menu part
         menuInsalate = VerticalGrid(cells2, secondGridPosition, data, maxColumns=secondGridColumns)
 
         menu = [menuPizze, menuInsalate]
