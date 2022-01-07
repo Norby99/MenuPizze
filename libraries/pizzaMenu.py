@@ -93,7 +93,8 @@ class PizzaMenu(ABC):
             elif obj["objType"] == "aggiunta":
                 tempCell = AggiuntaCell(self.window, {"nome_italiano" : obj["nome_aggiunta"], "nome_inglese" : obj["nome_inglese"]}, colors["generic_text"], obj["prezzo"], colors["price"], cellPosition, cellWidth)
             elif obj["objType"] == "insalata":
-                tempCell = InsalataCell(self.window, obj["nome"], colors["titolo"], obj["prezzo"], colors["price"], {"nome_italiano" : obj["ingredienti"], "nome_inglese" : obj["ingredientiInglese"]}, colors["generic_text"], pizzaAllergens, cellPosition, cellWidth)
+                insalataAllergens = [allergens[x] for x in obj["allergens"]]    # filters the allergens to show only those that are in the pizza
+                tempCell = InsalataCell(self.window, obj["nome"], colors["titolo"], obj["prezzo"], colors["price"], {"nome_italiano" : obj["ingredienti"], "nome_inglese" : obj["ingredientiInglese"]}, colors["generic_text"], insalataAllergens, cellPosition, cellWidth)
 
             if tempCell:
                 cells.append(tempCell)
