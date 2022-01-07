@@ -1,7 +1,13 @@
 import tkinter as tk
 from libraries.utils import capfirst
 from libraries.windowSpecs import WindowSpecs
+from libraries.gridTitleCell import TitleCell
+from libraries.gridPizzaCell import PizzaCell
+from libraries.gridAggiuntaCell import AggiuntaCell
+from libraries.gridInsalataCell import InsalataCell
 import json
+from PIL import ImageTk,Image 
+import os
 from abc import ABC
 
 class PizzaMenu(ABC):
@@ -71,6 +77,39 @@ class PizzaMenu(ABC):
         insalate.insert(0, {"objType" : "title", "tipo" : "Insalate"})  # added title aggiunte
 
         return insalate
+
+    def createCells(self, objList, colors, cellWidth):
+        cellPosition = [0, 0]
+        cells = []
+        allergens = self.loadAllergeni()
+
+        for obj in objList:
+            tempCell = False
+            if obj["objType"] == "title": # populating the grid with the cells
+                tempCell = TitleCell(self.window, obj["tipo"], colors["p_tipo"], cellPosition, cellWidth)
+            elif obj["objType"] == "pizza":
+                pizzaAllergens = [allergens[x] for x in obj["allergens"]]    # filters the allergens to show only those that are in the pizza
+                tempCell = PizzaCell(self.window, obj["nome"], colors["titolo"], obj["prezzo"], colors["price"], {"nome_italiano" : obj["ingredienti"], "nome_inglese" : obj["ingredientiInglese"]}, colors["generic_text"], pizzaAllergens, cellPosition, cellWidth)
+            elif obj["objType"] == "aggiunta":
+                tempCell = AggiuntaCell(self.window, {"nome_italiano" : obj["nome_aggiunta"], "nome_inglese" : obj["nome_inglese"]}, colors["generic_text"], obj["prezzo"], colors["price"], cellPosition, cellWidth)
+            elif obj["objType"] == "insalata":
+                tempCell = InsalataCell(self.window, obj["nome"], colors["titolo"], obj["prezzo"], colors["price"], {"nome_italiano" : obj["ingredienti"], "nome_inglese" : obj["ingredientiInglese"]}, colors["generic_text"], pizzaAllergens, cellPosition, cellWidth)
+
+            if tempCell:
+                cells.append(tempCell)
+        return cells
+
+    def loadAllergeni(self):
+        targetFile = os.path.join(os.path.curdir, 'resources', "allergeni")
+        resizeFormat = (int(119/6), int(121/6))
+
+        uova = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "uova.png")).resize(resizeFormat, Image.ANTIALIAS))
+        pesce = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "pesce.png")).resize(resizeFormat, Image.ANTIALIAS))
+        noci = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "noci.png")).resize(resizeFormat, Image.ANTIALIAS))
+        soia = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "soia.png")).resize(resizeFormat, Image.ANTIALIAS))
+        glutine = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "glutine.png")).resize(resizeFormat, Image.ANTIALIAS))
+        latticini = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "latticini.png")).resize(resizeFormat, Image.ANTIALIAS))
+        return { "uova" : uova, "pesce" : pesce, "noci" : noci, "soia" : soia, "glutine" : glutine, "latticini" : latticini }
 
     def tkWindowSetup(self):
         """
