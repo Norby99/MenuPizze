@@ -15,7 +15,6 @@ class PizzaMenu2(PizzaMenu):
         self.tkWindowSetup()
         colors = data["colors"] # colors are taken from the setup file
         padding = 20
-        menuMaxColumns = 4
         self.window.configure(background=colors["background"])
 
         pizze = self.pizzeCreator(self.pizzaTypesRequered)
@@ -24,18 +23,11 @@ class PizzaMenu2(PizzaMenu):
         allergeni = self.loadAllergeni()
         allergeniObj = self.allergeniCreator()
 
-        firstGridColumns = 2    # first menu part generator
-        firstGridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*firstGridColumns/menuMaxColumns, self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
-        cells1 = self.createCells(pizze + aggiunte, allergeni, colors, (firstGridPosition[2]-firstGridPosition[0])/firstGridColumns)
+        gridColumns = 4
+        gridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
+        cells = self.createCells(pizze + aggiunte, allergeni, colors, (gridPosition[2]-gridPosition[0])/gridColumns)
 
-        secondGridColumns = 1    # second menu part generator
-        secondGridPosition = (firstGridPosition[2], self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*secondGridColumns/menuMaxColumns+firstGridPosition[2], self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
-        cells2 = self.createCells(insalate+allergeniObj, allergeni, colors, (secondGridPosition[2]-secondGridPosition[0])/secondGridColumns)
-
-        menuPizze = VerticalGrid(cells1, firstGridPosition, data, maxColumns=firstGridColumns)  # creating the menu part
-        menuInsalate = VerticalGrid(cells2, secondGridPosition, data, maxColumns=secondGridColumns)
-
-        menu = [menuPizze, menuInsalate]
+        menu = VerticalGrid(cells, gridPosition, data, maxColumns=gridColumns)
 
         self.show(menu)
         self.update()
