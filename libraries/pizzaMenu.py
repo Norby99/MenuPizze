@@ -118,7 +118,7 @@ class PizzaMenu(ABC):
 
     def loadAllergeni(self):
         targetFile = os.path.join(os.path.curdir, 'resources', "allergeni")
-        resizeFormat = (int(119/6), int(121/6))
+        resizeFormat = (self.windowSpecs.resolutionConverter(119/3), self.windowSpecs.resolutionConverter(121/3))
 
         uova = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "uova.png")).resize(resizeFormat, Image.ANTIALIAS))
         pesce = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "pesce.png")).resize(resizeFormat, Image.ANTIALIAS))
