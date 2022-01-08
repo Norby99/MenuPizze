@@ -79,7 +79,8 @@ class PizzaMenu(ABC):
 
         return insalate
 
-    def allergeniCreator(self, allergens):
+    def allergeniCreator(self):
+        allergens = self.loadAllergeni(scale=2)
         allergensList = []
         keys = sorted(allergens.keys())
 
