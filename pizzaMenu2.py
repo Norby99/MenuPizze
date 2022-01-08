@@ -1,7 +1,6 @@
 from libraries.pizzaMenu import PizzaMenu
 from libraries.PizzaHandler import Pizzas
 from libraries.utils import waitForConnection
-from libraries.windowSpecs import WindowSpecs
 from libraries.verticalGrid import VerticalGrid
 
 class PizzaMenu2(PizzaMenu):
@@ -23,9 +22,11 @@ class PizzaMenu2(PizzaMenu):
         allergeni = self.loadAllergeni()
         allergeniObj = self.allergeniCreator()
 
+        elements = pizze + aggiunte + self.DEFAULT_NEWLINE + insalate + self.DEFAULT_NEWLINE + allergeniObj
+
         gridColumns = 4
         gridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
-        cells = self.createCells(pizze + aggiunte, allergeni, colors, (gridPosition[2]-gridPosition[0])/gridColumns)
+        cells = self.createCells(elements, allergeni, colors, (gridPosition[2]-gridPosition[0])/gridColumns)
 
         menu = VerticalGrid(cells, gridPosition, data, maxColumns=gridColumns)
 
