@@ -21,6 +21,10 @@ class VerticalGrid:
         else:
             cellPosition = [self.margin[0], self.margin[1]]
             for object in self.cells:
+                if isinstance(object, NewColumnCell): # if the cell is of typo of NewColumnCell, it goes to the new column
+                    cellPosition = [prevObject.getRightCoordinate(), self.margin[1]]
+                    continue
+
                 object.setPostion(cellPosition)
                 cellPosition[1] = object.getBottomCoordinate()
 
