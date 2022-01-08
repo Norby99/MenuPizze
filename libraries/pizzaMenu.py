@@ -52,6 +52,8 @@ class PizzaMenu(ABC):
         aggiunte = self.pizza.get_aggiunte()
         for i in aggiunte:
             i["objType"] = "aggiunta"
+            i["nome_aggiunta"] = capfirst(i["nome_aggiunta"])
+            i["nome_inglese"] = capfirst(i["nome_inglese"])
             i["prezzo"] = '€ {:,.2f}'.format(float(i["prezzo"]))
 
         aggiunte.insert(0, {"objType" : "title", "tipo" : "Aggiunte"})  # added title aggiunte
@@ -75,7 +77,7 @@ class PizzaMenu(ABC):
                             "allergens" : i["allergeni"]
                         })
 
-        insalate.insert(0, {"objType" : "title", "tipo" : "Insalate"})  # added title aggiunte
+        insalate.insert(0, {"objType" : "title", "tipo" : "Insalate  (+spianata)"})  # added title aggiunte
 
         return insalate
 
