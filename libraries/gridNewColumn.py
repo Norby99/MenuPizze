@@ -1,7 +1,7 @@
 from libraries.gridCell import Cell
 import tkinter as tk
 
-class NewColumnColumn(Cell):
+class NewColumnCell(Cell):
     """ This cell forces VerticalGrid to go to the next Column """
 
     def __init__(self, window, position, width):
