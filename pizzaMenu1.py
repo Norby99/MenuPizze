@@ -28,11 +28,17 @@ class PizzaMenu1(PizzaMenu):
         padding = 20
         self.window.configure(background=colors["background"])
 
-        self.pizze = self.pizzeCreator(self.pizzaTypesRequered)
-        self.menu = VerticalGrid(self.window, self.pizze, [self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding)], data, colors)
+        pizze = self.pizzeCreator(self.pizzaTypesRequered)
+        allergeni = self.loadAllergeni()
 
-        self.ShowAll()
-        self.Update()
+        gridColumns = 5
+        gridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
+        cells = self.createCells(pizze, allergeni, colors, (gridPosition[2]-gridPosition[0])/gridColumns)
+
+        menu = VerticalGrid(cells, gridPosition, data, maxColumns=2)
+
+        self.show(menu)
+        self.update()
         self.window.mainloop()
 
 if __name__ == '__main__':

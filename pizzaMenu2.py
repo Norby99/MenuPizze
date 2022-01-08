@@ -15,17 +15,30 @@ class PizzaMenu2(PizzaMenu):
         self.tkWindowSetup()
         colors = data["colors"] # colors are taken from the setup file
         padding = 20
+        menuMaxColumns = 4
         self.window.configure(background=colors["background"])
 
         pizze = self.pizzeCreator(self.pizzaTypesRequered)
         aggiunte = self.aggiunteCreator()
         insalate = self.insalateCreator()
-        self.elements = pizze + aggiunte + insalate
+        allergeni = self.loadAllergeni()
+        allergeniObj = self.allergeniCreator()
 
-        self.menu = VerticalGrid(self.window, self.elements, [self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*3/4, self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding)], data, colors, maxColumns=3)
+        firstGridColumns = 2    # first menu part generator
+        firstGridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*firstGridColumns/menuMaxColumns, self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
+        cells1 = self.createCells(pizze + aggiunte, allergeni, colors, (firstGridPosition[2]-firstGridPosition[0])/firstGridColumns)
 
-        self.ShowAll()
-        self.Update()
+        secondGridColumns = 1    # second menu part generator
+        secondGridPosition = (firstGridPosition[2], self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*secondGridColumns/menuMaxColumns+firstGridPosition[2], self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
+        cells2 = self.createCells(insalate+allergeniObj, allergeni, colors, (secondGridPosition[2]-secondGridPosition[0])/secondGridColumns)
+
+        menuPizze = VerticalGrid(cells1, firstGridPosition, data, maxColumns=firstGridColumns)  # creating the menu part
+        menuInsalate = VerticalGrid(cells2, secondGridPosition, data, maxColumns=secondGridColumns)
+
+        menu = [menuPizze, menuInsalate]
+
+        self.show(menu)
+        self.update()
         self.window.mainloop()
 
 if __name__ == '__main__':
