@@ -22,7 +22,7 @@ class PizzaMenu2(PizzaMenu):
         aggiunte = self.aggiunteCreator()
         insalate = self.insalateCreator()
         allergeni = self.loadAllergeni()
-        allergeniObj = self.allergeniCreator(allergeni)
+        allergeniObj = self.allergeniCreator()
 
         firstGridColumns = 2    # first menu part generator
         firstGridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]*firstGridColumns/menuMaxColumns, self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
