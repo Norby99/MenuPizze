@@ -6,12 +6,15 @@ from libraries.gridPizzaCell import PizzaCell
 from libraries.gridAggiuntaCell import AggiuntaCell
 from libraries.gridInsalataCell import InsalataCell
 from libraries.gridAllergeni import AllergeniCell
+from libraries.gridNewColumn import NewColumnColumn
 import json
 from PIL import ImageTk,Image 
 import os
 from abc import ABC
 
 class PizzaMenu(ABC):
+
+    DEFAULT_NEWLINE = [{ "objType" : "NewLine" }]
 
     def loadSetupData(self):
         fname = "setup.json"
@@ -114,6 +117,8 @@ class PizzaMenu(ABC):
                 tempCell = InsalataCell(self.window, obj["nome"], colors["titolo"], obj["prezzo"], colors["price"], {"nome_italiano" : obj["ingredienti"], "nome_inglese" : obj["ingredientiInglese"]}, colors["generic_text"], insalataAllergens, cellPosition, cellWidth)
             elif obj["objType"] == "allergeni":
                 tempCell = AllergeniCell(self.window, obj, colors["generic_text"], cellPosition, cellWidth)
+            elif obj["objType"] == "NewLine":
+                tempCell = NewColumnColumn(self.window, cellPosition, cellWidth)
 
             if tempCell:
                 cells.append(tempCell)
