@@ -6,7 +6,7 @@ from libraries.gridPizzaCell import PizzaCell
 from libraries.gridAggiuntaCell import AggiuntaCell
 from libraries.gridInsalataCell import InsalataCell
 from libraries.gridAllergeni import AllergeniCell
-from libraries.gridNewColumn import NewColumnColumn
+from libraries.gridNewColumn import NewColumnCell
 import json
 from PIL import ImageTk,Image 
 import os
@@ -118,7 +118,7 @@ class PizzaMenu(ABC):
             elif obj["objType"] == "allergeni":
                 tempCell = AllergeniCell(self.window, obj, colors["generic_text"], cellPosition, cellWidth)
             elif obj["objType"] == "NewLine":
-                tempCell = NewColumnColumn(self.window, cellPosition, cellWidth)
+                tempCell = NewColumnCell(self.window, cellPosition, cellWidth)
 
             if tempCell:
                 cells.append(tempCell)
