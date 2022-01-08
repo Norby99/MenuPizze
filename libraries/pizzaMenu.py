@@ -116,9 +116,13 @@ class PizzaMenu(ABC):
                 cells.append(tempCell)
         return cells
 
-    def loadAllergeni(self):
+    def loadAllergeni(self, scale=1):
+        """
+        Loads images of allergens
+        @param scale is the scale of the images based on the default resolution
+        """
         targetFile = os.path.join(os.path.curdir, 'resources', "allergeni")
-        resizeFormat = (self.windowSpecs.resolutionConverter(119/3), self.windowSpecs.resolutionConverter(121/3))
+        resizeFormat = (self.windowSpecs.resolutionConverter(119/6*scale), self.windowSpecs.resolutionConverter(121/6*scale))
 
         uova = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "uova.png")).resize(resizeFormat, Image.ANTIALIAS))
         pesce = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "pesce.png")).resize(resizeFormat, Image.ANTIALIAS))
