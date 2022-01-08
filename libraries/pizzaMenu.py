@@ -87,8 +87,8 @@ class PizzaMenu(ABC):
         for i in range(len(keys) -1):
             allergensList.append({
                 "objType" : "allergeni",
-                "first" : [keys[i], allergens[keys[i]]],
-                "second" : [keys[i+1], allergens[keys[i+1]]]
+                "first" : [capfirst(keys[i]), allergens[keys[i]]],
+                "second" : [capfirst(keys[i+1]), allergens[keys[i+1]]]
             })
         allergensList.insert(0, {"objType" : "title", "tipo" : "Legenda allergeni"})  # added title Allergeni
 
