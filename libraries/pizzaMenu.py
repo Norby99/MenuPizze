@@ -1,12 +1,12 @@
 import tkinter as tk
 from libraries.utils import capfirst
 from libraries.windowSpecs import WindowSpecs
-from libraries.gridTitleCell import TitleCell
-from libraries.gridPizzaCell import PizzaCell
-from libraries.gridAggiuntaCell import AggiuntaCell
-from libraries.gridInsalataCell import InsalataCell
-from libraries.gridAllergeni import AllergeniCell
-from libraries.gridNewColumn import NewColumnCell
+from libraries.cells.gridTitleCell import TitleCell
+from libraries.cells.gridPizzaCell import PizzaCell
+from libraries.cells.gridAggiuntaCell import AggiuntaCell
+from libraries.cells.gridInsalataCell import InsalataCell
+from libraries.cells.gridAllergeni import AllergeniCell
+from libraries.cells.gridNewColumn import NewColumnCell
 import json
 from PIL import ImageTk,Image 
 import os

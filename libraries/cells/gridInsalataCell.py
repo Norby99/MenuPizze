@@ -1,4 +1,4 @@
-from libraries.gridPizzaCell import PizzaCell
+from libraries.cells.gridPizzaCell import PizzaCell
 import tkinter as tk
 import tkinter.font as TkFont
 

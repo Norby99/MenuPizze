@@ -1,4 +1,4 @@
-from libraries.gridCell import Cell
+from libraries.cells.gridCell import Cell
 import tkinter as tk
 
 class NewColumnCell(Cell):

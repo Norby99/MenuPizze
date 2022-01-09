@@ -1,6 +1,6 @@
 from libraries.database import database
 import tkinter as tk
-from libraries.gridNewColumn import NewColumnCell
+from libraries.cells.gridNewColumn import NewColumnCell
 from libraries.windowSpecs import WindowSpecs
 
 class VerticalGrid:
