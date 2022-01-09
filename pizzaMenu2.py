@@ -1,6 +1,6 @@
 from libraries.pizzaMenu import PizzaMenu
 from libraries.pizzaHandler import Pizzas
-from libraries.utils import waitForConnection
+from libraries.utils.utils import waitForConnection
 from libraries.verticalGrid import VerticalGrid
 
 class PizzaMenu2(PizzaMenu):

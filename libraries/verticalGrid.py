@@ -1,7 +1,7 @@
-from libraries.database import database
+from libraries.utils.database import database
 import tkinter as tk
 from libraries.cells.gridNewColumn import NewColumnCell
-from libraries.windowSpecs import WindowSpecs
+from libraries.utils.windowSpecs import WindowSpecs
 
 class VerticalGrid:
     def __init__(self, cells, margini, dbData, maxColumns=5):

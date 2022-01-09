@@ -1,8 +1,8 @@
-from libraries.cloud import Cloud
+from libraries.utils.cloud import Cloud
 import json
 from os import path
-from libraries.database import database, saveJsonFile
-from libraries.utils import fileIsOld
+from libraries.utils.database import database, saveJsonFile
+from libraries.utils.utils import fileIsOld
 
 class Pizzas():
     """

@@ -1,4 +1,4 @@
-from libraries.windowSpecs import WindowSpecs
+from libraries.utils.windowSpecs import WindowSpecs
 import tkinter as tk
 from abc import ABC
 
