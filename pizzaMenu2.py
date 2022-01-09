@@ -20,9 +20,10 @@ class PizzaMenu2(PizzaMenu):
         aggiunte = self.aggiunteCreator()
         insalate = self.insalateCreator()
         allergeni = self.loadAllergeni()
+        logo = self.logoCreator()
         allergeniObj = self.allergeniCreator()
 
-        elements = pizze + aggiunte + self.DEFAULT_NEWLINE + insalate + self.DEFAULT_NEWLINE + allergeniObj
+        elements = pizze + aggiunte + self.DEFAULT_NEWLINE + insalate + self.DEFAULT_NEWLINE + logo + allergeniObj
 
         gridColumns = 4
         gridPosition = (self.windowSpecs.resolutionConverter(padding), 0, self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1])
