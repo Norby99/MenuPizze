@@ -7,6 +7,7 @@ from libraries.cells.gridAggiuntaCell import AggiuntaCell
 from libraries.cells.gridInsalataCell import InsalataCell
 from libraries.cells.gridAllergeni import AllergeniCell
 from libraries.cells.gridNewColumn import NewColumnCell
+from libraries.cells.gridImageCell import ImageCell
 import json
 from PIL import ImageTk,Image 
 import os
@@ -99,6 +100,12 @@ class PizzaMenu(ABC):
 
         return allergensList
 
+    def logoCreator(self):
+        return {
+            "objType" : "image",
+            "image" : "/resources/images/Piccola-Italia-logo.pdf"
+        }
+
     def createCells(self, objList, allergens, colors, cellWidth):
         cellPosition = [0, 0]
         cells = []
@@ -119,6 +126,8 @@ class PizzaMenu(ABC):
                 tempCell = AllergeniCell(self.window, obj, colors["generic_text"], cellPosition, cellWidth)
             elif obj["objType"] == "NewLine":
                 tempCell = NewColumnCell(self.window, cellPosition, cellWidth)
+            elif obj["objType"] == "image":
+                tempCell = ImageCell(self.window, obj["image"], cellPosition, cellWidth)
 
             if tempCell:
                 cells.append(tempCell)
