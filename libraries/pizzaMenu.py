@@ -101,10 +101,12 @@ class PizzaMenu(ABC):
         return allergensList
 
     def logoCreator(self):
-        return {
+        targetFile = os.path.join(os.path.curdir, 'resources', 'images')
+        image = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "Piccola-Italia-logo.png")))
+        return [{
             "objType" : "image",
-            "image" : "/resources/images/Piccola-Italia-logo.pdf"
-        }
+            "image" : image
+        }]
 
     def createCells(self, objList, allergens, colors, cellWidth):
         cellPosition = [0, 0]
