@@ -1,17 +1,21 @@
 import tkinter as tk
-from libraries.utils import capfirst
-from libraries.windowSpecs import WindowSpecs
-from libraries.gridTitleCell import TitleCell
-from libraries.gridPizzaCell import PizzaCell
-from libraries.gridAggiuntaCell import AggiuntaCell
-from libraries.gridInsalataCell import InsalataCell
-from libraries.gridAllergeni import AllergeniCell
+from libraries.utils.utils import capfirst
+from libraries.utils.windowSpecs import WindowSpecs
+from libraries.cells.gridTitleCell import TitleCell
+from libraries.cells.gridPizzaCell import PizzaCell
+from libraries.cells.gridAggiuntaCell import AggiuntaCell
+from libraries.cells.gridInsalataCell import InsalataCell
+from libraries.cells.gridAllergeni import AllergeniCell
+from libraries.cells.gridNewColumn import NewColumnCell
+from libraries.cells.gridImageCell import ImageCell
 import json
 from PIL import ImageTk,Image 
 import os
 from abc import ABC
 
 class PizzaMenu(ABC):
+
+    DEFAULT_NEWLINE = [{ "objType" : "NewLine" }]
 
     def loadSetupData(self):
         fname = "setup.json"
@@ -96,6 +100,14 @@ class PizzaMenu(ABC):
 
         return allergensList
 
+    def logoCreator(self):
+        targetFile = os.path.join(os.path.curdir, 'resources', 'images')
+        image = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "Piccola-Italia-logo.png")))
+        return [{
+            "objType" : "image",
+            "image" : image
+        }]
+
     def createCells(self, objList, allergens, colors, cellWidth):
         cellPosition = [0, 0]
         cells = []
@@ -114,6 +126,10 @@ class PizzaMenu(ABC):
                 tempCell = InsalataCell(self.window, obj["nome"], colors["titolo"], obj["prezzo"], colors["price"], {"nome_italiano" : obj["ingredienti"], "nome_inglese" : obj["ingredientiInglese"]}, colors["generic_text"], insalataAllergens, cellPosition, cellWidth)
             elif obj["objType"] == "allergeni":
                 tempCell = AllergeniCell(self.window, obj, colors["generic_text"], cellPosition, cellWidth)
+            elif obj["objType"] == "NewLine":
+                tempCell = NewColumnCell(self.window, cellPosition, cellWidth)
+            elif obj["objType"] == "image":
+                tempCell = ImageCell(self.window, obj["image"], cellPosition, cellWidth)
 
             if tempCell:
                 cells.append(tempCell)
