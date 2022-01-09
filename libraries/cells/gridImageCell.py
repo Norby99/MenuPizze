@@ -1,8 +1,6 @@
 from libraries.cells.gridCell import Cell
 import tkinter as tk
-import tkinter.font as TkFont
-
-#? Note that i only tested this class with vecotial images. I don't know if it works with scalar images too
+from PIL import Image 
 
 class ImageCell(Cell):
     """
@@ -10,3 +8,11 @@ class ImageCell(Cell):
     """
     def __init__(self, window, image, position, width, proportion=1):
         super().__init__(window, position, width, proportion)
+        resizeFormat = (image.width(), image.height())
+        print(resizeFormat)
+        self.image = image._PhotoImage__photo.zoom(1)
+
+        self.showImage()
+
+    def showImage(self):
+        self.canvas.create_image(0, 0, image=self.image, anchor=tk.NW)
