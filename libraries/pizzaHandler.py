@@ -14,13 +14,19 @@ class Pizzas():
         self.data = jsonData
         self.cloud = Cloud(self.data["m_key"])
 
-    def downloadAllFromCloud(self):
-        """ Checks if the files are too old and then downloads all from the cloud and creats the json files """
+    def downloadAllFromCloud(self, force=False):
+        """
+        Checks if the files are too old and then downloads all from the cloud and creats the json files
+        @param force : if True, download the files even if the files aren't old
+        """
 
-        if fileIsOld(self.filePathInResources("aggiunte.json")):
+        if force:
             self.effectiveDownload()
         else:
-            self.loadPizzasFromJson()
+            if fileIsOld(self.filePathInResources("aggiunte.json")):
+                self.effectiveDownload()
+            else:
+                self.loadPizzasFromJson()
 
     def loadPizzasFromJson(self):
         with open(self.filePathInResources('pizze.json')) as f:
