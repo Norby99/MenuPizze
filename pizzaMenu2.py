@@ -9,7 +9,7 @@ class PizzaMenu2(PizzaMenu):
         data = self.loadSetupData()
         self.pizza = Pizzas(data)
         self.pizzaTypesRequered = ["Impasto Napoletano", "Pizze Dolci"] # the pizza types that have to be visualized
-        self.pizza.downloadAllFromCloud()
+        self.pizza.downloadAllFromCloud(force=True)
         
         self.tkWindowSetup()
         colors = data["colors"] # colors are taken from the setup file

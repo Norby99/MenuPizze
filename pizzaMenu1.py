@@ -9,7 +9,7 @@ class PizzaMenu1(PizzaMenu):
         data = self.loadSetupData()
         self.pizza = Pizzas(data)
         self.pizzaTypesRequered = ["Pizze classiche", "Pizze bianche", "Pizze conditissime"] # the pizza types that have to be visualized
-        self.pizza.downloadAllFromCloud()
+        self.pizza.downloadAllFromCloud(force=True)
         
         self.tkWindowSetup()
 
