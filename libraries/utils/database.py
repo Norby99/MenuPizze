@@ -119,7 +119,7 @@ def saveJsonFile(fileName, jsonObj):
         f.write(jsonObj)
 
 if __name__ == "__main__":
-    with open("setup.json") as f:
+    with open("DBsetup.json") as f:
         data = json.load(f)
     db = database("localhost", data["dbUserName"], data["dbPassword"], data["dbData2BeUploaded"])
     data = db.read_data()
