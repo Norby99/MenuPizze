@@ -1,5 +1,6 @@
 import tkinter as tk
 from libraries.utils.utils import capfirst
+from libraries.utils.database import database
 from libraries.utils.windowSpecs import WindowSpecs
 from libraries.cells.gridTitleCell import TitleCell
 from libraries.cells.gridPizzaCell import PizzaCell
@@ -17,10 +18,12 @@ class PizzaMenu(ABC):
 
     DEFAULT_NEWLINE = [{ "objType" : "NewLine" }]
 
-    def loadSetupData(self):
-        fname = "setup.json"
+    def loadJsonData(self, fname):
         with open(fname) as f:
             return json.load(f)
+
+    def connect2db(self, data):
+        self.dbConnection = database("localhost", data["dbUserName"], data["dbPassword"], data["dbData"])
 
     def pizzeCreator(self, pizzaType="*"):     ### crea un dizionario con tutte le pizze e i suoi atributi
         """
