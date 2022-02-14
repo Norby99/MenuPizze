@@ -14,8 +14,6 @@ class Cloud():
         headers = {'X-Master-Key': self.mKey}
 
         try:
-            print("url: ", url)
-            print("h: ", headers)
             req = requests.get(url, headers=headers)
             data = json.dumps(req.json(), indent = 4)
             return data
