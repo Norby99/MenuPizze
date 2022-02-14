@@ -172,9 +172,5 @@ class Pizzas():
         return path.join("resources", "pizzeJson", file)
 
 if __name__ == "__main__":
-    """p = Pizzas("setup.json")
-    p.downloadAllFromCloud()"""
-
-    #la seguente parte di codice mi servira per uploaddare il menu modificato
     p = Pizzas("setup.json")
-    p.uploadAll()
+    p.downloadAllFromCloud()

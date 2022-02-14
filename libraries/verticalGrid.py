@@ -1,19 +1,16 @@
-from libraries.utils.database import database
 import tkinter as tk
 from libraries.cells.gridNewColumn import NewColumnCell
-from libraries.utils.windowSpecs import WindowSpecs
 
 class VerticalGrid:
     def __init__(self, cells, margini, dbData, maxColumns=5):
         """
         Defines a vertical grid that show some cell
-        @maxRows if defined, sets a max height for all cells (default to False)
         """
         self.cells = cells
         self.maxColumns = maxColumns
         self.margin = margini
 
-        self.db = database("localhost", dbData["dbUserName"], dbData["dbPassword"], dbData["dbData"])
+        self.db = dbData
 
     def show(self, update=False):
         if update:

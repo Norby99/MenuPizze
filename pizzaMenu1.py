@@ -6,8 +6,10 @@ from libraries.pizzaMenu import PizzaMenu
 class PizzaMenu1(PizzaMenu):
 
     def __init__(self):
-        data = self.loadSetupData()
-        self.pizza = Pizzas(data)
+        data = self.loadJsonData("setup.json")
+        dbData = self.loadJsonData("DBsetup.json")
+        self.connect2db(dbData)
+        self.pizza = Pizzas(dbData)
         self.pizzaTypesRequered = ["Pizze classiche", "Pizze bianche", "Pizze conditissime"] # the pizza types that have to be visualized
         self.pizza.downloadAllFromCloud(force=True)
         
@@ -35,7 +37,7 @@ class PizzaMenu1(PizzaMenu):
         gridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
         cells = self.createCells(pizze, allergeni, colors, (gridPosition[2]-gridPosition[0])/gridColumns)
 
-        menu = VerticalGrid(cells, gridPosition, data, maxColumns=2)
+        menu = VerticalGrid(cells, gridPosition, self.dbConnection, maxColumns=2)
 
         self.show(menu)
         self.update()

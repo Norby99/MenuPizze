@@ -1,0 +1,11 @@
+{
+    "m_key": "API key used to log to my server",
+    "pizze": "website that load pizzas as json",
+    "ingredienti": "website that load ingredienti as json",
+    "aggiunte": "website that load aggiunte as json",
+    "insalate": "website that load insalate as json",
+    "dbUserName": "the db username",
+    "dbPassword": "the db pass",
+    "dbData": "database that contains the current language",
+    "dbData2BeUploaded": "@depracated it is the db that will contain the pizza data"
+}
