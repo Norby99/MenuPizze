@@ -14,7 +14,7 @@ class Cloud():
         headers = {'X-Master-Key': self.mKey}
 
         try:
-            req = requests.get(url, headers=headers, verify=False)
+            req = requests.get(url, headers=headers)
             data = json.dumps(req.json(), indent = 4)
             return data
         except requests.exceptions.RequestException as err:
