@@ -105,7 +105,7 @@ class PizzaMenu(ABC):
 
     def logoCreator(self):
         targetFile = os.path.join(os.path.curdir, 'resources', 'images')
-        image = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "Piccola-Italia-logo.png")))
+        image = Image.open(os.path.join(targetFile, "Piccola-Italia-logo.png"))
         return [{
             "objType" : "image",
             "image" : image
