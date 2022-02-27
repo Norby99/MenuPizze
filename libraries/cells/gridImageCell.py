@@ -1,15 +1,18 @@
 from libraries.cells.gridCell import Cell
 import tkinter as tk
+from PIL import ImageTk,Image 
 import math
 
 class ImageCell(Cell):
     """
     This cell contains the logo of the Pizzeria
+    @param image is a PIL image
     """
     def __init__(self, window, image, position, width, proportion=1):
         super().__init__(window, position, width, proportion)
-        resizeFormat = int(math.ceil(image.width()/width))
-        self.image = image._PhotoImage__photo.subsample(resizeFormat)
+        new_image_width = math.trunc(width)
+        new_image_height = math.trunc(image.size[1]*new_image_width/image.size[0])
+        self.image = ImageTk.PhotoImage(image.resize((new_image_width,new_image_height), Image.ANTIALIAS))
 
         self.showImage()
 
