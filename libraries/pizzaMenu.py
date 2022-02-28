@@ -142,8 +142,18 @@ class PizzaMenu(ABC):
         """
         Loads all the social logos and returns a list with them
         """
+
+        targetFile = os.path.join(os.path.curdir, 'resources', 'images')
+
         logos = []
-        #TODO load the logos
+        logos.append(Image.open(os.path.join(targetFile, "Facebook-logo.png")))
+        logos.append(Image.open(os.path.join(targetFile, "Instagram-logo.png")))
+        logos.append(Image.open(os.path.join(targetFile, "TripAdvisor-Logo.png")))
+
+        return [{
+            "objType" : "logosContainer",
+            "images" : logos
+        }]
 
     def loadAllergeni(self, scale=1):
         """
