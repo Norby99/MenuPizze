@@ -138,6 +138,13 @@ class PizzaMenu(ABC):
                 cells.append(tempCell)
         return cells
 
+    def loadSocialLogos(self):
+        """
+        Loads all the social logos and returns a list with them
+        """
+        logos = []
+        #TODO load the logos
+
     def loadAllergeni(self, scale=1):
         """
         Loads images of allergens
