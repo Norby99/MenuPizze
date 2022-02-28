@@ -5,11 +5,11 @@ from PIL import ImageTk,Image
 class SocialLogos(Cell):
     """
     This cell contains the logo of the Pizzeria
-    @param image is a PIL image
+    @param logos is an array of PIL images
     """
-    def __init__(self, window, image, position, width, proportion=1):
+    def __init__(self, window, logos, position, width, proportion=1):
         super().__init__(window, position, width, proportion)
-        image_size = 4/5    # represents the size of the image compared to the cell size 
+        #* image_size = 4/5    # represents the size of the image compared to the cell size 
         new_image_width = math.trunc(width * image_size)
         new_image_height = math.trunc(image.size[1] * new_image_width / image.size[0])
         self.image = ImageTk.PhotoImage(image.resize((new_image_width,new_image_height), Image.ANTIALIAS))
