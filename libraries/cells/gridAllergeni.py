@@ -12,7 +12,7 @@ class AllergeniCell(Cell):
         allergens = allergen["first"] + allergen["second"]
 
         self.textColor = textColor
-        self.font = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(15), weight='bold')
+        self.font = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(20), weight='bold')
 
         self.createText(allergens[0])
         self.createText(allergens[2], left=False)
