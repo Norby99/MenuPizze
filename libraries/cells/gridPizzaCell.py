@@ -20,7 +20,7 @@ class PizzaCell(Cell):
         self.priceFont = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(18), weight='bold')
         self.ingredients = ingredients  # ingredients setup
         self.ingredientsColor = ingredientsColor
-        self.ingredientsFont = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(15))
+        self.ingredientsFont = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(16))
         self.allergens = allergens
         if self.allergens:
             self.allergensImageSize = self.allergens[0].width()
