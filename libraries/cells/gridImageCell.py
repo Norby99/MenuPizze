@@ -10,9 +10,10 @@ class ImageCell(Cell):
     """
     def __init__(self, window, image, position, width, proportion=1):
         super().__init__(window, position, width, proportion)
-        new_image_width = math.trunc(width)
-        new_image_height = math.trunc(image.size[1]*new_image_width/image.size[0])
-        self.image = ImageTk.PhotoImage(image.resize((new_image_width,new_image_height), Image.ANTIALIAS))
+        image_size = 4/5    # represents the size of the image compared to the cell size 
+        new_image_width = math.trunc(width * image_size)
+        new_image_height = math.trunc(image.size[1] * new_image_width / image.size[0])
+        self.image = ImageTk.PhotoImage(image.resize((new_image_width, new_image_height), Image.ANTIALIAS))
 
         self.showImage()
 

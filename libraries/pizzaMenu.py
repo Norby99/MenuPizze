@@ -9,6 +9,7 @@ from libraries.cells.gridInsalataCell import InsalataCell
 from libraries.cells.gridAllergeni import AllergeniCell
 from libraries.cells.gridNewColumn import NewColumnCell
 from libraries.cells.gridImageCell import ImageCell
+from libraries.cells.gridSocialLogos import SocialLogos
 import json
 from PIL import ImageTk,Image 
 import os
@@ -133,10 +134,30 @@ class PizzaMenu(ABC):
                 tempCell = NewColumnCell(self.window, cellPosition, cellWidth)
             elif obj["objType"] == "image":
                 tempCell = ImageCell(self.window, obj["image"], cellPosition, cellWidth)
+            elif obj["objType"] == "logosContainer":
+                tempCell = SocialLogos(self.window, obj["images"], cellPosition, cellWidth)
+            else:
+                raise ValueError(f'The cell type {obj["objType"]} does not exist.')
 
             if tempCell:
                 cells.append(tempCell)
         return cells
+
+    def loadSocialLogos(self):
+        """
+        Loads all the social logos and returns a list with them
+        """
+
+        targetFile = os.path.join(os.path.curdir, 'resources', 'social_logos')
+
+        logos = []
+        for image_name in os.listdir(targetFile):
+            logos.append(Image.open(os.path.join(targetFile, image_name)))
+
+        return [{
+            "objType" : "logosContainer",
+            "images" : logos
+        }]
 
     def loadAllergeni(self, scale=1):
         """
