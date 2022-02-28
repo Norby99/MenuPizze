@@ -22,6 +22,8 @@ class SocialLogos(Cell):
         self.showImage()
 
     def showImage(self):
-        for logo in self.social_logos:
-            center = (self.dimensions[0]/2, self.dimensions[1]/2)
-            self.canvas.create_image(center[0], center[1], image=logo, anchor=tk.CENTER)
+        n_logos = len(self.social_logos)
+        position = [0, self.dimensions[1]/2]
+        for i, logo in enumerate(self.social_logos):
+            position[0] = self.dimensions[0]/n_logos*(i+1/2)    # finds the x position of each image
+            self.canvas.create_image(position[0], position[1], image=logo, anchor=tk.CENTER)
