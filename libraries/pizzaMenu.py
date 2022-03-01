@@ -217,9 +217,9 @@ class PizzaMenu(ABC):
             menu.show()
 
     def update(self):
-        if isinstance(self.CACHEDMENU, list):
+        if isinstance(self.CACHEDMENU, list):   # if there are more than 1 vertical grids
             for i in self.CACHEDMENU:
                 i.updateCells()
         else:
-            self.CACHEDMENU.show()
+            self.CACHEDMENU.updateCells()
         self.window.after(2000, self.update)
