@@ -12,11 +12,3 @@ class InsalataCell(PizzaCell):
     """
     def __init__(self, window, name, nameColor, price, priceColor, ingredients, ingredientsColor, allergens, position, width, proportion=5.76):
         super().__init__(window, name, nameColor, price, priceColor, ingredients, ingredientsColor, allergens, position, width, proportion=proportion)
-        self.allergens = allergens
-        if self.allergens:
-            self.allergensImageSize = self.allergens[0].width()
-
-        self.createName()
-        self.createPrice()
-        self.createIngredients()
-        self.showAllergeni()
