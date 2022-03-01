@@ -6,6 +6,7 @@
     "insalate": "website that load insalate as json",
     "dbUserName": "the db username",
     "dbPassword": "the db pass",
+    "restaurantName": "the name of the restaurant in the db",
     "dbData": "database that contains the current language",
     "dbData2BeUploaded": "@depracated it is the db that will contain the pizza data"
 }
