@@ -7,12 +7,13 @@ import datetime
 class database():
     connectionTracker = True #remouves spam comments
 
-    def __init__(self, host, user, password, database):
+    def __init__(self, host, user, password, database, restaurant_name=""):
         self.host = host
         self.user = user
         self.password = password
         self.database = database
         self.con = self.connect()
+        self.restaurant_name = restaurant_name
         if self.con != None:
             print("Connected")
             self.con.close()
@@ -97,13 +98,20 @@ class database():
 
     def getCurrentLanguage(self):
         try:
-            self.con = self.connect()
-            cursor = self.con.cursor(buffered=True)
-            query = """SELECT lingua
-                    FROM `lingua`"""
-            cursor.execute(query)
-            self.con.close()
-            return cursor.fetchone()[0]
+            if self.restaurant_name != "":
+                self.con = self.connect()
+                cursor = self.con.cursor(buffered=True)
+                query = f"""
+                    SELECT language_name
+                    FROM `restaurants`
+                    INNER JOIN languages ON restaurants.id_language = languages.id
+                    WHERE restaurants.restaurant_name = '{self.restaurant_name}';
+                    """
+                cursor.execute(query)
+                self.con.close()
+                return cursor.fetchone()[0]
+            else:
+                return "nome_italiano"
         except:
             return "nome_italiano"
 
@@ -122,7 +130,7 @@ if __name__ == "__main__":
     with open("DBsetup.json") as f:
         data = json.load(f)
     db = database("localhost", data["dbUserName"], data["dbPassword"], data["dbData2BeUploaded"])
-    data = db.read_data()
+    data = db.  read_data()
     for i in data:
         print(i, "\n")
 

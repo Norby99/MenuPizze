@@ -24,7 +24,7 @@ class PizzaMenu(ABC):
             return json.load(f)
 
     def connect2db(self, data):
-        self.dbConnection = database("localhost", data["dbUserName"], data["dbPassword"], data["dbData"])
+        self.dbConnection = database(data["ipOfServer"], data["dbUserName"], data["dbPassword"], data["dbData"], restaurant_name=data["restaurantName"])
 
     def pizzeCreator(self, pizzaType="*"):     ### crea un dizionario con tutte le pizze e i suoi atributi
         """
@@ -217,9 +217,9 @@ class PizzaMenu(ABC):
             menu.show()
 
     def update(self):
-        if isinstance(self.CACHEDMENU, list):
+        if isinstance(self.CACHEDMENU, list):   # if there are more than 1 vertical grids
             for i in self.CACHEDMENU:
                 i.updateCells()
         else:
-            self.CACHEDMENU.show()
+            self.CACHEDMENU.updateCells()
         self.window.after(2000, self.update)
