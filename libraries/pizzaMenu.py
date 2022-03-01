@@ -24,7 +24,7 @@ class PizzaMenu(ABC):
             return json.load(f)
 
     def connect2db(self, data):
-        self.dbConnection = database("localhost", data["dbUserName"], data["dbPassword"], data["dbData"])
+        self.dbConnection = database("localhost", data["dbUserName"], data["dbPassword"], data["dbData"], restaurant_name=data["restaurantName"])
 
     def pizzeCreator(self, pizzaType="*"):     ### crea un dizionario con tutte le pizze e i suoi atributi
         """
