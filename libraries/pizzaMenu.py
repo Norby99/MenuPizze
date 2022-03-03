@@ -1,6 +1,6 @@
 import tkinter as tk
 from libraries.utils.utils import capfirst
-from libraries.utils.database import database
+from libraries.utils.languageHandler import LanguageHandler
 from libraries.utils.windowSpecs import WindowSpecs
 from libraries.cells.gridTitleCell import TitleCell
 from libraries.cells.gridPizzaCell import PizzaCell
@@ -24,7 +24,7 @@ class PizzaMenu(ABC):
             return json.load(f)
 
     def connect2db(self, data):
-        self.dbConnection = database(data["ipOfServer"], data["dbUserName"], data["dbPassword"], data["dbData"], restaurant_name=data["restaurantName"])
+        self.LHandler = LanguageHandler(data['languageSite'] + "/" + data['restaurantName'] + ".php", data['defaultLanguage'], token=data['m_key'])
 
     def pizzeCreator(self, pizzaType="*"):     ### crea un dizionario con tutte le pizze e i suoi atributi
         """
@@ -222,4 +222,4 @@ class PizzaMenu(ABC):
                 i.updateCells()
         else:
             self.CACHEDMENU.updateCells()
-        self.window.after(2000, self.update)
+        self.window.after(5000, self.update)
