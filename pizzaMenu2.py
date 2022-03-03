@@ -32,7 +32,7 @@ class PizzaMenu2(PizzaMenu):
         gridPosition = (self.windowSpecs.resolutionConverter(padding), 0, self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1])
         cells = self.createCells(elements, allergeni, colors, (gridPosition[2]-gridPosition[0])/gridColumns)
 
-        menu = VerticalGrid(cells, gridPosition, self.dbConnection, maxColumns=gridColumns)
+        menu = VerticalGrid(cells, gridPosition, self.LHandler, maxColumns=gridColumns)
 
         self.show(menu)
         self.update()
