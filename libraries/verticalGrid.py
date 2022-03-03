@@ -2,7 +2,7 @@ import tkinter as tk
 from libraries.cells.gridNewColumn import NewColumnCell
 
 class VerticalGrid:
-    def __init__(self, cells, margini, dbData, maxColumns=5):
+    def __init__(self, cells, margini, LHandler, maxColumns=5):
         """
         Defines a vertical grid that show some cell
         """
@@ -10,7 +10,7 @@ class VerticalGrid:
         self.maxColumns = maxColumns
         self.margin = margini
 
-        self.db = dbData
+        self.LHandler = LHandler
 
     def show(self, update=False):
         if update:
@@ -40,4 +40,4 @@ class VerticalGrid:
                 i.update(testoLingua)
 
     def getLingua(self):
-        return self.db.getCurrentLanguage()
+        return self.LHandler.getCurrentLanguage()

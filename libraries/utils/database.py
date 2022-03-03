@@ -133,4 +133,3 @@ if __name__ == "__main__":
     data = db.  read_data()
     for i in data:
         print(i, "\n")
-
