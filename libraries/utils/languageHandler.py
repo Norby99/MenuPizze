@@ -1,4 +1,6 @@
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util import Retry
 import json
 
 class LanguageHandler():
@@ -17,6 +19,12 @@ class LanguageHandler():
 
     def getCurrentLanguage(self):
         try:
+            session = requests.Session()
+            retry = Retry(connect=3, backoff_factor=0.5)
+            adapter = HTTPAdapter(max_retries=retry)
+            session.mount('http://', adapter)
+            session.mount('https://', adapter)
+            
             if self.token != "":
                 req = requests.get(self.website, headers={'X-Master-Key': self.token})
             else:
@@ -43,4 +51,3 @@ if __name__ == "__main__":
     LHandler = LanguageHandler(data['languageSite'] + "/" + data['restaurantName'] + ".php", data['defaultLanguage'], token=data['m_key'])
     while True:
         print(LHandler.getCurrentLanguage())
-
