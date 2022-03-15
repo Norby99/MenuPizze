@@ -2,13 +2,14 @@ from libraries.pizzaMenu import PizzaMenu
 from libraries.pizzaHandler import Pizzas
 from libraries.utils.utils import waitForConnection
 from libraries.verticalGrid import VerticalGrid
+from libraries.utils.languageHandler import LanguageHandler
 
 class PizzaMenu2(PizzaMenu):
 
     def __init__(self):
         data = self.loadJsonData("setup.json")
         dbData = self.loadJsonData("DBsetup.json")
-        self.connect2db(dbData)
+        self.LHandler = LanguageHandler(dbData['languageSite'] + "/" + dbData['restaurantName'] + ".php", dbData['defaultLanguage'], token=dbData['m_key'], no_connection=True)
         self.pizza = Pizzas(dbData)
         self.pizzaTypesRequered = ["Impasto Napoletano", "Pizze Dolci"] # the pizza types that have to be visualized
         self.pizza.downloadAllFromCloud(force=True)
