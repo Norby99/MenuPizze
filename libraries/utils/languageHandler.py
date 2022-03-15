@@ -6,18 +6,23 @@ import json
 class LanguageHandler():
     connectionTracker = True    # remouves spam comments
 
-    def __init__(self, website, default_language, token=""):
+    def __init__(self, website, default_language, token="", no_connection=False):
         """
         This class reads the language (a text shown on a website)
         @param website is the link to the website (eg. 192.168.1.1/request)
         @param default_language is the default language that will be returned in case the website is not reachable
         @param token is optinal and is the autentication token to log in the website
+        @param no_connection is optinal and if set to True, it always return the default language
         """
         self.website = website
         self.default_language = default_language
         self.token = token
+        self.no_connection = no_connection
 
     def getCurrentLanguage(self):
+        if self.no_connection:
+            return self.default_language
+
         try:
             session = requests.Session()
             retry = Retry(connect=3, backoff_factor=0.5)
