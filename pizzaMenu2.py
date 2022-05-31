@@ -26,8 +26,9 @@ class PizzaMenu2(PizzaMenu):
         logo = self.logoCreator()
         social_logos = self.loadSocialLogos()
         allergeniObj = self.allergeniCreator()
+        coperto = self.simpleTextCreator(["coperto"])
 
-        elements = pizze + aggiunte + self.DEFAULT_NEWLINE + insalate + self.DEFAULT_NEWLINE + logo + social_logos + allergeniObj
+        elements = pizze + aggiunte + self.DEFAULT_NEWLINE + insalate + self.DEFAULT_NEWLINE + logo + social_logos + allergeniObj + coperto
 
         gridColumns = 4
         gridPosition = (self.windowSpecs.resolutionConverter(padding), 0, self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1])
