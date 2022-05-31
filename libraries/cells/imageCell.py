@@ -1,4 +1,4 @@
-from libraries.cells.gridCell import Cell
+from libraries.cells.AbstractCell import Cell
 import tkinter as tk
 from PIL import ImageTk,Image 
 import math

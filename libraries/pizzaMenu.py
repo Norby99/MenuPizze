@@ -2,14 +2,14 @@ import tkinter as tk
 from libraries.utils.utils import capfirst
 from libraries.utils.languageHandler import LanguageHandler
 from libraries.utils.windowSpecs import WindowSpecs
-from libraries.cells.gridTitleCell import TitleCell
-from libraries.cells.gridPizzaCell import PizzaCell
-from libraries.cells.gridAggiuntaCell import AggiuntaCell
-from libraries.cells.gridInsalataCell import InsalataCell
-from libraries.cells.gridAllergeni import AllergeniCell
-from libraries.cells.gridNewColumn import NewColumnCell
-from libraries.cells.gridImageCell import ImageCell
-from libraries.cells.gridSocialLogos import SocialLogos
+from libraries.cells.titleCell import TitleCell
+from libraries.cells.pizzaCell import PizzaCell
+from libraries.cells.aggiuntaCell import AggiuntaCell
+from libraries.cells.insalataCell import InsalataCell
+from libraries.cells.allergeniCell import AllergeniCell
+from libraries.cells.newColumn import NewColumnCell
+from libraries.cells.imageCell import ImageCell
+from libraries.cells.socialLogos import SocialLogos
 import json
 from PIL import ImageTk,Image 
 import os
