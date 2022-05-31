@@ -2,7 +2,7 @@ from libraries.cells.AbstractCell import Cell
 import tkinter as tk
 import tkinter.font as TkFont
 
-class SimpleText(Cell):
+class SimpleTextCell(Cell):
 
     __text: str
     __text_color: str
@@ -16,7 +16,7 @@ class SimpleText(Cell):
 
         self.create_text()
 
-    def create_text(self):
+    def create_text(self) -> None:
         sr = self.windowSpecs.resolutionConverter
 
         self.canvas.create_text(sr(5), self.dimensions[1]/2, anchor=tk.W, fill=self.__text_color, font=self.font, text=self.__text)
