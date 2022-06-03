@@ -2,14 +2,16 @@ import tkinter as tk
 from libraries.utils.utils import capfirst
 from libraries.utils.languageHandler import LanguageHandler
 from libraries.utils.windowSpecs import WindowSpecs
-from libraries.cells.gridTitleCell import TitleCell
-from libraries.cells.gridPizzaCell import PizzaCell
-from libraries.cells.gridAggiuntaCell import AggiuntaCell
-from libraries.cells.gridInsalataCell import InsalataCell
-from libraries.cells.gridAllergeni import AllergeniCell
-from libraries.cells.gridNewColumn import NewColumnCell
-from libraries.cells.gridImageCell import ImageCell
-from libraries.cells.gridSocialLogos import SocialLogos
+from libraries.cells.AbstractCell import Cell
+from libraries.cells.titleCell import TitleCell
+from libraries.cells.pizzaCell import PizzaCell
+from libraries.cells.aggiuntaCell import AggiuntaCell
+from libraries.cells.insalataCell import InsalataCell
+from libraries.cells.allergeniCell import AllergeniCell
+from libraries.cells.newColumn import NewColumnCell
+from libraries.cells.imageCell import ImageCell
+from libraries.cells.socialLogos import SocialLogos
+from libraries.cells.simpleTextCell import SimpleTextCell
 import json
 from PIL import ImageTk,Image 
 import os
@@ -26,7 +28,7 @@ class PizzaMenu(ABC):
     def connect2db(self, data):
         self.LHandler = LanguageHandler(data['languageSite'] + "/" + data['restaurantName'] + ".php", data['defaultLanguage'], token=data['m_key'])
 
-    def pizzeCreator(self, pizzaType="*"):     ### crea un dizionario con tutte le pizze e i suoi atributi
+    def pizzeCreator(self, pizzaType="*") -> list[dict]:     ### crea un dizionario con tutte le pizze e i suoi atributi
         """
         creates a dictionary with all the pizzas that have the @pizzaType
         @pizzaType it's a list, or it can be "*" (default) for all elements
@@ -53,7 +55,24 @@ class PizzaMenu(ABC):
                         })
         return pizze
 
-    def aggiunteCreator(self):
+    def simpleTextCreator(self, text_list) -> list[dict]:
+        """
+        creates a dictionary with all the simple text
+        """
+
+        text = []
+
+        for i in text_list:
+            text.append({
+                "objType" : "simple_text",
+                "text" : i,
+                "font_size" : 34
+            })
+
+        return text
+
+
+    def aggiunteCreator(self) -> list[dict]:
         """
         creates a dictionary with all the aggiunte
         """
@@ -67,7 +86,7 @@ class PizzaMenu(ABC):
         aggiunte.insert(0, {"objType" : "title", "tipo" : "Aggiunte"})  # added title aggiunte
         return aggiunte
 
-    def insalateCreator(self):
+    def insalateCreator(self) -> list[dict]:
         """
         creates a dictionary with all the "insalate"
         """
@@ -89,7 +108,7 @@ class PizzaMenu(ABC):
 
         return insalate
 
-    def allergeniCreator(self):
+    def allergeniCreator(self) -> list[dict]:
         allergens = self.loadAllergeni(scale=2)
         allergensList = []
         keys = sorted(allergens.keys())
@@ -104,7 +123,7 @@ class PizzaMenu(ABC):
 
         return allergensList
 
-    def logoCreator(self):
+    def logoCreator(self) -> list[dict]:
         targetFile = os.path.join(os.path.curdir, 'resources', 'images')
         image = Image.open(os.path.join(targetFile, "Piccola-Italia-logo.png"))
         return [{
@@ -112,7 +131,7 @@ class PizzaMenu(ABC):
             "image" : image
         }]
 
-    def createCells(self, objList, allergens, colors, cellWidth):
+    def createCells(self, objList, allergens, colors, cellWidth) -> list[Cell]:
         cellPosition = [0, 0]
         cells = []
 
@@ -136,6 +155,8 @@ class PizzaMenu(ABC):
                 tempCell = ImageCell(self.window, obj["image"], cellPosition, cellWidth)
             elif obj["objType"] == "logosContainer":
                 tempCell = SocialLogos(self.window, obj["images"], cellPosition, cellWidth)
+            elif obj["objType"] == "simple_text":
+                tempCell = SimpleTextCell(self.window, obj["text"], colors["generic_text"], obj["font_size"], cellPosition, cellWidth)
             else:
                 raise ValueError(f'The cell type {obj["objType"]} does not exist.')
 

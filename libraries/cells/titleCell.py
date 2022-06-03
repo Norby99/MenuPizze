@@ -1,4 +1,4 @@
-from libraries.cells.gridCell import Cell
+from libraries.cells.AbstractCell import Cell
 import tkinter as tk
 import tkinter.font as TkFont
 
@@ -17,7 +17,7 @@ class TitleCell(Cell):
         shadowPosition = 3
         sr = self.windowSpecs.resolutionConverter
 
-        self.canvas.create_text(sr(5)+shadowPosition, self.dimensions[1]/2+shadowPosition, anchor= tk.W, fill="#BBBBBB", font=self.font, text=self.title) # shadow text
+        self.canvas.create_text(sr(5)+shadowPosition, self.dimensions[1]/2+shadowPosition, anchor=tk.W, fill="#BBBBBB", font=self.font, text=self.title) # shadow text
         self.canvas.create_text(sr(5)+1, self.dimensions[1]/2+1, anchor= tk.W, fill="#000000", font=self.font, text=self.title) # outer outline
         self.canvas.create_text(sr(5)-1, self.dimensions[1]/2-1, anchor= tk.W, fill="#000000", font=self.font, text=self.title) # inner outline
         self.canvas.create_text(sr(5), self.dimensions[1]/2, anchor= tk.W, fill=self.textColor, font=self.font, text=self.title) # text body

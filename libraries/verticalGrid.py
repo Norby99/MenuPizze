@@ -1,5 +1,5 @@
 import tkinter as tk
-from libraries.cells.gridNewColumn import NewColumnCell
+from libraries.cells.newColumn import NewColumnCell
 
 class VerticalGrid:
     def __init__(self, cells, margini, LHandler, maxColumns=5):
