@@ -28,7 +28,7 @@ class PizzaMenu(ABC):
     def connect2db(self, data):
         self.LHandler = LanguageHandler(data['languageSite'] + "/" + data['restaurantName'] + ".php", data['defaultLanguage'], token=data['m_key'])
 
-    def pizzeCreator(self, pizzaType="*") -> list[dict]:     ### crea un dizionario con tutte le pizze e i suoi atributi
+    def pizzeCreator(self, pizzaType="*"):     ### crea un dizionario con tutte le pizze e i suoi atributi
         """
         creates a dictionary with all the pizzas that have the @pizzaType
         @pizzaType it's a list, or it can be "*" (default) for all elements
@@ -55,7 +55,7 @@ class PizzaMenu(ABC):
                         })
         return pizze
 
-    def simpleTextCreator(self, text_list) -> list[dict]:
+    def simpleTextCreator(self, text_list):
         """
         creates a dictionary with all the simple text
         """
@@ -72,7 +72,7 @@ class PizzaMenu(ABC):
         return text
 
 
-    def aggiunteCreator(self) -> list[dict]:
+    def aggiunteCreator(self):
         """
         creates a dictionary with all the aggiunte
         """
@@ -86,7 +86,7 @@ class PizzaMenu(ABC):
         aggiunte.insert(0, {"objType" : "title", "tipo" : "Aggiunte"})  # added title aggiunte
         return aggiunte
 
-    def insalateCreator(self) -> list[dict]:
+    def insalateCreator(self):
         """
         creates a dictionary with all the "insalate"
         """
@@ -108,7 +108,7 @@ class PizzaMenu(ABC):
 
         return insalate
 
-    def allergeniCreator(self) -> list[dict]:
+    def allergeniCreator(self):
         allergens = self.loadAllergeni(scale=2)
         allergensList = []
         keys = sorted(allergens.keys())
@@ -123,7 +123,7 @@ class PizzaMenu(ABC):
 
         return allergensList
 
-    def logoCreator(self) -> list[dict]:
+    def logoCreator(self):
         targetFile = os.path.join(os.path.curdir, 'resources', 'images')
         image = Image.open(os.path.join(targetFile, "Piccola-Italia-logo.png"))
         return [{
@@ -131,7 +131,7 @@ class PizzaMenu(ABC):
             "image" : image
         }]
 
-    def createCells(self, objList, allergens, colors, cellWidth) -> list[Cell]:
+    def createCells(self, objList, allergens, colors, cellWidth):
         cellPosition = [0, 0]
         cells = []
 
