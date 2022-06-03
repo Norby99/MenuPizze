@@ -26,7 +26,7 @@ class PizzaMenu2(PizzaMenu):
         logo = self.logoCreator()
         social_logos = self.loadSocialLogos()
         allergeniObj = self.allergeniCreator()
-        coperto = self.simpleTextCreator(["coperto"])
+        coperto = self.simpleTextCreator(["Consumazione sul posto 0.50€"])
 
         elements = pizze + aggiunte + self.DEFAULT_NEWLINE + insalate + self.DEFAULT_NEWLINE + logo + social_logos + allergeniObj + coperto
 

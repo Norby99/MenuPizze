@@ -19,4 +19,4 @@ class SimpleTextCell(Cell):
     def create_text(self) -> None:
         sr = self.windowSpecs.resolutionConverter
 
-        self.canvas.create_text(sr(5), self.dimensions[1]/2, anchor=tk.W, fill=self.__text_color, font=self.font, text=self.__text)
+        self.canvas.create_text(self.dimensions[0]/2, self.dimensions[1]/2, anchor=tk.CENTER, fill=self.__text_color, font=self.font, text=self.__text)

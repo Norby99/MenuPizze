@@ -66,7 +66,7 @@ class PizzaMenu(ABC):
             text.append({
                 "objType" : "simple_text",
                 "text" : i,
-                "font_size" : 12
+                "font_size" : 34
             })
 
         return text
