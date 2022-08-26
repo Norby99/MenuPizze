@@ -2,13 +2,13 @@ import tkinter as tk
 from libraries.cells.newColumn import NewColumnCell
 
 class VerticalGrid:
-    def __init__(self, cells, margini, LHandler, maxColumns=5):
+    def __init__(self, cells, margin, LHandler, maxColumns=5):
         """
         Defines a vertical grid that show some cell
         """
         self.cells = cells
         self.maxColumns = maxColumns
-        self.margin = margini
+        self.margin = margin
 
         self.LHandler = LHandler
 
