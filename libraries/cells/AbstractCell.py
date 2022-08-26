@@ -32,7 +32,3 @@ class Cell(ABC):
     def setPostion(self, coord):
         self.position = coord
         self.canvas.place(x=self.position[0], y=self.position[1], anchor=tk.NW)
-
-    def setWidth(self, width):
-        self.dimensions = [width, width/self.proportion]
-        self.canvas.config(width=self.dimensions[0], height=self.dimensions[1])
