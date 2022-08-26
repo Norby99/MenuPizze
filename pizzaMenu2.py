@@ -19,16 +19,8 @@ class PizzaMenu2(PizzaMenu):
         padding = 20
         self.window.configure(background=colors["background"])
 
-        pizze = self.pizzeCreator(self.pizzaTypesRequered)
-        aggiunte = self.aggiunteCreator()
-        insalate = self.insalateCreator()
         allergeni = self.loadAllergeni()
-        logo = self.logoCreator()
-        social_logos = self.loadSocialLogos()
-        allergeniObj = self.allergeniCreator()
-        coperto = self.simpleTextCreator(["Consumazione sul posto 0.50€"])
-
-        elements = pizze + aggiunte + self.DEFAULT_NEWLINE + insalate + self.DEFAULT_NEWLINE + logo + social_logos + allergeniObj + coperto
+        elements = self.cellsElementsGetter()
 
         gridColumns = 4
         gridPosition = (self.windowSpecs.resolutionConverter(padding), 0, self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1])
@@ -39,6 +31,17 @@ class PizzaMenu2(PizzaMenu):
         self.show(menu)
         self.update()
         self.window.mainloop()
+
+    def cellsElementsGetter(self):
+        pizze = self.pizzeCreator(self.pizzaTypesRequered)
+        aggiunte = self.aggiunteCreator()
+        insalate = self.insalateCreator()
+        logo = self.logoCreator()
+        social_logos = self.loadSocialLogos()
+        allergeniObj = self.allergeniCreator()
+        coperto = self.simpleTextCreator(["Consumazione sul posto 0.50€"])
+
+        return pizze + aggiunte + self.DEFAULT_NEWLINE + insalate + self.DEFAULT_NEWLINE + logo + social_logos + allergeniObj + coperto
 
 if __name__ == '__main__':
     waitForConnection()
