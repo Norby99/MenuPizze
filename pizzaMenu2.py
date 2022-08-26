@@ -20,12 +20,12 @@ class PizzaMenu2(PizzaMenu):
         padding = 20
         self.window.configure(background=colors["background"])
 
-        allergeni = self.loadAllergeni()
-        elements = self.cellsElementsGetter()
-
         gridColumns = 4
         gridPosition = (self.windowSpecs.resolutionConverter(padding), 0, self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1])
-        cells = self.createCells(elements, allergeni, (gridPosition[2]-gridPosition[0])/gridColumns)
+        self._columnWidth = (gridPosition[2]-gridPosition[0])/gridColumns
+
+        self.allergens = self.loadAllergeni()
+        cells = self.cellsElementsGetter()
 
         menu = VerticalGrid(cells, gridPosition, self.LHandler, maxColumns=gridColumns)
 
@@ -34,16 +34,17 @@ class PizzaMenu2(PizzaMenu):
         self.window.mainloop()
 
     def cellsElementsGetter(self):
-        pizze = self.pizzeCreator(self.pizzaTypesRequered)
+        """ pizze = self.pizzeCreator(self.pizzaTypesRequered)
         aggiunte = self.aggiunteCreator()
         insalate = self.insalateCreator()
         logo = self.logoCreator()
-        social_logos = self.loadSocialLogos()
+        social_logos = self.loadSocialLogos() """
         allergeniObj = self.allergeniCreator()
-        coperto = self.simpleTextCreator(["Consumazione sul posto 0.50€"])
-        menuSettimana = self.menuSettimanaCreator()
+        """ coperto = self.simpleTextCreator(["Consumazione sul posto 0.50€"])
+        menuSettimana = self.menuSettimanaCreator() """
 
-        return pizze + aggiunte + self.DEFAULT_NEWLINE + insalate + self.DEFAULT_NEWLINE + logo + social_logos + allergeniObj + coperto + menuSettimana
+        return allergeniObj
+        #return pizze + aggiunte + self.newColumnCreator() + insalate + self.newColumnCreator() + logo + social_logos + allergeniObj + coperto + menuSettimana
 
 if __name__ == '__main__':
     waitForConnection()

@@ -20,8 +20,9 @@ from abc import ABC
 
 class PizzaMenu(ABC):
 
-    DEFAULT_NEWLINE = [{ "objType" : "NewLine" }]
     _font_colors: dict
+    _allergens: dict
+    _columnWidth: float
 
     def loadJsonData(self, fname):
         with open(fname) as f:
@@ -42,19 +43,12 @@ class PizzaMenu(ABC):
         for i in data:
             if (i["nome_tipo"] in pizzaType) or pizzaType == "*":
                 if i["nome_tipo"] != tipo_pizza:
-                    pizze.append({"objType" : "title", "tipo" : i["nome_tipo"]})
                     tipo_pizza = i["nome_tipo"]
+                    pizze.append(TitleCell(self.window, i["nome_tipo"], self._font_colors["p_tipo"], [0, 0], self._columnWidth))
 
-                pizze.append({
-                            "objType" : "pizza",
-                            "id" : int(i["id"]),
-                            "nome": i["nomePizza"],
-                            "tipo" : i["nome_tipo"],
-                            "prezzo" : '€ {:,.2f}'.format(float(i["prezzo"])),
-                            "ingredienti" : capfirst(", ".join(str(x) for x in i["ingredienti"].split(","))),
-                            "ingredientiInglese" : capfirst(", ".join(str(x) for x in i["ingredientiInglese"].split(","))),
-                            "allergens" : i["allergeni"]
-                        })
+                pizzaAllergens = [self.allergens[x] for x in i["allergeni"]]    # filters the allergens to show only those that are in the pizza
+                pizze.append(PizzaCell(self.window, i["nomePizza"], self._font_colors["titolo"], '€ {:,.2f}'.format(float(i["prezzo"])), self._font_colors["price"], {"nome_italiano" : capfirst(", ".join(str(x) for x in i["ingredienti"].split(","))), "nome_inglese" : capfirst(", ".join(str(x) for x in i["ingredientiInglese"].split(",")))}, self._font_colors["generic_text"], pizzaAllergens, [0, 0], self._columnWidth))
+        
         return pizze
 
     def simpleTextCreator(self, text_list):
@@ -65,13 +59,12 @@ class PizzaMenu(ABC):
         text = []
 
         for i in text_list:
-            text.append({
-                "objType" : "simple_text",
-                "text" : i,
-                "font_size" : 34
-            })
+            text.append(SimpleTextCell(self.window, i, self._font_colors["generic_text"], 34, [0, 0], self._columnWidth))
 
         return text
+
+    def newColumnCreator(self):
+        return [NewColumnCell(self.window, [0, 0], self._columnWidth)]
 
     def menuSettimanaCreator(self):
         """
@@ -85,25 +78,20 @@ class PizzaMenu(ABC):
             "Venerdi - Patatine fritte"
         ]
 
-        return [{
-            "objType" : "menu_settimana",
-            "title" : "Menu della settimana",
-            "body" : menuSettimana
-        }]
+        return [MenuSettimanaCell(self.window, "Menu della settimana", menuSettimana, [0, 0], self._columnWidth)]
 
     def aggiunteCreator(self):
         """
         creates a dictionary with all the aggiunte
         """
+        aggiunteCell = []
+        aggiunteCell.append(TitleCell(self.window, "Aggiunte", self._font_colors["p_tipo"], [0, 0], self._columnWidth))
+
         aggiunte = self.pizza.get_aggiunte()
         for i in aggiunte:
-            i["objType"] = "aggiunta"
-            i["nome_aggiunta"] = capfirst(i["nome_aggiunta"])
-            i["nome_inglese"] = capfirst(i["nome_inglese"])
-            i["prezzo"] = '€ {:,.2f}'.format(float(i["prezzo"]))
+            aggiunteCell.append(AggiuntaCell(self.window, {"nome_italiano" : capfirst(i["nome_aggiunta"]), "nome_inglese" : capfirst(i["nome_inglese"])}, self._font_colors["generic_text"], '€ {:,.2f}'.format(float(i["prezzo"])), self._font_colors["price"], [0, 0], self._columnWidth))
 
-        aggiunte.insert(0, {"objType" : "title", "tipo" : "Aggiunte"})  # added title aggiunte
-        return aggiunte
+        return aggiunteCell
 
     def insalateCreator(self):
         """
@@ -112,18 +100,11 @@ class PizzaMenu(ABC):
         insalate = []
         data = self.pizza.get_insalate(True)
 
-        for i in data:
-            insalate.append({
-                            "objType" : "insalata",
-                            "id" : int(i["id"]),
-                            "nome": i["nomeInsalata"],
-                            "prezzo" : '€ {:,.2f}'.format(float(i["prezzo"])),
-                            "ingredienti" : capfirst(", ".join(str(x) for x in i["ingredienti"].split(","))),
-                            "ingredientiInglese" : capfirst(", ".join(str(x) for x in i["ingredientiInglese"].split(","))),
-                            "allergens" : i["allergeni"]
-                        })
+        insalate.append(TitleCell(self.window, "Insalate  (+spianata)", self._font_colors["p_tipo"], [0, 0], self._columnWidth))
 
-        insalate.insert(0, {"objType" : "title", "tipo" : "Insalate  (+spianata)"})  # added title aggiunte
+        for i in data:
+            insalataAllergens = [self.allergens[x] for x in i["allergeni"]]    # filters the allergens to show only those that are in the pizza
+            insalate.append(InsalataCell(self.window, i["nomeInsalata"], self._font_colors["titolo"], '€ {:,.2f}'.format(float(i["prezzo"])), self._font_colors["price"], {"nome_italiano" : capfirst(", ".join(str(x) for x in i["ingredienti"].split(","))), "nome_inglese" : capfirst(", ".join(str(x) for x in i["ingredientiInglese"].split(",")))}, self._font_colors["generic_text"], insalataAllergens, [0, 0], self._columnWidth))
 
         return insalate
 
@@ -132,23 +113,28 @@ class PizzaMenu(ABC):
         allergensList = []
         keys = sorted(allergens.keys())
 
+        allergensList.append(TitleCell(self.window, "Legenda allergeni", self._font_colors["p_tipo"], [0, 0], self._columnWidth))
         for i in range(len(keys) -1):
-            allergensList.append({
-                "objType" : "allergeni",
-                "first" : [capfirst(keys[i]), allergens[keys[i]]],
-                "second" : [capfirst(keys[i+1]), allergens[keys[i+1]]]
-            })
-        allergensList.insert(0, {"objType" : "title", "tipo" : "Legenda allergeni"})  # added title Allergeni
+            allergensList.append(AllergeniCell(self.window, {"first" : [capfirst(keys[i]), allergens[keys[i]]], "second" : [capfirst(keys[i+1]), allergens[keys[i+1]]]}, self._font_colors["generic_text"], [0, 0], self._columnWidth))
 
         return allergensList
 
     def logoCreator(self):
         targetFile = os.path.join(os.path.curdir, 'resources', 'images')
         image = Image.open(os.path.join(targetFile, "Piccola-Italia-logo.png"))
-        return [{
-            "objType" : "image",
-            "image" : image
-        }]
+        return [ImageCell(self.window, image, [0, 0], self._columnWidth)]
+
+    def loadSocialLogos(self):
+        """
+        Loads all the social logos and returns a list with them
+        """
+        targetFile = os.path.join(os.path.curdir, 'resources', 'social_logos')
+
+        logos = []
+        for image_name in os.listdir(targetFile):
+            logos.append(Image.open(os.path.join(targetFile, image_name)))
+
+        return [SocialLogos(self.window, logos, [0, 0], self._columnWidth)]
 
     def createCells(self, objList, allergens, cellWidth):
         cellPosition = [0, 0]
@@ -184,22 +170,6 @@ class PizzaMenu(ABC):
             if tempCell:
                 cells.append(tempCell)
         return cells
-
-    def loadSocialLogos(self):
-        """
-        Loads all the social logos and returns a list with them
-        """
-
-        targetFile = os.path.join(os.path.curdir, 'resources', 'social_logos')
-
-        logos = []
-        for image_name in os.listdir(targetFile):
-            logos.append(Image.open(os.path.join(targetFile, image_name)))
-
-        return [{
-            "objType" : "logosContainer",
-            "images" : logos
-        }]
 
     def loadAllergeni(self, scale=1):
         """
