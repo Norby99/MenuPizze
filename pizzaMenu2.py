@@ -40,8 +40,9 @@ class PizzaMenu2(PizzaMenu):
         social_logos = self.loadSocialLogos()
         allergeniObj = self.allergeniCreator()
         coperto = self.simpleTextCreator(["Consumazione sul posto 0.50€"])
+        menuSettimana = self.menuSettimanaCreator()
 
-        return pizze + aggiunte + self.DEFAULT_NEWLINE + insalate + self.DEFAULT_NEWLINE + logo + social_logos + allergeniObj + coperto
+        return pizze + aggiunte + self.DEFAULT_NEWLINE + insalate + self.DEFAULT_NEWLINE + logo + social_logos + allergeniObj + coperto + menuSettimana
 
 if __name__ == '__main__':
     waitForConnection()

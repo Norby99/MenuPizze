@@ -71,6 +71,23 @@ class PizzaMenu(ABC):
 
         return text
 
+    def menuSettimanaCreator(self):
+        """
+        Creates menu della settimana
+        """
+
+        # TODO: this is hardcoded and needs to be changed
+        menuSettimana = [
+            "Lunedi - Cappelletti",
+            "Mercoledi - Pollo arrosto",
+            "Venerdi - Patatine fritte"
+        ]
+
+        return [{
+            "objType" : "simple_text",
+            "title" : "Menu della settimana",
+            "body" : menuSettimana
+        }]
 
     def aggiunteCreator(self):
         """
