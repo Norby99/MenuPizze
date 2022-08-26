@@ -12,7 +12,5 @@ class MenuSettimanaCell(Cell):
                 The title of the cell
             rows : list[str]
                 The body of the cell
-
-            See 
         """
         super().__init__(window, position, width, proportion)
