@@ -12,6 +12,7 @@ from libraries.cells.newColumn import NewColumnCell
 from libraries.cells.imageCell import ImageCell
 from libraries.cells.socialLogos import SocialLogos
 from libraries.cells.simpleTextCell import SimpleTextCell
+from libraries.cells.menuSettimanaCell import MenuSettimanaCell
 import json
 from PIL import ImageTk,Image 
 import os
@@ -174,6 +175,8 @@ class PizzaMenu(ABC):
                 tempCell = SocialLogos(self.window, obj["images"], cellPosition, cellWidth)
             elif obj["objType"] == "simple_text":
                 tempCell = SimpleTextCell(self.window, obj["text"], colors["generic_text"], obj["font_size"], cellPosition, cellWidth)
+            elif obj["objType"] == "menu_settimana":
+                tempCell = MenuSettimanaCell(self.window, obj["text"], colors["generic_text"], obj["font_size"], cellPosition, cellWidth)
             else:
                 raise ValueError(f'The cell type {obj["objType"]} does not exist.')
 
