@@ -176,7 +176,7 @@ class PizzaMenu(ABC):
             elif obj["objType"] == "simple_text":
                 tempCell = SimpleTextCell(self.window, obj["text"], colors["generic_text"], obj["font_size"], cellPosition, cellWidth)
             elif obj["objType"] == "menu_settimana":
-                tempCell = MenuSettimanaCell(self.window, obj["text"], colors["generic_text"], obj["font_size"], cellPosition, cellWidth)
+                tempCell = MenuSettimanaCell(self.window, obj["title"], obj["body"], cellPosition, cellWidth)
             else:
                 raise ValueError(f'The cell type {obj["objType"]} does not exist.')
 
