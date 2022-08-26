@@ -84,7 +84,7 @@ class PizzaMenu(ABC):
         ]
 
         return [{
-            "objType" : "simple_text",
+            "objType" : "menu_settimana",
             "title" : "Menu della settimana",
             "body" : menuSettimana
         }]
