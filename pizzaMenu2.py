@@ -16,6 +16,7 @@ class PizzaMenu2(PizzaMenu):
         
         self.tkWindowSetup()
         colors = data["colors"] # colors are taken from the setup file
+        self.setFontColors(colors)
         padding = 20
         self.window.configure(background=colors["background"])
 
@@ -24,7 +25,7 @@ class PizzaMenu2(PizzaMenu):
 
         gridColumns = 4
         gridPosition = (self.windowSpecs.resolutionConverter(padding), 0, self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1])
-        cells = self.createCells(elements, allergeni, colors, (gridPosition[2]-gridPosition[0])/gridColumns)
+        cells = self.createCells(elements, allergeni, (gridPosition[2]-gridPosition[0])/gridColumns)
 
         menu = VerticalGrid(cells, gridPosition, self.LHandler, maxColumns=gridColumns)
 

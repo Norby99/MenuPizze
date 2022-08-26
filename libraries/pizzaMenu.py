@@ -21,6 +21,7 @@ from abc import ABC
 class PizzaMenu(ABC):
 
     DEFAULT_NEWLINE = [{ "objType" : "NewLine" }]
+    _font_colors: dict
 
     def loadJsonData(self, fname):
         with open(fname) as f:
@@ -149,24 +150,24 @@ class PizzaMenu(ABC):
             "image" : image
         }]
 
-    def createCells(self, objList, allergens, colors, cellWidth):
+    def createCells(self, objList, allergens, cellWidth):
         cellPosition = [0, 0]
         cells = []
 
         for obj in objList:
             tempCell = False
             if obj["objType"] == "title": # populating the grid with the cells
-                tempCell = TitleCell(self.window, obj["tipo"], colors["p_tipo"], cellPosition, cellWidth)
+                tempCell = TitleCell(self.window, obj["tipo"], self._font_colors["p_tipo"], cellPosition, cellWidth)
             elif obj["objType"] == "pizza":
                 pizzaAllergens = [allergens[x] for x in obj["allergens"]]    # filters the allergens to show only those that are in the pizza
-                tempCell = PizzaCell(self.window, obj["nome"], colors["titolo"], obj["prezzo"], colors["price"], {"nome_italiano" : obj["ingredienti"], "nome_inglese" : obj["ingredientiInglese"]}, colors["generic_text"], pizzaAllergens, cellPosition, cellWidth)
+                tempCell = PizzaCell(self.window, obj["nome"], self._font_colors["titolo"], obj["prezzo"], self._font_colors["price"], {"nome_italiano" : obj["ingredienti"], "nome_inglese" : obj["ingredientiInglese"]}, self._font_colors["generic_text"], pizzaAllergens, cellPosition, cellWidth)
             elif obj["objType"] == "aggiunta":
-                tempCell = AggiuntaCell(self.window, {"nome_italiano" : obj["nome_aggiunta"], "nome_inglese" : obj["nome_inglese"]}, colors["generic_text"], obj["prezzo"], colors["price"], cellPosition, cellWidth)
+                tempCell = AggiuntaCell(self.window, {"nome_italiano" : obj["nome_aggiunta"], "nome_inglese" : obj["nome_inglese"]}, self._font_colors["generic_text"], obj["prezzo"], self._font_colors["price"], cellPosition, cellWidth)
             elif obj["objType"] == "insalata":
                 insalataAllergens = [allergens[x] for x in obj["allergens"]]    # filters the allergens to show only those that are in the pizza
-                tempCell = InsalataCell(self.window, obj["nome"], colors["titolo"], obj["prezzo"], colors["price"], {"nome_italiano" : obj["ingredienti"], "nome_inglese" : obj["ingredientiInglese"]}, colors["generic_text"], insalataAllergens, cellPosition, cellWidth)
+                tempCell = InsalataCell(self.window, obj["nome"], self._font_colors["titolo"], obj["prezzo"], self._font_colors["price"], {"nome_italiano" : obj["ingredienti"], "nome_inglese" : obj["ingredientiInglese"]}, self._font_colors["generic_text"], insalataAllergens, cellPosition, cellWidth)
             elif obj["objType"] == "allergeni":
-                tempCell = AllergeniCell(self.window, obj, colors["generic_text"], cellPosition, cellWidth)
+                tempCell = AllergeniCell(self.window, obj, self._font_colors["generic_text"], cellPosition, cellWidth)
             elif obj["objType"] == "NewLine":
                 tempCell = NewColumnCell(self.window, cellPosition, cellWidth)
             elif obj["objType"] == "image":
@@ -174,7 +175,7 @@ class PizzaMenu(ABC):
             elif obj["objType"] == "logosContainer":
                 tempCell = SocialLogos(self.window, obj["images"], cellPosition, cellWidth)
             elif obj["objType"] == "simple_text":
-                tempCell = SimpleTextCell(self.window, obj["text"], colors["generic_text"], obj["font_size"], cellPosition, cellWidth)
+                tempCell = SimpleTextCell(self.window, obj["text"], self._font_colors["generic_text"], obj["font_size"], cellPosition, cellWidth)
             elif obj["objType"] == "menu_settimana":
                 tempCell = MenuSettimanaCell(self.window, obj["title"], obj["body"], cellPosition, cellWidth)
             else:
@@ -215,6 +216,13 @@ class PizzaMenu(ABC):
         glutine = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "glutine.png")).resize(resizeFormat, Image.ANTIALIAS))
         latticini = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "latticini.png")).resize(resizeFormat, Image.ANTIALIAS))
         return { "uova" : uova, "pesce" : pesce, "noci" : noci, "soia" : soia, "glutine" : glutine, "latticini" : latticini }
+
+    def setFontColors(self, colors) -> None:
+        """
+        Sets the font colors
+        """
+        self._font_colors = colors
+
 
     def tkWindowSetup(self):
         """
