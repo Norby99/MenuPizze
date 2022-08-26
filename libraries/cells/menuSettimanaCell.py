@@ -14,3 +14,5 @@ class MenuSettimanaCell(Cell):
                 The body of the cell
         """
         super().__init__(window, position, width, proportion)
+
+        # TODO: try to make the body of the cell scalable with the height of the text
