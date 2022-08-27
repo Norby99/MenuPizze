@@ -136,41 +136,6 @@ class PizzaMenu(ABC):
 
         return [SocialLogos(self.window, logos, [0, 0], self._columnWidth)]
 
-    def createCells(self, objList, allergens, cellWidth):
-        cellPosition = [0, 0]
-        cells = []
-
-        for obj in objList:
-            tempCell = False
-            if obj["objType"] == "title": # populating the grid with the cells
-                tempCell = TitleCell(self.window, obj["tipo"], self._font_colors["p_tipo"], cellPosition, cellWidth)
-            elif obj["objType"] == "pizza":
-                pizzaAllergens = [allergens[x] for x in obj["allergens"]]    # filters the allergens to show only those that are in the pizza
-                tempCell = PizzaCell(self.window, obj["nome"], self._font_colors["titolo"], obj["prezzo"], self._font_colors["price"], {"nome_italiano" : obj["ingredienti"], "nome_inglese" : obj["ingredientiInglese"]}, self._font_colors["generic_text"], pizzaAllergens, cellPosition, cellWidth)
-            elif obj["objType"] == "aggiunta":
-                tempCell = AggiuntaCell(self.window, {"nome_italiano" : obj["nome_aggiunta"], "nome_inglese" : obj["nome_inglese"]}, self._font_colors["generic_text"], obj["prezzo"], self._font_colors["price"], cellPosition, cellWidth)
-            elif obj["objType"] == "insalata":
-                insalataAllergens = [allergens[x] for x in obj["allergens"]]    # filters the allergens to show only those that are in the pizza
-                tempCell = InsalataCell(self.window, obj["nome"], self._font_colors["titolo"], obj["prezzo"], self._font_colors["price"], {"nome_italiano" : obj["ingredienti"], "nome_inglese" : obj["ingredientiInglese"]}, self._font_colors["generic_text"], insalataAllergens, cellPosition, cellWidth)
-            elif obj["objType"] == "allergeni":
-                tempCell = AllergeniCell(self.window, obj, self._font_colors["generic_text"], cellPosition, cellWidth)
-            elif obj["objType"] == "NewLine":
-                tempCell = NewColumnCell(self.window, cellPosition, cellWidth)
-            elif obj["objType"] == "image":
-                tempCell = ImageCell(self.window, obj["image"], cellPosition, cellWidth)
-            elif obj["objType"] == "logosContainer":
-                tempCell = SocialLogos(self.window, obj["images"], cellPosition, cellWidth)
-            elif obj["objType"] == "simple_text":
-                tempCell = SimpleTextCell(self.window, obj["text"], self._font_colors["generic_text"], obj["font_size"], cellPosition, cellWidth)
-            elif obj["objType"] == "menu_settimana":
-                tempCell = MenuSettimanaCell(self.window, obj["title"], obj["body"], cellPosition, cellWidth)
-            else:
-                raise ValueError(f'The cell type {obj["objType"]} does not exist.')
-
-            if tempCell:
-                cells.append(tempCell)
-        return cells
-
     def loadAllergeni(self, scale=1):
         """
         Loads images of allergens
