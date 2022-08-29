@@ -2,13 +2,13 @@ import tkinter as tk
 from libraries.cells.newColumn import NewColumnCell
 
 class VerticalGrid:
-    def __init__(self, cells, margini, LHandler, maxColumns=5):
+    def __init__(self, cells, margin, LHandler, maxColumns=5):
         """
         Defines a vertical grid that show some cell
         """
         self.cells = cells
         self.maxColumns = maxColumns
-        self.margin = margini
+        self.margin = margin
 
         self.LHandler = LHandler
 
@@ -17,19 +17,19 @@ class VerticalGrid:
             self.updateScritte()
         else:
             cellPosition = [self.margin[0], self.margin[1]]
-            for object in self.cells:
-                if isinstance(object, NewColumnCell): # if the cell is of typo of NewColumnCell, it goes to the new column
+            for cell in self.cells:
+                if isinstance(cell, NewColumnCell): # if the cell is of typo of NewColumnCell, it goes to the new column
                     cellPosition = [prevObject.getRightCoordinate(), self.margin[1]]
                     continue
 
-                object.setPostion(cellPosition)
-                cellPosition[1] = object.getBottomCoordinate()
+                cell.setPostion(cellPosition)
+                cellPosition[1] = cell.getBottomCoordinate()
 
-                prevObject = object
+                prevObject = cell
                 if prevObject.getBottomCoordinate() > self.margin[3]: # getting next element position
                     cellPosition = [prevObject.getRightCoordinate(), self.margin[1]]
 
-                if object.getRightCoordinate() > self.margin[2]:
+                if cell.getRightCoordinate() > self.margin[2]:
                     raise IndexError("Given too many Cell's")
 
     def updateCells(self):    #this function updates the text boxes

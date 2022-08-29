@@ -6,7 +6,7 @@ from libraries.utils.languageHandler import LanguageHandler
 
 class PizzaMenu1(PizzaMenu):
 
-    def __init__(self):
+    def __init__(self) -> None:
         data = self.loadJsonData("setup.json")
         dbData = self.loadJsonData("DBsetup.json")
         self.LHandler = LanguageHandler(dbData['languageSite'] + "/" + dbData['restaurantName'] + ".php", dbData['defaultLanguage'], token=dbData['m_key'], no_connection=True)
@@ -28,15 +28,18 @@ class PizzaMenu1(PizzaMenu):
         #colors = {"background" : "#2B2D42", "p_tipo" : "#EF233C", "titolo" : "#8D99AE", "generic_text" : "#EDF2F4", "price" : "#EF233C"}598392
         #colors = {"background" : "#0B0014", "p_tipo" : "#FFFFFF", "titolo" : "#ef233c", "generic_text" : "#F5E9E2", "price" : "#fdc500"}
         colors = data["colors"] # colors are taken from the setup file
+        self.setFontColors(colors)
         padding = 20
         self.window.configure(background=colors["background"])
 
-        pizze = self.pizzeCreator(self.pizzaTypesRequered)
-        allergeni = self.loadAllergeni()
-
         gridColumns = 5
         gridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
-        cells = self.createCells(pizze, allergeni, colors, (gridPosition[2]-gridPosition[0])/gridColumns)
+        self._columnWidth = (gridPosition[2]-gridPosition[0])/gridColumns
+
+        self.allergens = self.loadAllergeni()
+        pizze = self.pizzeCreator(self.pizzaTypesRequered)
+        
+        cells = pizze
 
         menu = VerticalGrid(cells, gridPosition, self.LHandler, maxColumns=2)
 

@@ -10,7 +10,8 @@ class Cell(ABC):
         given a width it calculates it's hight by the given proportion
         """
         self.position = position
-        self.dimensions = [width, width/proportion]
+        self.proportion = proportion
+        self.dimensions = [width, width/self.proportion]
         self.window = window
         self.canvas = tk.Canvas(self.window, bg=window["background"], width=self.dimensions[0], height=self.dimensions[1], highlightthickness=0, bd=0)
         self.canvas.place(x=position[0], y=position[1], anchor=tk.NW)

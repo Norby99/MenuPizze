@@ -9,15 +9,15 @@ class AllergeniCell(Cell):
         super().__init__(window, position, width, proportion=proportion)
         self.backGroundColor = window["background"]
 
-        allergens = allergen["first"] + allergen["second"]
+        self.allergens = allergen["first"] + allergen["second"]
 
         self.textColor = textColor
         self.font = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(20), weight='bold')
 
-        self.createText(allergens[0])
-        self.createText(allergens[2], left=False)
-        self.createImages(allergens[1])
-        self.createImages(allergens[3], left=False)
+        self.createText(self.allergens[0])
+        self.createText(self.allergens[2], left=False)
+        self.createImages(self.allergens[1])
+        self.createImages(self.allergens[3], left=False)
 
     def createText(self, text, left=True):
         """
