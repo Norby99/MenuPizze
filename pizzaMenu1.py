@@ -6,7 +6,7 @@ from libraries.utils.languageHandler import LanguageHandler
 
 class PizzaMenu1(PizzaMenu):
 
-    def __init__(self):
+    def __init__(self) -> None:
         data = self.loadJsonData("setup.json")
         dbData = self.loadJsonData("DBsetup.json")
         self.LHandler = LanguageHandler(dbData['languageSite'] + "/" + dbData['restaurantName'] + ".php", dbData['defaultLanguage'], token=dbData['m_key'], no_connection=True)
