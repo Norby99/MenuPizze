@@ -6,7 +6,7 @@ from libraries.utils.languageHandler import LanguageHandler
 
 class PizzaMenu2(PizzaMenu):
 
-    def __init__(self):
+    def __init__(self) -> None:
         data = self.loadJsonData("setup.json")
         dbData = self.loadJsonData("DBsetup.json")
         self.LHandler = LanguageHandler(dbData['languageSite'] + "/" + dbData['restaurantName'] + ".php", dbData['defaultLanguage'], token=dbData['m_key'], no_connection=True)
@@ -16,29 +16,34 @@ class PizzaMenu2(PizzaMenu):
         
         self.tkWindowSetup()
         colors = data["colors"] # colors are taken from the setup file
+        self.setFontColors(colors)
         padding = 20
         self.window.configure(background=colors["background"])
 
-        pizze = self.pizzeCreator(self.pizzaTypesRequered)
-        aggiunte = self.aggiunteCreator()
-        insalate = self.insalateCreator()
-        allergeni = self.loadAllergeni()
-        logo = self.logoCreator()
-        social_logos = self.loadSocialLogos()
-        allergeniObj = self.allergeniCreator()
-        coperto = self.simpleTextCreator(["Consumazione sul posto 0.50€"])
-
-        elements = pizze + aggiunte + self.DEFAULT_NEWLINE + insalate + self.DEFAULT_NEWLINE + logo + social_logos + allergeniObj + coperto
-
         gridColumns = 4
         gridPosition = (self.windowSpecs.resolutionConverter(padding), 0, self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1])
-        cells = self.createCells(elements, allergeni, colors, (gridPosition[2]-gridPosition[0])/gridColumns)
+        self._columnWidth = (gridPosition[2]-gridPosition[0])/gridColumns
+
+        self.allergens = self.loadAllergeni()
+        cells = self.cellsElementsGetter()
 
         menu = VerticalGrid(cells, gridPosition, self.LHandler, maxColumns=gridColumns)
 
         self.show(menu)
         self.update()
         self.window.mainloop()
+
+    def cellsElementsGetter(self) -> list:
+        pizze = self.pizzeCreator(self.pizzaTypesRequered)
+        aggiunte = self.aggiunteCreator()
+        insalate = self.insalateCreator()
+        logo = self.logoCreator()
+        social_logos = self.loadSocialLogos()
+        allergeniObj = self.allergeniCreator()
+        coperto = self.simpleTextCreator(["Consumazione sul posto 0.50€"])
+        menuSettimana = self.menuSettimanaCreator()
+
+        return pizze + aggiunte + self.newColumnCreator() + insalate + self.newColumnCreator() + logo + social_logos + allergeniObj + coperto + menuSettimana
 
 if __name__ == '__main__':
     waitForConnection()
