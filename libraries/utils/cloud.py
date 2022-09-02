@@ -22,7 +22,7 @@ class Cloud():
             data = json.dumps(req.json(), indent = 4)
             return data
         except requests.exceptions.RequestException as err:
-            self._logger.disp(f"Host is not responding!\n{err}")
+            self._logger.disp(f"Host is not responding! - {err}")
             return False
 
     def update(self, data, url):
