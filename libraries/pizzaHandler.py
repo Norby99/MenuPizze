@@ -3,6 +3,7 @@ import json
 from os import path
 from libraries.utils.database import database, saveJsonFile
 from libraries.utils.utils import fileIsOld
+from libraries.utils.logger import Logger
 
 class Pizzas():
     """
@@ -10,9 +11,13 @@ class Pizzas():
     - downloads the json files from the website
     - reads the pizzas from the json files
     """
+
+    _logger: Logger
+
     def __init__(self, jsonData):
         self.data = jsonData
         self.cloud = Cloud(self.data["m_key"])
+        self._logger = Logger()
 
     def downloadAllFromCloud(self, force=False):
         """
@@ -39,7 +44,7 @@ class Pizzas():
             self.ElencoInsalate = json.load(f)
 
     def effectiveDownload(self):
-        print("Downloading the files from the cloud...")
+        self._logger.disp("Downloading the files from the cloud...")
         self.ElencoPizze = self.cloud.read(self.data["pizze"])
 
         if self.ElencoPizze:    # if the server is responding
@@ -47,7 +52,7 @@ class Pizzas():
             self.ElencoAggiunte = self.cloud.read(self.data["aggiunte"])
             self.ElencoInsalate = self.cloud.read(self.data["insalate"])
 
-            print(self.filePathInResources("pizze.json"))
+            self._logger.disp(self.filePathInResources("pizze.json"))
             saveJsonFile(self.filePathInResources("pizze.json"), self.ElencoPizze)
             saveJsonFile(self.filePathInResources("ingredienti.json"), self.ElencoIngredienti)
             saveJsonFile(self.filePathInResources("aggiunte.json"), self.ElencoAggiunte)

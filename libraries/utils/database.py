@@ -1,10 +1,11 @@
 import mysql.connector
 from mysql.connector import Error
 import json
-import os
-import datetime
+from libraries.utils.logger import Logger
 
 class database():
+
+    _log_file: str
     connectionTracker = True #remouves spam comments
 
     def __init__(self, host, user, password, database, restaurant_name=""):
@@ -12,14 +13,16 @@ class database():
         self.user = user
         self.password = password
         self.database = database
+        self._logger = Logger()
+
         self.con = self.connect()
         self.restaurant_name = restaurant_name
         if self.con != None:
-            print("Connected")
+            self._logger.disp("Connected")
             self.con.close()
         else:
             self.connectionTracker = False
-            print("Can't connect to database. Default language will be used")
+            self._logger.disp("Can't connect to database. Default language will be used")
 
     def readByQuery(self, query, form=None):
         self.con = self.connect()
@@ -94,7 +97,7 @@ class database():
         except Error as e:
             if self.connectionTracker:
                 self.connectionTracker = False
-                print("Error while connecting to MySQL", e)
+                self._logger.disp("Error while connecting to MySQL", e)
 
     def getCurrentLanguage(self):
         try:

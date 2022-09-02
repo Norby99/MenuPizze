@@ -2,12 +2,15 @@ import time
 import requests
 import os
 import datetime
+from libraries.utils.logger import Logger
 
 def capfirst(s):
     """Capitalize the first letter of a string without touching the others"""
     return s[:1].upper() + s[1:]
 
 def waitForConnection(url='http://www.google.com/', timeout=5):
+    _logger = Logger()
+
     initTime = time.time()
     while True:
         try:
@@ -17,7 +20,7 @@ def waitForConnection(url='http://www.google.com/', timeout=5):
             pass
         nowTime = time.time()
         if (nowTime-initTime)/60 > 3:   # do this for 3 minutes
-            print("No internet connection available.")
+            _logger.disp("No internet connection available.")
             break
 
 def waitForFilesUpdate(fname='aggiunte.json'):
@@ -26,27 +29,30 @@ def waitForFilesUpdate(fname='aggiunte.json'):
     - True : if the file is updated
     - False : if it's not
     """
+    _logger = Logger()
     initTime = time.time()
+
     while True:
         nowTime = time.time()
         if not fileIsOld(fname):
             return True
         
         if (nowTime-initTime)/60 > 3:   # do this for 3 minutes
-            print("Can't update the files.")
+            _logger.disp("Can't update the files.")
             return False
         time.sleep(5)
 
 def fileIsOld(fname):
     """ Given a fname, it returns true, if the file il older than yesterday, or if the file doesn't exists """
+    _logger = Logger()
     fileIsOld = False
     if os.path.isfile(fname):
-        print("Existing file detected!")
+        _logger.disp("Existing file detected!")
         midnight = datetime.datetime.combine(datetime.datetime.today(), datetime.time.min).timestamp() #in realta segna le 11, ma vabbeh
         if midnight-creation_date(fname) < 0:   #the file was modified today
             fileIsOld = False
         else:
-            print("But is too old.")
+            _logger.disp("But is too old.")
             fileIsOld = True
     else:
         fileIsOld = True
