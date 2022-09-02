@@ -20,7 +20,7 @@ class Cloud():
         try:
             req = requests.get(url, headers=headers)
             data = json.dumps(req.json(), indent = 4)
-            self._logger.disp("File downloaded successfully!")
+            self._logger.disp(f"File downloaded successfully! - File: {url}")
             return data
         except requests.exceptions.RequestException as err:
             self._logger.disp(f"Host is not responding! - {err}")
