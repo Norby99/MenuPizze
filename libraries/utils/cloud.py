@@ -1,10 +1,14 @@
 import requests
 import json
+from libraries.utils.logger import Logger
 
 class Cloud():
 
+    _log_file: str
+
     def __init__(self, mKey):
         self.mKey = mKey
+        self._logger = Logger()
 
     def read(self, url):
         """
@@ -16,9 +20,10 @@ class Cloud():
         try:
             req = requests.get(url, headers=headers)
             data = json.dumps(req.json(), indent = 4)
+            self._logger.disp(f"File downloaded successfully! - File: {url}")
             return data
         except requests.exceptions.RequestException as err:
-            print(f"Host is not responding!\n{err}")
+            self._logger.disp(f"Host is not responding! - {err}")
             return False
 
     def update(self, data, url):
@@ -26,8 +31,8 @@ class Cloud():
                     'X-Master-Key': self.mKey}
 
         req = requests.put(url, json=data, headers=headers)
-        print(req.text)
-        print("File: " + url + "\nSuccesful updated!")
+        self._logger.disp(req.text)
+        self._logger.disp("File: " + url + "\nSuccesful updated!")
 
 """if __name__ == "__main__":
 

@@ -2,8 +2,11 @@ import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 import json
+from libraries.utils.logger import Logger
 
 class LanguageHandler():
+
+    _logger: Logger
     connectionTracker = True    # remouves spam comments
 
     def __init__(self, website, default_language, token="", no_connection=False):
@@ -14,6 +17,7 @@ class LanguageHandler():
         @param token is optinal and is the autentication token to log in the website
         @param no_connection is optinal and if set to True, it always return the default language
         """
+        self._logger = Logger()
         self.website = website
         self.default_language = default_language
         self.token = token
@@ -37,7 +41,7 @@ class LanguageHandler():
             req = req.text
             if (req == ""):
                 if self.connectionTracker:
-                    print("No response, maybe the token is wrong\n")
+                    self._logger.disp("No response, maybe the token is wrong\n")
                     self.connectionTracker = False
                 return self.default_language
             else:
@@ -46,7 +50,7 @@ class LanguageHandler():
 
         except requests.exceptions.RequestException as err:
             if self.connectionTracker:
-                print(f"Host is not responding!\n{err}")
+                self._logger.disp(f"Host is not responding!\n{err}")
                 self.connectionTracker = False
             return self.default_language
 
