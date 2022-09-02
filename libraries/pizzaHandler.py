@@ -52,7 +52,6 @@ class Pizzas():
             self.ElencoAggiunte = self.cloud.read(self.data["aggiunte"])
             self.ElencoInsalate = self.cloud.read(self.data["insalate"])
 
-            self._logger.disp(self.filePathInResources("pizze.json"))
             saveJsonFile(self.filePathInResources("pizze.json"), self.ElencoPizze)
             saveJsonFile(self.filePathInResources("ingredienti.json"), self.ElencoIngredienti)
             saveJsonFile(self.filePathInResources("aggiunte.json"), self.ElencoAggiunte)
