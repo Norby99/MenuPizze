@@ -18,14 +18,14 @@ class LanguageHandler():
         @param no_connection is optinal and if set to True, it always return the default language
         """
         self._logger = Logger()
-        self.website = website
-        self.default_language = default_language
-        self.token = token
+        self._website = website
+        self._default_language = default_language
+        self._token = token
         self.no_connection = no_connection
 
     def getCurrentLanguage(self):
         if self.no_connection:
-            return self.default_language
+            return self._default_language
 
         try:
             session = requests.Session()
@@ -34,25 +34,25 @@ class LanguageHandler():
             session.mount('http://', adapter)
             session.mount('https://', adapter)
             
-            if self.token != "":
-                req = requests.get(self.website, headers={'X-Master-Key': self.token})
+            if self._token != "":
+                message = requests.get(self._website, headers={'X-Master-Key': self._token}).text
             else:
-                req = requests.get(self.website)
-            req = req.text
-            if (req == ""):
+                message = requests.get(self._website).text
+
+            if (message == ""):
                 if self.connectionTracker:
                     self._logger.disp("No response, maybe the token is wrong\n")
                     self.connectionTracker = False
-                return self.default_language
-            else:
-                self.connectionTracker = True
-                return req
+                return self._default_language
+
+            self.connectionTracker = True
+            return message
 
         except requests.exceptions.RequestException as err:
             if self.connectionTracker:
                 self._logger.disp(f"Host is not responding!\n{err}")
                 self.connectionTracker = False
-            return self.default_language
+            return self._default_language
 
 if __name__ == "__main__":
     with open("DBsetup.json") as f:
