@@ -7,7 +7,8 @@ from libraries.utils.logger import Logger
 class LanguageHandler():
 
     _logger: Logger
-    connectionTracker = True    # remouves spam comments
+    _connection_tracker = True    # remouves spam comments
+    _logger_title = "(LanguageHandler)"
 
     def __init__(self, website, default_language, token="", no_connection=False):
         """
@@ -40,18 +41,21 @@ class LanguageHandler():
                 message = requests.get(self._website).text
 
             if (message == ""):
-                if self.connectionTracker:
-                    self._logger.disp("No response, maybe the token is wrong\n")
-                    self.connectionTracker = False
+                if self._connection_tracker:
+                    self._logger.disp(f"{self._logger_title}No response, maybe the token is wrong\n")
+                    self._connection_tracker = False
                 return self._default_language
 
-            self.connectionTracker = True
+            if not self._connection_tracker:
+                self._logger.disp(f"{self._logger_title}Connection established (language site)")
+                self._connection_tracker = True
+
             return message
 
         except requests.exceptions.RequestException as err:
-            if self.connectionTracker:
-                self._logger.disp(f"Host is not responding!\n{err}")
-                self.connectionTracker = False
+            if self._connection_tracker:
+                self._logger.disp(f"{self._logger_title}Host (language site) is not responding!\n{err}")
+                self._connection_tracker = False
             return self._default_language
 
 if __name__ == "__main__":
