@@ -9,7 +9,7 @@ class PizzaMenu1(PizzaMenu):
     def __init__(self):
         data = self.loadJsonData("setup.json")
         dbData = self.loadJsonData("DBsetup.json")
-        self.LHandler = LanguageHandler(dbData['languageSite'] + "/" + dbData['restaurantName'] + ".php", dbData['defaultLanguage'], token=dbData['m_key'], no_connection=True)
+        self.LHandler = LanguageHandler(dbData['languageSite'] + "/" + dbData['restaurantName'] + ".php", dbData['defaultLanguage'], token=dbData['m_key'], no_connection=False)
         self.pizza = Pizzas(dbData)
         self.pizzaTypesRequered = ["Pizze classiche", "Pizze bianche", "Pizze conditissime"] # the pizza types that have to be visualized
         #self.pizza.downloadAllFromCloud(force=True)
