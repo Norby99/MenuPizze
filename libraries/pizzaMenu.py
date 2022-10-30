@@ -111,11 +111,18 @@ class PizzaMenu(ABC):
     def allergeniCreator(self):
         allergens = self.loadAllergeni(scale=2)
         allergensList = []
-        keys = sorted(allergens.keys())
 
         allergensList.append(TitleCell(self.window, "Legenda allergeni", self._font_colors["p_tipo"], [0, 0], self._columnWidth))
-        for i in range(len(keys) -1):
-            allergensList.append(AllergeniCell(self.window, {"first" : [capfirst(keys[i]), allergens[keys[i]]], "second" : [capfirst(keys[i+1]), allergens[keys[i+1]]]}, self._font_colors["generic_text"], [0, 0], self._columnWidth))
+
+        names, images = zip(*allergens.items())
+        i = 0
+        while (i < len(allergens)):
+            if i+1 < len(allergens):
+                allergensList.append(AllergeniCell(self.window, self._font_colors["generic_text"], [0, 0], self._columnWidth, names[i], images[i], names[i+1], images[i+1]))
+            else:
+                allergensList.append(AllergeniCell(self.window, self._font_colors["generic_text"], [0, 0], self._columnWidth, names[i], images[i]))
+            
+            i += 2
 
         return allergensList
 

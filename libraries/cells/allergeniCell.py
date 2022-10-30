@@ -5,19 +5,24 @@ import tkinter.font as TkFont
 class AllergeniCell(Cell):
     """ This cell contains the legend of Allergens """
 
-    def __init__(self, window, allergen, textColor, position, width, proportion=13):
+    def __init__(self, window, textColor, position, width, allergen_name1, allergen_image1, allergen_name2=None, allergen_image2=None, proportion=13):
         super().__init__(window, position, width, proportion=proportion)
         self.backGroundColor = window["background"]
 
-        self.allergens = allergen["first"] + allergen["second"]
+        self.allergen_name1 = allergen_name1
+        self.allergen_image1 = allergen_image1
+        if allergen_name2 is not None and allergen_image2 is not None:
+            self.allergen_name2 = allergen_name2
+            self.allergen_image2 = allergen_image2
 
         self.textColor = textColor
         self.font = TkFont.Font(family="Times", size=self.windowSpecs.resolutionConverter(20), weight='bold')
 
-        self.createText(self.allergens[0])
-        self.createText(self.allergens[2], left=False)
-        self.createImages(self.allergens[1])
-        self.createImages(self.allergens[3], left=False)
+        self.createText(self.allergen_name1)
+        self.createImages(self.allergen_image1)
+        if allergen_name2 is not None and allergen_image2 is not None:
+            self.createText(self.allergen_name2, left=False)
+            self.createImages(self.allergen_image2, left=False)
 
     def createText(self, text, left=True):
         """
