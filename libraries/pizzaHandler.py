@@ -60,8 +60,8 @@ class Pizzas():
             self.ElencoIngredienti = json.loads(self.ElencoIngredienti)
             self.ElencoAggiunte = json.loads(self.ElencoAggiunte)
             self.ElencoInsalate = json.loads(self.ElencoInsalate)
-        else:   # if the server is not responding
-            self._logger.disp("An error occured. An older version of files will be loaded.")
+        else:   # if the server is not responding or a file is not valid
+            self._logger.disp("An error occured. An older version of files will be loaded.\nNote that all downloaded files won't be saved.")
             self.loadPizzasFromJson()
 
     def uploadAll(self):
