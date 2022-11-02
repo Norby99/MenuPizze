@@ -1,6 +1,7 @@
 import requests
 import json
 from libraries.utils.logger import Logger
+from libraries.utils.jsonValidator import *
 
 class Cloud():
 
@@ -36,16 +37,6 @@ class Cloud():
         req = requests.put(url, json=data, headers=headers)
         self._logger.disp(req.text)
         self._logger.disp("File: " + url + "\nSuccesful updated!")
-
-def is_json(myjson):
-    """
-    Returns True if the json is valid
-    """
-    try:
-        json.loads(myjson)
-    except ValueError as e:
-        return False
-    return True
 
 """if __name__ == "__main__":
 
