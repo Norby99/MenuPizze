@@ -26,7 +26,7 @@ class Cloud():
                 return data
 
         except requests.exceptions.RequestException as err:
-            self._logger.disp(f"Host is not responding! - {err.errno}")
+            self._logger.disp(f"Host is not responding! - {err}")
         
         return False
 
