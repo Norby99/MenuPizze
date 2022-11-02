@@ -46,12 +46,11 @@ class Pizzas():
     def effectiveDownload(self):
         self._logger.disp("Downloading the files from the cloud...")
         self.ElencoPizze = self.cloud.read(self.data["pizze"])
+        self.ElencoIngredienti = self.cloud.read(self.data["ingredienti"])
+        self.ElencoAggiunte = self.cloud.read(self.data["aggiunte"])
+        self.ElencoInsalate = self.cloud.read(self.data["insalate"])
 
-        if self.ElencoPizze:    # if the server is responding
-            self.ElencoIngredienti = self.cloud.read(self.data["ingredienti"])
-            self.ElencoAggiunte = self.cloud.read(self.data["aggiunte"])
-            self.ElencoInsalate = self.cloud.read(self.data["insalate"])
-
+        if self.ElencoPizze and self.ElencoIngredienti and self.ElencoAggiunte and self.ElencoInsalate:     # if the server is responding and the files are valid
             saveJsonFile(self.filePathInResources("pizze.json"), self.ElencoPizze)
             saveJsonFile(self.filePathInResources("ingredienti.json"), self.ElencoIngredienti)
             saveJsonFile(self.filePathInResources("aggiunte.json"), self.ElencoAggiunte)
