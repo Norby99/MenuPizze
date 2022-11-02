@@ -19,12 +19,15 @@ class Cloud():
 
         try:
             req = requests.get(url, headers=headers)
-            data = json.dumps(req.json(), indent = 4)
-            self._logger.disp(f"File downloaded successfully! - File: {url}")
-            return data
+            data = json.dumps(req.json(), indent = 4)   # sometimes the dumps method is not throwing an exeption if the json is not valid
+            if is_json(data):
+                self._logger.disp(f"File downloaded successfully! - File: {url}")
+                return data
+
         except requests.exceptions.RequestException as err:
-            self._logger.disp(f"Host is not responding! - {err}")
-            return False
+            self._logger.disp(f"Host is not responding! - {err.errno}")
+        
+        return False
 
     def update(self, data, url):
         headers = {'Content-Type': 'application/json',
@@ -33,6 +36,16 @@ class Cloud():
         req = requests.put(url, json=data, headers=headers)
         self._logger.disp(req.text)
         self._logger.disp("File: " + url + "\nSuccesful updated!")
+
+def is_json(myjson):
+    """
+    Returns True if the json is valid
+    """
+    try:
+        json.loads(myjson)
+    except ValueError as e:
+        return False
+    return True
 
 """if __name__ == "__main__":
 
