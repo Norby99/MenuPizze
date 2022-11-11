@@ -1,11 +1,11 @@
 from libraries.utils.cloud import Cloud
 import json
 from os import path
-from libraries.utils.database import database, saveJsonFile
+from libraries.utils.database import saveJsonFile
 from libraries.utils.utils import fileIsOld
 from libraries.utils.logger import Logger
 
-class Pizzas():
+class Recources():
     """
     This class handles the pizzas:
     - downloads the json files from the website
@@ -145,5 +145,5 @@ class Pizzas():
         return path.join("resources", "pizzeJson", file)
 
 if __name__ == "__main__":
-    p = Pizzas("setup.json")
+    p = Recources("setup.json")
     p.downloadAllFromCloud()
