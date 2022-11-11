@@ -4,6 +4,9 @@ import json
 from libraries.utils.logger import Logger
 
 class database():
+    """
+    All this class is deprecated, but the code can modifed to work with a database
+    """
 
     _log_file: str
     connectionTracker = True #remouves spam comments
