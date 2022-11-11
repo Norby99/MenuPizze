@@ -53,7 +53,7 @@ class Pizzas():
         self.ElencoInsalate = self.cloud.read(self.data["insalate"])
         self.MenuSettimanale = self.cloud.read(self.data["menu-settimanale"])
 
-        if self.ElencoPizze and self.ElencoIngredienti and self.ElencoAggiunte and self.ElencoInsalate:     # if the server is responding and the files are valid
+        if self.ElencoPizze and self.ElencoIngredienti and self.ElencoAggiunte and self.ElencoInsalate and self.MenuSettimanale:     # if the server is responding and the files are valid
             saveJsonFile(self.filePathInResources("pizze.json"), self.ElencoPizze)
             saveJsonFile(self.filePathInResources("ingredienti.json"), self.ElencoIngredienti)
             saveJsonFile(self.filePathInResources("aggiunte.json"), self.ElencoAggiunte)
