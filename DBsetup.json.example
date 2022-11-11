@@ -9,8 +9,6 @@
     "dbPassword": "the db pass",
     "restaurantName": "the name of the restaurant in the db",
     "languageSite": "use languageSite if you want to get the language from a php page | use dbData and ipOfServer if you want to get it from a database",
-    "dbData": "database that contains the current language",
-    "ipOfServer": "the ip where the language db is hosted (set to localhost)",
     "defaultLanguage": "the default language that will be returned in case the website is not reachable",
     "dbData2BeUploaded": "@depracated it is the db that will contain the pizza data"
 }
