@@ -65,38 +65,6 @@ class Pizzas():
         
         self.loadAllFromJson()
 
-    def uploadAll(self):
-        """
-        Deprecated!
-        This method uploads the DB data to a website
-        """
-        db = database("localhost", self.data["dbUserName"], self.data["dbPassword"], self.data["dbData2BeUploaded"])
-        queryPizze = ("""
-            SELECT pizze.id, nomePizza, nome_tipo, prezzo, GROUP_CONCAT(`pizza-ingredienti`.`id_ingrediente` ORDER BY `pizza-ingredienti`.`id_collegamento`) AS "ingredienti"
-            FROM pizze
-            INNER JOIN tipo_pizze ON tipo_pizze.id_tipo = pizze.id_tipo
-            INNER JOIN `pizza-ingredienti` ON pizze.id = `pizza-ingredienti`.id_pizza
-            GROUP BY nomePizza
-            ORDER BY pizze.id
-        """)
-        dbPizzaList = db.readByQuery(queryPizze, "json")
-        self.cloud.update(dbPizzaList, self.data["pizze"])
-
-        #uploadda gli ingredienti
-        queryingredienti = ("""
-            SELECT *
-            FROM `ingredienti`
-        """)
-        dbIngredientsList = db.readByQuery(queryingredienti, "json")
-        self.cloud.update(dbIngredientsList, self.data["ingredienti"])
-        #uploadda le aggiunte
-        queryAggiunte = ("""
-            SELECT *
-            FROM `aggiunte`
-        """)
-        dbAggiunteList = db.readByQuery(queryAggiunte, "json")
-        self.cloud.update(dbAggiunteList, self.data["aggiunte"])
-
     def get_pizzas(self, merge=False):
         """
         Gets all the pizzas and ingredients and merge them toghether
