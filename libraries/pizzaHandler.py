@@ -61,7 +61,7 @@ class Pizzas():
             saveJsonFile(self.filePathInResources("menu-settimanale.json"), self.MenuSettimanale)
 
         else:   # if the server is not responding or a file is not valid
-            self._logger.disp("An error occured. An older version of files will be loaded.\nNote that all downloaded files won't be saved.")
+            self._logger.disp("An error occured. An older version of files will be loaded.\nNote that if there was any donwloaded file, none of them will be saved.")
         
         self.loadAllFromJson()
 
