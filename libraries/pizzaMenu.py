@@ -12,7 +12,6 @@ from libraries.cells.newColumn import NewColumnCell
 from libraries.cells.imageCell import ImageCell
 from libraries.cells.socialLogos import SocialLogos
 from libraries.cells.simpleTextCell import SimpleTextCell
-from libraries.cells.menuSettimanaCell import MenuSettimanaCell
 import json
 from PIL import ImageTk,Image 
 import os
