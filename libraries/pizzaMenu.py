@@ -21,8 +21,9 @@ from abc import ABC
 class PizzaMenu(ABC):
 
     _font_colors: dict
-    allergens: dict
     _columnWidth: float
+
+    allergens: dict
 
     resources: Recources
 
