@@ -123,6 +123,12 @@ class Recources():
         else:
             return self.ElencoPizze
 
+    def get_menu_settimanale(self):
+        """
+        Gets menu settimanale
+        """
+        return self.MenuSettimanale
+
     def getAllergenByPizzaType(self, pizzaType):
         """
         Given a type of pizza, it returns a set of it's allergens
