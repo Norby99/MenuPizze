@@ -31,9 +31,9 @@ class Pizzas():
             if fileIsOld(self.filePathInResources("aggiunte.json")):
                 self.effectiveDownload()
             else:
-                self.loadPizzasFromJson()
+                self.loadAllFromJson()
 
-    def loadPizzasFromJson(self):
+    def loadAllFromJson(self):
         with open(self.filePathInResources('pizze.json')) as f:
             self.ElencoPizze = json.load(f)
         with open(self.filePathInResources('ingredienti.json')) as f:
@@ -42,6 +42,8 @@ class Pizzas():
             self.ElencoAggiunte = json.load(f)
         with open(self.filePathInResources('insalate.json')) as f:
             self.ElencoInsalate = json.load(f)
+        with open(self.filePathInResources('menu-settimanale.json')) as f:
+            self.MenuSettimanale = json.load(f)
 
     def effectiveDownload(self):
         self._logger.disp("Downloading the files from the cloud...")
@@ -49,20 +51,19 @@ class Pizzas():
         self.ElencoIngredienti = self.cloud.read(self.data["ingredienti"])
         self.ElencoAggiunte = self.cloud.read(self.data["aggiunte"])
         self.ElencoInsalate = self.cloud.read(self.data["insalate"])
+        self.MenuSettimanale = self.cloud.read(self.data["menu-settimanale"])
 
         if self.ElencoPizze and self.ElencoIngredienti and self.ElencoAggiunte and self.ElencoInsalate:     # if the server is responding and the files are valid
             saveJsonFile(self.filePathInResources("pizze.json"), self.ElencoPizze)
             saveJsonFile(self.filePathInResources("ingredienti.json"), self.ElencoIngredienti)
             saveJsonFile(self.filePathInResources("aggiunte.json"), self.ElencoAggiunte)
             saveJsonFile(self.filePathInResources("insalate.json"), self.ElencoInsalate)
+            saveJsonFile(self.filePathInResources("menu-settimanale.json"), self.MenuSettimanale)
 
-            self.ElencoPizze = json.loads(self.ElencoPizze)
-            self.ElencoIngredienti = json.loads(self.ElencoIngredienti)
-            self.ElencoAggiunte = json.loads(self.ElencoAggiunte)
-            self.ElencoInsalate = json.loads(self.ElencoInsalate)
         else:   # if the server is not responding or a file is not valid
             self._logger.disp("An error occured. An older version of files will be loaded.\nNote that all downloaded files won't be saved.")
-            self.loadPizzasFromJson()
+        
+        self.loadAllFromJson()
 
     def uploadAll(self):
         """
