@@ -25,4 +25,4 @@ class PizzaCell(SubtitlePriceCell):
             self.canvas.create_image(self.textNamePos[0]+self.titleFont.measure(self.title)+self.windowSpecs.resolutionConverter(5)+allergenSpacing, self.textNamePos[1]+self.windowSpecs.resolutionConverter(5), anchor=tk.NW, image=allergen)
 
     def update(self, language):
-        self.canvas.itemconfig(self.textIngredients, text=self.description[language])
+        self.canvas.itemconfig(self.textDescription, text=self.description[language])

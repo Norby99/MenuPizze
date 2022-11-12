@@ -35,8 +35,11 @@ class SubtitlePriceCell(Cell):
         self.textPrice = self.canvas.create_text(self.textPricePos[0], self.textPricePos[1], anchor= tk.NE, fill=self.priceColor,font=self.priceFont, text=self.price)
 
     def createDescription(self):
-        self.textIngredientsPos = [self.windowSpecs.resolutionConverter(5), self.dimensions[1]/2-self.windowSpecs.resolutionConverter(13)]
-        self.textIngredients = self.canvas.create_text(self.textIngredientsPos[0], self.textIngredientsPos[1], anchor= tk.NW, fill=self.descriptionColor,font=self.descriptionFont, text=self.description[next(iter(self.description))], width=(self.dimensions[0]-self.windowSpecs.resolutionConverter(5)))
+        self.textDescriptionPos = [self.windowSpecs.resolutionConverter(5), self.dimensions[1]/2-self.windowSpecs.resolutionConverter(13)]
+        if isinstance(self.description, str):
+            self.textDescription = self.canvas.create_text(self.textDescriptionPos[0], self.textDescriptionPos[1], anchor= tk.NW, fill=self.descriptionColor,font=self.descriptionFont, text=self.description, width=(self.dimensions[0]-self.windowSpecs.resolutionConverter(5)))
+        if isinstance(self.description, dict):
+            self.textDescription = self.canvas.create_text(self.textDescriptionPos[0], self.textDescriptionPos[1], anchor= tk.NW, fill=self.descriptionColor,font=self.descriptionFont, text=self.description[next(iter(self.description))], width=(self.dimensions[0]-self.windowSpecs.resolutionConverter(5)))
 
     def setTitleFont(self, font):
         self.titleFont = font
