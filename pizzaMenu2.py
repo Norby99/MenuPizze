@@ -43,7 +43,7 @@ class PizzaMenu2(PizzaMenu):
         coperto = self.simpleTextCreator(["Consumazione sul posto 0.50€"])
         menuSettimana = self.menuSettimanaCreator()
 
-        return pizze + aggiunte + self.newColumnCreator() + insalate + self.newColumnCreator() + logo + social_logos + allergeniObj + coperto + menuSettimana
+        return pizze + aggiunte + self.newColumnCreator() + insalate + menuSettimana + self.newColumnCreator() + logo + social_logos + allergeniObj + coperto
 
 if __name__ == '__main__':
     waitForConnection()
