@@ -1,5 +1,5 @@
 from libraries.pizzaMenu import PizzaMenu
-from libraries.pizzaHandler import Pizzas
+from libraries.resourceHandler import Recources
 from libraries.utils.utils import waitForConnection
 from libraries.verticalGrid import VerticalGrid
 from libraries.utils.languageHandler import LanguageHandler
@@ -10,9 +10,9 @@ class PizzaMenu2(PizzaMenu):
         data = self.loadJsonData("setup.json")
         dbData = self.loadJsonData("DBsetup.json")
         self.LHandler = LanguageHandler(dbData['languageSite'] + "/" + dbData['restaurantName'] + ".php", dbData['defaultLanguage'], token=dbData['m_key'], no_connection=False)
-        self.pizza = Pizzas(dbData)
+        self.resources = Recources(dbData)
         self.pizzaTypesRequered = ["Impasto Napoletano", "Pizze Dolci"] # the pizza types that have to be visualized
-        self.pizza.downloadAllFromCloud(force=True)
+        self.resources.downloadAllFromCloud(force=True)
         
         self.tkWindowSetup()
         colors = data["colors"] # colors are taken from the setup file
@@ -43,7 +43,7 @@ class PizzaMenu2(PizzaMenu):
         coperto = self.simpleTextCreator(["Consumazione sul posto 0.50€"])
         menuSettimana = self.menuSettimanaCreator()
 
-        return pizze + aggiunte + self.newColumnCreator() + insalate + self.newColumnCreator() + logo + social_logos + allergeniObj + coperto + menuSettimana
+        return pizze + aggiunte + self.newColumnCreator() + insalate + menuSettimana + self.newColumnCreator() + logo + social_logos + allergeniObj + coperto
 
 if __name__ == '__main__':
     waitForConnection()

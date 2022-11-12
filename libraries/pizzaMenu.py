@@ -12,7 +12,8 @@ from libraries.cells.newColumn import NewColumnCell
 from libraries.cells.imageCell import ImageCell
 from libraries.cells.socialLogos import SocialLogos
 from libraries.cells.simpleTextCell import SimpleTextCell
-from libraries.cells.menuSettimanaCell import MenuSettimanaCell
+from libraries.cells.subtitlePriceCell import SubtitlePriceCell
+from libraries.resourceHandler import Recources
 import json
 from PIL import ImageTk,Image 
 import os
@@ -21,8 +22,11 @@ from abc import ABC
 class PizzaMenu(ABC):
 
     _font_colors: dict
-    _allergens: dict
     _columnWidth: float
+
+    allergens: dict
+
+    resources: Recources
 
     def loadJsonData(self, fname):
         with open(fname) as f:
@@ -37,7 +41,7 @@ class PizzaMenu(ABC):
         @pizzaType it's a list, or it can be "*" (default) for all elements
         """
         pizze = []
-        data = self.pizza.get_pizzas(True)
+        data = self.resources.get_pizzas(True)
         tipo_pizza = ""
 
         for i in data:
@@ -70,15 +74,18 @@ class PizzaMenu(ABC):
         """
         Creates menu della settimana
         """
+        menu_settimanale = self.resources.get_menu_settimanale()
 
-        # TODO: this is hardcoded and needs to be changed
-        menuSettimana = [
-            "Lunedi - Cappelletti",
-            "Mercoledi - Pollo arrosto",
-            "Venerdi - Patatine fritte"
-        ]
+        if len(menu_settimanale) == 0:
+            return []
+        
+        widget_list = []
+        widget_list.append(TitleCell(self.window, "Menu della settimana", self._font_colors["p_tipo"], [0, 0], self._columnWidth))
 
-        return [MenuSettimanaCell(self.window, "Menu della settimana", menuSettimana, [0, 0], self._columnWidth)]
+        for i in menu_settimanale:
+            widget_list.append(SubtitlePriceCell(self.window, i["day"], self._font_colors["menu_settimanale"], '€ {:,.2f}'.format(float(i["price"])), self._font_colors["price"], i["meal"], self._font_colors["generic_text"], [0, 0], self._columnWidth))
+
+        return widget_list
 
     def aggiunteCreator(self):
         """
@@ -87,7 +94,7 @@ class PizzaMenu(ABC):
         aggiunteCell = []
         aggiunteCell.append(TitleCell(self.window, "Aggiunte", self._font_colors["p_tipo"], [0, 0], self._columnWidth))
 
-        aggiunte = self.pizza.get_aggiunte()
+        aggiunte = self.resources.get_aggiunte()
         for i in aggiunte:
             aggiunteCell.append(AggiuntaCell(self.window, {"nome_italiano" : capfirst(i["nome_aggiunta"]), "nome_inglese" : capfirst(i["nome_inglese"])}, self._font_colors["generic_text"], '€ {:,.2f}'.format(float(i["prezzo"])), self._font_colors["price"], [0, 0], self._columnWidth))
 
@@ -98,7 +105,7 @@ class PizzaMenu(ABC):
         creates a dictionary with all the "insalate"
         """
         insalate = []
-        data = self.pizza.get_insalate(True)
+        data = self.resources.get_insalate(True)
 
         insalate.append(TitleCell(self.window, "Insalate  (+spianata)", self._font_colors["p_tipo"], [0, 0], self._columnWidth))
 

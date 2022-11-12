@@ -1,11 +1,11 @@
 from libraries.utils.cloud import Cloud
 import json
 from os import path
-from libraries.utils.database import database, saveJsonFile
+from libraries.utils.database import saveJsonFile
 from libraries.utils.utils import fileIsOld
 from libraries.utils.logger import Logger
 
-class Pizzas():
+class Recources():
     """
     This class handles the pizzas:
     - downloads the json files from the website
@@ -31,9 +31,9 @@ class Pizzas():
             if fileIsOld(self.filePathInResources("aggiunte.json")):
                 self.effectiveDownload()
             else:
-                self.loadPizzasFromJson()
+                self.loadAllFromJson()
 
-    def loadPizzasFromJson(self):
+    def loadAllFromJson(self):
         with open(self.filePathInResources('pizze.json')) as f:
             self.ElencoPizze = json.load(f)
         with open(self.filePathInResources('ingredienti.json')) as f:
@@ -42,6 +42,8 @@ class Pizzas():
             self.ElencoAggiunte = json.load(f)
         with open(self.filePathInResources('insalate.json')) as f:
             self.ElencoInsalate = json.load(f)
+        with open(self.filePathInResources('menu-settimanale.json')) as f:
+            self.MenuSettimanale = json.load(f)
 
     def effectiveDownload(self):
         self._logger.disp("Downloading the files from the cloud...")
@@ -49,52 +51,19 @@ class Pizzas():
         self.ElencoIngredienti = self.cloud.read(self.data["ingredienti"])
         self.ElencoAggiunte = self.cloud.read(self.data["aggiunte"])
         self.ElencoInsalate = self.cloud.read(self.data["insalate"])
+        self.MenuSettimanale = self.cloud.read(self.data["menu-settimanale"])
 
-        if self.ElencoPizze and self.ElencoIngredienti and self.ElencoAggiunte and self.ElencoInsalate:     # if the server is responding and the files are valid
+        if self.ElencoPizze and self.ElencoIngredienti and self.ElencoAggiunte and self.ElencoInsalate and self.MenuSettimanale:     # if the server is responding and the files are valid
             saveJsonFile(self.filePathInResources("pizze.json"), self.ElencoPizze)
             saveJsonFile(self.filePathInResources("ingredienti.json"), self.ElencoIngredienti)
             saveJsonFile(self.filePathInResources("aggiunte.json"), self.ElencoAggiunte)
             saveJsonFile(self.filePathInResources("insalate.json"), self.ElencoInsalate)
+            saveJsonFile(self.filePathInResources("menu-settimanale.json"), self.MenuSettimanale)
 
-            self.ElencoPizze = json.loads(self.ElencoPizze)
-            self.ElencoIngredienti = json.loads(self.ElencoIngredienti)
-            self.ElencoAggiunte = json.loads(self.ElencoAggiunte)
-            self.ElencoInsalate = json.loads(self.ElencoInsalate)
         else:   # if the server is not responding or a file is not valid
-            self._logger.disp("An error occured. An older version of files will be loaded.\nNote that all downloaded files won't be saved.")
-            self.loadPizzasFromJson()
-
-    def uploadAll(self):
-        """
-        Deprecated!
-        This method uploads the DB data to a website
-        """
-        db = database("localhost", self.data["dbUserName"], self.data["dbPassword"], self.data["dbData2BeUploaded"])
-        queryPizze = ("""
-            SELECT pizze.id, nomePizza, nome_tipo, prezzo, GROUP_CONCAT(`pizza-ingredienti`.`id_ingrediente` ORDER BY `pizza-ingredienti`.`id_collegamento`) AS "ingredienti"
-            FROM pizze
-            INNER JOIN tipo_pizze ON tipo_pizze.id_tipo = pizze.id_tipo
-            INNER JOIN `pizza-ingredienti` ON pizze.id = `pizza-ingredienti`.id_pizza
-            GROUP BY nomePizza
-            ORDER BY pizze.id
-        """)
-        dbPizzaList = db.readByQuery(queryPizze, "json")
-        self.cloud.update(dbPizzaList, self.data["pizze"])
-
-        #uploadda gli ingredienti
-        queryingredienti = ("""
-            SELECT *
-            FROM `ingredienti`
-        """)
-        dbIngredientsList = db.readByQuery(queryingredienti, "json")
-        self.cloud.update(dbIngredientsList, self.data["ingredienti"])
-        #uploadda le aggiunte
-        queryAggiunte = ("""
-            SELECT *
-            FROM `aggiunte`
-        """)
-        dbAggiunteList = db.readByQuery(queryAggiunte, "json")
-        self.cloud.update(dbAggiunteList, self.data["aggiunte"])
+            self._logger.disp("An error occured. An older version of files will be loaded.\nNote that if there was any donwloaded file, none of them will be saved.")
+        
+        self.loadAllFromJson()
 
     def get_pizzas(self, merge=False):
         """
@@ -154,6 +123,12 @@ class Pizzas():
         else:
             return self.ElencoPizze
 
+    def get_menu_settimanale(self):
+        """
+        Gets menu settimanale
+        """
+        return self.MenuSettimanale
+
     def getAllergenByPizzaType(self, pizzaType):
         """
         Given a type of pizza, it returns a set of it's allergens
@@ -176,5 +151,5 @@ class Pizzas():
         return path.join("resources", "pizzeJson", file)
 
 if __name__ == "__main__":
-    p = Pizzas("setup.json")
+    p = Recources("setup.json")
     p.downloadAllFromCloud()
