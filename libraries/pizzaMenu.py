@@ -83,7 +83,7 @@ class PizzaMenu(ABC):
         widget_list.append(TitleCell(self.window, "Menu della settimana", self._font_colors["p_tipo"], [0, 0], self._columnWidth))
 
         for i in menu_settimanale:
-            widget_list.append(SubtitlePriceCell(self.window, i["day"], self._font_colors["titolo"], '€ {:,.2f}'.format(float(i["price"])), self._font_colors["price"], i["meal"], self._font_colors["generic_text"], [0, 0], self._columnWidth))
+            widget_list.append(SubtitlePriceCell(self.window, i["day"], self._font_colors["menu_settimanale"], '€ {:,.2f}'.format(float(i["price"])), self._font_colors["price"], i["meal"], self._font_colors["generic_text"], [0, 0], self._columnWidth))
 
         return widget_list
 
