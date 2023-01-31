@@ -29,6 +29,7 @@ class LanguageHandler():
             return self._default_language
 
         try:
+            # check if the connection is working
             session = requests.Session()
             retry = Retry(connect=3, backoff_factor=0.5)
             adapter = HTTPAdapter(max_retries=retry)
@@ -36,9 +37,9 @@ class LanguageHandler():
             session.mount('https://', adapter)
             
             if self._token != "":
-                message = requests.get(self._website, headers={'X-Master-Key': self._token}).text
+                message = requests.get(self._website, headers={'X-Master-Key': self._token})
             else:
-                message = requests.get(self._website).text
+                message = requests.get(self._website)
 
             if (message == ""):
                 if self._connection_tracker:
@@ -50,7 +51,15 @@ class LanguageHandler():
                 self._logger.disp(f"{self._logger_title}Connection established (language site)")
                 self._connection_tracker = True
 
-            return message
+            # check if there isn't a 404 error
+
+            if message.status_code == 404:
+                if self._connection_tracker:
+                    self._logger.disp(f"{self._logger_title}404 error, maybe the token is wrong\n")
+                    self._connection_tracker = False
+                return self._default_language
+
+            return message.text
 
         except requests.exceptions.RequestException as err:
             if self._connection_tracker:
