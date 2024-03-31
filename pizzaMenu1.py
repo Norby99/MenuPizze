@@ -37,7 +37,7 @@ class PizzaMenu1(PizzaMenu):
         self._columnWidth = (gridPosition[2]-gridPosition[0])/gridColumns
 
         self.allergens = self.loadAllergeni()
-        pizze = self.pizzeCreator(self.pizzaTypesRequered, proportion=5.40)
+        pizze = self.pizzeCreator(self.pizzaTypesRequered, proportion=5.40) # 5.40, 5.76
         
         cells = pizze
 
