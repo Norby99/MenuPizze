@@ -35,7 +35,7 @@ class PizzaMenu(ABC):
     def connect2db(self, data):
         self.LHandler = LanguageHandler(data['languageSite'] + "/" + data['restaurantName'] + ".php", data['defaultLanguage'], token=data['m_key'])
 
-    def pizzeCreator(self, pizzaType="*"):     ### crea un dizionario con tutte le pizze e i suoi atributi
+    def pizzeCreator(self, pizzaType="*", proportion=5.76):     ### crea un dizionario con tutte le pizze e i suoi atributi
         """
         creates a dictionary with all the pizzas that have the @pizzaType
         @pizzaType it's a list, or it can be "*" (default) for all elements
@@ -48,10 +48,13 @@ class PizzaMenu(ABC):
             if (i["nome_tipo"] in pizzaType) or pizzaType == "*":
                 if i["nome_tipo"] != tipo_pizza:
                     tipo_pizza = i["nome_tipo"]
-                    pizze.append(TitleCell(self.window, i["nome_tipo"], self._font_colors["p_tipo"], [0, 0], self._columnWidth))
+                    pizze.append(TitleCell(self.window, i["nome_tipo"], self._font_colors["p_tipo"], [0, 0], self._columnWidth, proportion=proportion))
 
                 pizzaAllergens = [self.allergens[x] for x in i["allergeni"]]    # filters the allergens to show only those that are in the pizza
-                pizze.append(PizzaCell(self.window, i["nomePizza"], self._font_colors["titolo"], '€ {:,.2f}'.format(float(i["prezzo"])), self._font_colors["price"], {"nome_italiano" : capfirst(", ".join(str(x) for x in i["ingredienti"].split(","))), "nome_inglese" : capfirst(", ".join(str(x) for x in i["ingredientiInglese"].split(",")))}, self._font_colors["generic_text"], pizzaAllergens, [0, 0], self._columnWidth))
+                pizze.append(PizzaCell( self.window, i["nomePizza"], self._font_colors["titolo"], '€ {:,.2f}'.format(float(i["prezzo"])),
+                                        self._font_colors["price"], {"nome_italiano" : capfirst(", ".join(str(x) for x in i["ingredienti"].split(","))),
+                                        "nome_inglese" : capfirst(", ".join(str(x) for x in i["ingredientiInglese"].split(",")))},
+                                        self._font_colors["generic_text"], pizzaAllergens, [0, 0], self._columnWidth, proportion=proportion))
         
         return pizze
 

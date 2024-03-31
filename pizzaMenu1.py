@@ -37,11 +37,11 @@ class PizzaMenu1(PizzaMenu):
         self._columnWidth = (gridPosition[2]-gridPosition[0])/gridColumns
 
         self.allergens = self.loadAllergeni()
-        pizze = self.pizzeCreator(self.pizzaTypesRequered)
+        pizze = self.pizzeCreator(self.pizzaTypesRequered, proportion=5.40)
         
         cells = pizze
 
-        menu = VerticalGrid(cells, gridPosition, self.LHandler, maxColumns=2)
+        menu = VerticalGrid(cells, gridPosition, self.LHandler)
 
         self.show(menu)
         self.update()

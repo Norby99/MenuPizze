@@ -17,6 +17,11 @@ class PizzaCell(SubtitlePriceCell):
 
         super().__init__(window, name, nameColor, price, priceColor, ingredients, ingredientsColor, position, width, proportion)
 
+        # draw red background
+        """ self.width = width
+        self.height = self.width / proportion
+        self.canvas.create_rectangle(self.position[0], self.position[1], self.position[0]+self.width, self.position[1]+self.height, fill="#a86032", outline="#a86032") """
+
         self.showAllergeni()
 
     def showAllergeni(self):
