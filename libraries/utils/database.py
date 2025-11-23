@@ -1,5 +1,3 @@
-import mysql.connector
-from mysql.connector import Error
 import json
 from libraries.utils.logger import Logger
 
@@ -81,26 +79,6 @@ class database():
         result = cursor.fetchall()
         self.con.close()
         return result
-        
-
-    def connect(self):
-        try:
-            connection = mysql.connector.connect(
-                                                host=self.host,
-                                                user=self.user,
-                                                password=self.password,
-                                                database=self.database,
-                                                buffered=True)
-            if connection.is_connected():
-                cursor = connection.cursor()
-                cursor.execute("select database()")
-                self.connectionTracker = True
-                return connection
-
-        except Error as e:
-            if self.connectionTracker:
-                self.connectionTracker = False
-                self._logger.disp("Error while connecting to MySQL", e)
 
     def getCurrentLanguage(self):
         try:
