@@ -21,7 +21,7 @@ from abc import ABC
 
 class PizzaMenu(ABC):
 
-    _font_colors: FontColors
+    _font_colors: FontColors = FontColors()
     _columnWidth: float
 
     allergens: dict
@@ -164,13 +164,6 @@ class PizzaMenu(ABC):
         glutine = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "glutine.png")).resize(resizeFormat, Image.LANCZOS))
         latticini = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "latticini.png")).resize(resizeFormat, Image.LANCZOS))
         return { "uova" : uova, "pesce" : pesce, "noci" : noci, "soia" : soia, "glutine" : glutine, "latticini" : latticini }
-
-    def setFontColors(self, colors) -> None:
-        """
-        Sets the font colors
-        """
-        self._font_colors = colors
-
 
     def tkWindowSetup(self):
         """

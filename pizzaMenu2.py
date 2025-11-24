@@ -16,7 +16,6 @@ class PizzaMenu2(PizzaMenu):
         
         self.tkWindowSetup()
         colors = data["colors"] # colors are taken from the setup file
-        self.setFontColors(colors)
         padding = 20
         self.window.configure(background=colors["background"])
 

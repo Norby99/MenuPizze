@@ -30,7 +30,6 @@ class PizzaMenu1(PizzaMenu):
         #colors = {"background" : "#2B2D42", "p_tipo" : "#EF233C", "titolo" : "#8D99AE", "generic_text" : "#EDF2F4", "price" : "#EF233C"}598392
         #colors = {"background" : "#0B0014", "p_tipo" : "#FFFFFF", "titolo" : "#ef233c", "generic_text" : "#F5E9E2", "price" : "#fdc500"}
         colors = Colors()   # colors are taken from the setup file
-        self.setFontColors(FontColors())
         padding = 20
         self.window.configure(background=colors.background)
 
