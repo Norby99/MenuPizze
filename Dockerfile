@@ -1,7 +1,4 @@
-FROM lscr.io/linuxserver/webtop:latest
-
-# It seems like git and curl are not installed by default
-# RUN apt-get update && apt-get install -y git curl && apt-get clean
+FROM lscr.io/linuxserver/webtop:debian-xfce
 
 WORKDIR /opt/cache
 
@@ -29,8 +26,15 @@ EOF
 RUN sed -i 's/\r$//' $ENTRYPOINT_SCRIPT
 RUN chmod +x $ENTRYPOINT_SCRIPT
 
+#Python stuff
+RUN pip install --upgrade pip
+
+RUN pip install requests
+RUN apt-get update && \
+    apt-get install -y python3-tk tk tcl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # Execute my script in background
 #TODO
 #python3 /opt/cache/MenuPizze/myscript.py &
-
-ENTRYPOINT ["/bin/sh", "-c", "$ENTRYPOINT_SCRIPT"]
