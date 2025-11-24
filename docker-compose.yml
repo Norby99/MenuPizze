@@ -1,9 +1,0 @@
-services:
-  webtop:
-    build: .
-    container_name: webtop-pizze
-    ports:
-      - "127.0.0.1:3000:3000"
-    volumes:
-      - ./data:/config
-    restart: unless-stopped
