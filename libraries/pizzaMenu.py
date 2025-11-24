@@ -14,23 +14,19 @@ from libraries.cells.socialLogos import SocialLogos
 from libraries.cells.simpleTextCell import SimpleTextCell
 from libraries.cells.subtitlePriceCell import SubtitlePriceCell
 from libraries.resourceHandler import Recources
-import json
+from libraries.font_colors import FontColors
 from PIL import ImageTk,Image 
 import os
 from abc import ABC
 
 class PizzaMenu(ABC):
 
-    _font_colors: dict
+    _font_colors: FontColors
     _columnWidth: float
 
     allergens: dict
 
     resources: Recources
-
-    def loadJsonData(self, fname):
-        with open(fname) as f:
-            return json.load(f)
 
     def connect2db(self, data):
         self.LHandler = LanguageHandler(data['languageSite'] + "/" + data['restaurantName'] + ".php", data['defaultLanguage'], token=data['m_key'])
@@ -48,13 +44,13 @@ class PizzaMenu(ABC):
             if (i["nome_tipo"] in pizzaType) or pizzaType == "*":
                 if i["nome_tipo"] != tipo_pizza:
                     tipo_pizza = i["nome_tipo"]
-                    pizze.append(TitleCell(self.window, i["nome_tipo"], self._font_colors["p_tipo"], [0, 0], self._columnWidth, proportion=proportion))
+                    pizze.append(TitleCell(self.window, i["nome_tipo"], self._font_colors.p_tipo, [0, 0], self._columnWidth, proportion=proportion))
 
                 pizzaAllergens = [self.allergens[x] for x in i["allergeni"]]    # filters the allergens to show only those that are in the pizza
-                pizze.append(PizzaCell( self.window, i["nomePizza"], self._font_colors["titolo"], '€ {:,.2f}'.format(float(i["prezzo"])),
-                                        self._font_colors["price"], {"nome_italiano" : capfirst(", ".join(str(x) for x in i["ingredienti"].split(","))),
+                pizze.append(PizzaCell( self.window, i["nomePizza"], self._font_colors.titolo, '€ {:,.2f}'.format(float(i["prezzo"])),
+                                        self._font_colors.price, {"nome_italiano" : capfirst(", ".join(str(x) for x in i["ingredienti"].split(","))),
                                         "nome_inglese" : capfirst(", ".join(str(x) for x in i["ingredientiInglese"].split(",")))},
-                                        self._font_colors["generic_text"], pizzaAllergens, [0, 0], self._columnWidth, proportion=proportion))
+                                        self._font_colors.generic_text, pizzaAllergens, [0, 0], self._columnWidth, proportion=proportion))
         
         return pizze
 
@@ -66,7 +62,7 @@ class PizzaMenu(ABC):
         text = []
 
         for i in text_list:
-            text.append(SimpleTextCell(self.window, i, self._font_colors["generic_text"], 34, [0, 0], self._columnWidth))
+            text.append(SimpleTextCell(self.window, i, self._font_colors.generic_text, 34, [0, 0], self._columnWidth))
 
         return text
 
@@ -83,10 +79,10 @@ class PizzaMenu(ABC):
             return []
         
         widget_list = []
-        widget_list.append(TitleCell(self.window, "Menu pranzo", self._font_colors["p_tipo"], [0, 0], self._columnWidth))
+        widget_list.append(TitleCell(self.window, "Menu pranzo", self._font_colors.p_tipo, [0, 0], self._columnWidth))
 
         for i in menu_settimanale:
-            widget_list.append(SubtitlePriceCell(self.window, i["day"], self._font_colors["menu_settimanale"], '€ {:,.2f}'.format(float(i["price"])), self._font_colors["price"], i["meal"], self._font_colors["generic_text"], [0, 0], self._columnWidth))
+            widget_list.append(SubtitlePriceCell(self.window, i["day"], self._font_colors.menu_settimanale, '€ {:,.2f}'.format(float(i["price"])), self._font_colors.price, i["meal"], self._font_colors.generic_text, [0, 0], self._columnWidth))
 
         return widget_list
 
@@ -95,11 +91,11 @@ class PizzaMenu(ABC):
         creates a dictionary with all the aggiunte
         """
         aggiunteCell = []
-        aggiunteCell.append(TitleCell(self.window, "Aggiunte", self._font_colors["p_tipo"], [0, 0], self._columnWidth))
+        aggiunteCell.append(TitleCell(self.window, "Aggiunte", self._font_colors.p_tipo, [0, 0], self._columnWidth))
 
         aggiunte = self.resources.get_aggiunte()
         for i in aggiunte:
-            aggiunteCell.append(AggiuntaCell(self.window, {"nome_italiano" : capfirst(i["nome_aggiunta"]), "nome_inglese" : capfirst(i["nome_inglese"])}, self._font_colors["generic_text"], '€ {:,.2f}'.format(float(i["prezzo"])), self._font_colors["price"], [0, 0], self._columnWidth))
+            aggiunteCell.append(AggiuntaCell(self.window, {"nome_italiano" : capfirst(i["nome_aggiunta"]), "nome_inglese" : capfirst(i["nome_inglese"])}, self._font_colors.generic_text, '€ {:,.2f}'.format(float(i["prezzo"])), self._font_colors.price, [0, 0], self._columnWidth))
 
         return aggiunteCell
 
@@ -110,11 +106,11 @@ class PizzaMenu(ABC):
         insalate = []
         data = self.resources.get_insalate(True)
 
-        insalate.append(TitleCell(self.window, "Insalate  (+spianata)", self._font_colors["p_tipo"], [0, 0], self._columnWidth))
+        insalate.append(TitleCell(self.window, "Insalate  (+spianata)", self._font_colors.p_tipo, [0, 0], self._columnWidth))
 
         for i in data:
             insalataAllergens = [self.allergens[x] for x in i["allergeni"]]    # filters the allergens to show only those that are in the pizza
-            insalate.append(InsalataCell(self.window, i["nomeInsalata"], self._font_colors["titolo"], '€ {:,.2f}'.format(float(i["prezzo"])), self._font_colors["price"], {"nome_italiano" : capfirst(", ".join(str(x) for x in i["ingredienti"].split(","))), "nome_inglese" : capfirst(", ".join(str(x) for x in i["ingredientiInglese"].split(",")))}, self._font_colors["generic_text"], insalataAllergens, [0, 0], self._columnWidth))
+            insalate.append(InsalataCell(self.window, i["nomeInsalata"], self._font_colors.titolo, '€ {:,.2f}'.format(float(i["prezzo"])), self._font_colors.price, {"nome_italiano" : capfirst(", ".join(str(x) for x in i["ingredienti"].split(","))), "nome_inglese" : capfirst(", ".join(str(x) for x in i["ingredientiInglese"].split(",")))}, self._font_colors.generic_text, insalataAllergens, [0, 0], self._columnWidth))
 
         return insalate
 
@@ -122,15 +118,15 @@ class PizzaMenu(ABC):
         allergens = self.loadAllergeni(scale=2)
         allergensList = []
 
-        allergensList.append(TitleCell(self.window, "Legenda allergeni", self._font_colors["p_tipo"], [0, 0], self._columnWidth))
+        allergensList.append(TitleCell(self.window, "Legenda allergeni", self._font_colors.p_tipo, [0, 0], self._columnWidth))
 
         names, images = zip(*allergens.items())
         i = 0
         while (i < len(allergens)):
             if i+1 < len(allergens):
-                allergensList.append(AllergeniCell(self.window, self._font_colors["generic_text"], [0, 0], self._columnWidth, names[i], images[i], names[i+1], images[i+1]))
+                allergensList.append(AllergeniCell(self.window, self._font_colors.generic_text, [0, 0], self._columnWidth, names[i], images[i], names[i+1], images[i+1]))
             else:
-                allergensList.append(AllergeniCell(self.window, self._font_colors["generic_text"], [0, 0], self._columnWidth, names[i], images[i]))
+                allergensList.append(AllergeniCell(self.window, self._font_colors.generic_text, [0, 0], self._columnWidth, names[i], images[i]))
             
             i += 2
 
@@ -161,12 +157,12 @@ class PizzaMenu(ABC):
         targetFile = os.path.join(os.path.curdir, 'resources', "allergeni")
         resizeFormat = (self.windowSpecs.resolutionConverter(119/6*scale), self.windowSpecs.resolutionConverter(121/6*scale))
 
-        uova = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "uova.png")).resize(resizeFormat, Image.ANTIALIAS))
-        pesce = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "pesce.png")).resize(resizeFormat, Image.ANTIALIAS))
-        noci = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "noci.png")).resize(resizeFormat, Image.ANTIALIAS))
-        soia = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "soia.png")).resize(resizeFormat, Image.ANTIALIAS))
-        glutine = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "glutine.png")).resize(resizeFormat, Image.ANTIALIAS))
-        latticini = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "latticini.png")).resize(resizeFormat, Image.ANTIALIAS))
+        uova = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "uova.png")).resize(resizeFormat, Image.LANCZOS))
+        pesce = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "pesce.png")).resize(resizeFormat, Image.LANCZOS))
+        noci = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "noci.png")).resize(resizeFormat, Image.LANCZOS))
+        soia = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "soia.png")).resize(resizeFormat, Image.LANCZOS))
+        glutine = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "glutine.png")).resize(resizeFormat, Image.LANCZOS))
+        latticini = ImageTk.PhotoImage(Image.open(os.path.join(targetFile, "latticini.png")).resize(resizeFormat, Image.LANCZOS))
         return { "uova" : uova, "pesce" : pesce, "noci" : noci, "soia" : soia, "glutine" : glutine, "latticini" : latticini }
 
     def setFontColors(self, colors) -> None:

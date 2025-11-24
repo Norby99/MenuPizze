@@ -14,9 +14,9 @@ class Recources():
 
     _logger: Logger
 
-    def __init__(self, jsonData):
-        self.data = jsonData
-        self.cloud = Cloud(self.data["m_key"])
+    def __init__(self, dbData):
+        self.data = dbData
+        self.cloud = Cloud(self.data.getToken())
         self._logger = Logger()
 
     def downloadAllFromCloud(self, force=False):
@@ -47,12 +47,11 @@ class Recources():
 
     def effectiveDownload(self):
         self._logger.disp("Downloading the files from the cloud...")
-        self.ElencoPizze = self.cloud.read(self.data["pizze"])
-        self.ElencoIngredienti = self.cloud.read(self.data["ingredienti"])
-        self.ElencoAggiunte = self.cloud.read(self.data["aggiunte"])
-        self.ElencoInsalate = self.cloud.read(self.data["insalate"])
-        self.MenuSettimanale = self.cloud.read(self.data["menu-settimanale"])
-
+        self.ElencoPizze = self.cloud.read(self.data.getPizze())
+        self.ElencoIngredienti = self.cloud.read(self.data.getIngredienti())
+        self.ElencoAggiunte = self.cloud.read(self.data.getAggiunte())
+        self.ElencoInsalate = self.cloud.read(self.data.getInsalate())
+        self.MenuSettimanale = self.cloud.read(self.data.getMenuSettimanale())
         if self.ElencoPizze and self.ElencoIngredienti and self.ElencoAggiunte and self.ElencoInsalate and self.MenuSettimanale:     # if the server is responding and the files are valid
             saveJsonFile(self.filePathInResources("pizze.json"), self.ElencoPizze)
             saveJsonFile(self.filePathInResources("ingredienti.json"), self.ElencoIngredienti)

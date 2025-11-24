@@ -3,13 +3,15 @@ from libraries.utils.utils import waitForConnection
 from libraries.verticalGrid import VerticalGrid
 from libraries.pizzaMenu import PizzaMenu
 from libraries.utils.languageHandler import LanguageHandler
+from libraries.dataReader import DataReader
+from libraries.font_colors import FontColors
+from libraries.colors import Colors
 
 class PizzaMenu1(PizzaMenu):
 
     def __init__(self):
-        data = self.loadJsonData("setup.json")
-        dbData = self.loadJsonData("DBsetup.json")
-        self.LHandler = LanguageHandler(dbData['languageSite'] + "/" + dbData['restaurantName'] + ".php", dbData['defaultLanguage'], token=dbData['m_key'], no_connection=False)
+        dbData = DataReader()
+        self.LHandler = LanguageHandler(dbData.getWebsite(), dbData.getDefaultLanguage(), token=dbData.getToken(), no_connection=False)
         self.resources = Recources(dbData)
         self.pizzaTypesRequered = ["Pizze classiche", "Pizze bianche", "Pizze conditissime"] # the pizza types that have to be visualized
         self.resources.downloadAllFromCloud(force=True)
@@ -27,10 +29,10 @@ class PizzaMenu1(PizzaMenu):
         #colors = {"background" : "#540B0E", "p_tipo" : "#e84545", "titolo" : "#E09F3E", "generic_text" : "#FFF3B0", "price" : "#335C67"}
         #colors = {"background" : "#2B2D42", "p_tipo" : "#EF233C", "titolo" : "#8D99AE", "generic_text" : "#EDF2F4", "price" : "#EF233C"}598392
         #colors = {"background" : "#0B0014", "p_tipo" : "#FFFFFF", "titolo" : "#ef233c", "generic_text" : "#F5E9E2", "price" : "#fdc500"}
-        colors = data["colors"] # colors are taken from the setup file
-        self.setFontColors(colors)
+        colors = Colors()   # colors are taken from the setup file
+        self.setFontColors(FontColors())
         padding = 20
-        self.window.configure(background=colors["background"])
+        self.window.configure(background=colors.background)
 
         gridColumns = 5
         gridPosition = (self.windowSpecs.resolutionConverter(padding), self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1]-self.windowSpecs.resolutionConverter(padding))
