@@ -17,7 +17,7 @@ class SocialLogos(Cell):
             new_image_height = math.trunc(width / proportion * image_size)
             new_image_width = math.trunc(image.size[0] * new_image_height / image.size[1])
 
-            self.social_logos.append(ImageTk.PhotoImage(image.resize((new_image_width, new_image_height), Image.ANTIALIAS)))
+            self.social_logos.append(ImageTk.PhotoImage(image.resize((new_image_width, new_image_height), Image.LANCZOS)))
 
         self.showImage()
 

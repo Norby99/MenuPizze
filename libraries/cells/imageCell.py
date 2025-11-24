@@ -13,7 +13,7 @@ class ImageCell(Cell):
         image_size = 4/5    # represents the size of the image compared to the cell size 
         new_image_width = math.trunc(width * image_size)
         new_image_height = math.trunc(image.size[1] * new_image_width / image.size[0])
-        self.image = ImageTk.PhotoImage(image.resize((new_image_width, new_image_height), Image.ANTIALIAS))
+        self.image = ImageTk.PhotoImage(image.resize((new_image_width, new_image_height), Image.LANCZOS))
 
         self.showImage()
 

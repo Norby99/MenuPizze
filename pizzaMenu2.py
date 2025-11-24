@@ -3,21 +3,22 @@ from libraries.resourceHandler import Recources
 from libraries.utils.utils import waitForConnection
 from libraries.verticalGrid import VerticalGrid
 from libraries.utils.languageHandler import LanguageHandler
+from libraries.dataReader import DataReader
+from libraries.colors import Colors
 
 class PizzaMenu2(PizzaMenu):
 
     def __init__(self):
-        data = self.loadJsonData("setup.json")
-        dbData = self.loadJsonData("DBsetup.json")
-        self.LHandler = LanguageHandler(dbData['languageSite'] + "/" + dbData['restaurantName'] + ".php", dbData['defaultLanguage'], token=dbData['m_key'], no_connection=False)
+        dbData = DataReader()
+        self.LHandler = LanguageHandler(dbData.getWebsite(), dbData.getDefaultLanguage(), token=dbData.getToken(), no_connection=False)
         self.resources = Recources(dbData)
         self.pizzaTypesRequered = ["Impasto Napoletano", "Pizze Dolci"] # the pizza types that have to be visualized
         self.resources.downloadAllFromCloud(force=True)
         
         self.tkWindowSetup()
-        colors = data["colors"] # colors are taken from the setup file
+        colors = Colors()   # colors are taken from the setup file
         padding = 20
-        self.window.configure(background=colors["background"])
+        self.window.configure(background=colors.background)
 
         gridColumns = 4
         gridPosition = (self.windowSpecs.resolutionConverter(padding), 0, self.windowSpecs.getScreenDimension()[0]-self.windowSpecs.resolutionConverter(padding), self.windowSpecs.getScreenDimension()[1])
