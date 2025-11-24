@@ -7,3 +7,4 @@ __pycache__
 *.php
 *.json
 !setup.json
+data/
