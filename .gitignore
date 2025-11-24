@@ -8,3 +8,4 @@ __pycache__
 *.json
 !setup.json
 data/
+docker-compose.yml
