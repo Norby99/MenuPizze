@@ -4,8 +4,8 @@ from libraries.verticalGrid import VerticalGrid
 from libraries.pizzaMenu import PizzaMenu
 from libraries.utils.languageHandler import LanguageHandler
 from libraries.repository.db_setup.dataReader import DataReader
-from libraries.font_colors import FontColors
-from libraries.colors import Colors
+from libraries.repository.setup.font_colors import FontColors
+from libraries.repository.setup.colors import Colors
 
 class PizzaMenu1(PizzaMenu):
 

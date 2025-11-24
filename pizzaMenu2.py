@@ -4,7 +4,7 @@ from libraries.utils.utils import waitForConnection
 from libraries.verticalGrid import VerticalGrid
 from libraries.utils.languageHandler import LanguageHandler
 from libraries.repository.db_setup.dataReader import DataReader
-from libraries.colors import Colors
+from libraries.repository.setup.colors import Colors
 
 class PizzaMenu2(PizzaMenu):
 

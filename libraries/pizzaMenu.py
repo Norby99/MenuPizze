@@ -14,7 +14,7 @@ from libraries.cells.socialLogos import SocialLogos
 from libraries.cells.simpleTextCell import SimpleTextCell
 from libraries.cells.subtitlePriceCell import SubtitlePriceCell
 from libraries.resourceHandler import Recources
-from libraries.font_colors import FontColors
+from libraries.repository.setup.font_colors import FontColors
 from PIL import ImageTk,Image 
 import os
 from abc import ABC

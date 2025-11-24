@@ -1,7 +1,7 @@
 
 from libraries.repository.db_setup.base_config import BaseConfig
 from typing import Optional, Any
-from config_base import BaseConfig, create_config
+from libraries.repository.db_setup.base_config import BaseConfig
 
 class DataReader:
     """Reads configuration using a provided config source."""
