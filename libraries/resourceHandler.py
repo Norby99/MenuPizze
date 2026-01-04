@@ -134,7 +134,7 @@ class Recources():
         Given a type of pizza, it returns a set of it's allergens
         """
         allergens = set()
-        if pizzaType in ["Pizze classiche", "Pizze bianche", "Pizze conditissime", "Pizze Dolci"]:
+        if pizzaType in ["Pizze classiche", "Pizze bianche", "Pizze conditissime", "Pizze stese", "Pizze dolci"]:
             allergens.update(["glutine", "soia"])
         elif pizzaType in ["Impasto Napoletano"]:
             allergens.add("glutine")

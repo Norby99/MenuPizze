@@ -11,7 +11,7 @@ class PizzaMenu2(PizzaMenu):
         dbData = self.loadJsonData("DBsetup.json")
         self.LHandler = LanguageHandler(dbData['languageSite'] + "/" + dbData['restaurantName'] + ".php", dbData['defaultLanguage'], token=dbData['m_key'], no_connection=False)
         self.resources = Recources(dbData)
-        self.pizzaTypesRequered = ["Impasto Napoletano", "Pizze Dolci"] # the pizza types that have to be visualized
+        self.pizzaTypesRequered = ["Impasto Napoletano", "Pizze dolci"] # the pizza types that have to be visualized
         self.resources.downloadAllFromCloud(force=True)
         
         self.tkWindowSetup()
